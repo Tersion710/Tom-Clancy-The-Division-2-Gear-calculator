@@ -1,0 +1,44 @@
+{
+  "name": "division2-gear-calculator",
+  "version": "1.2.0",
+  "description": "A Division 2 Gear & DPS Calculator built with Electron. Configure weapons, gear, attachments, talents, and see real-time DPS calculations.",
+  "main": "main.js",
+  "author": "ImThatTeriyaki",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --x64"
+  },
+  "build": {
+    "appId": "com.sleepyinc.div2calc",
+    "productName": "Division 2 Gear Calculator",
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ],
+      "icon": "icon.png",
+      "certificateFile": null,
+      "certificatePassword": null,
+      "signingHashAlgorithms": null,
+      "sign": null,
+      "verifyUpdateCodeSignature": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "files": [
+      "main.js",
+      "splash.html",
+      "division2-gear-calculator.html",
+      "icon.png"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  }
+}

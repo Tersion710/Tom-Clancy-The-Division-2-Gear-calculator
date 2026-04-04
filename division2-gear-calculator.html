@@ -1,0 +1,2633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Division 2 Gear Calculator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+    :root {
+      --bg: #080c10;
+      --bg2: #0c1018;
+      --surface: #101620;
+      --surface2: #141e2c;
+      --surface3: #1a2638;
+      --accent: #f4a21e;
+      --accent-glow: #f4a21e44;
+      --accent-dim: #6b4a0e;
+      --cyan: #00e5ff;
+      --cyan-glow: #00e5ff22;
+      --green: #00e676;
+      --text: #b8cfe0;
+      --text-muted: #4a6070;
+      --text-bright: #dff0ff;
+      --border: #1e3040;
+      --border-accent: #f4a21e44;
+      --radius: 2px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      background-image: radial-gradient(ellipse at 20% 0%, #0a1a2a 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 100%, #0a1520 0%, transparent 60%);
+      color: var(--text);
+      font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      min-height: 100vh;
+    }
+
+    /* ── Header ─────────────────────────────────────────────────────────── */
+    header {
+      background: linear-gradient(180deg, var(--surface2) 0%, var(--surface) 100%);
+      border-bottom: 2px solid var(--accent);
+      padding: 0 24px;
+      display: flex;
+      align-items: stretch;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 32px #000c, 0 2px 0 var(--accent-glow);
+    }
+
+    .header-title {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      padding: 12px 24px 12px 0;
+      border-right: 1px solid var(--border);
+      margin-right: 20px;
+      text-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .header-title span {
+      color: var(--text-muted);
+      font-size: 0.6rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      margin-left: 10px;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 12px 0;
+    }
+
+    .header-controls input[type="text"] {
+      background: var(--surface3);
+      color: var(--text-bright);
+      border: 1px solid var(--border);
+      border-bottom: 2px solid var(--accent-dim);
+      padding: 6px 12px;
+      border-radius: var(--radius);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      width: 200px;
+      transition: border-color 0.2s;
+    }
+
+    .header-controls input[type="text"]:focus {
+      outline: none;
+      border-bottom-color: var(--accent);
+    }
+
+    /* ── Buttons ─────────────────────────────────────────────────────────── */
+    button, .btn {
+      background: linear-gradient(135deg, var(--surface3) 0%, var(--surface2) 100%);
+      color: var(--accent);
+      border: 1px solid var(--accent-dim);
+      border-bottom: 2px solid var(--accent);
+      padding: 6px 16px;
+      border-radius: var(--radius);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    button:hover, .btn:hover {
+      background: linear-gradient(135deg, var(--accent) 0%, #c07010 100%);
+      color: #080c10;
+      border-color: var(--accent);
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    button:active, .btn:active {
+      transform: translateY(1px);
+    }
+
+    /* ── Footer ─────────────────────────────────────────────────────────── */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    footer::before {
+      content: 'SHD NETWORK ACTIVE';
+      color: var(--green);
+      font-size: 0.65rem;
+      text-shadow: 0 0 8px var(--green);
+    }
+
+    /* ── App layout ──────────────────────────────────────────────────────── */
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #app {
+      flex: 1;
+      min-height: 0;
+      padding: 16px 20px;
+      display: flex;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .main-panels {
+      flex: 1;
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* ── Panel sections ──────────────────────────────────────────────────── */
+    .panel-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+      flex: 1;
+    }
+
+    .panel-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      padding: 5px 14px;
+      background: linear-gradient(90deg, var(--surface2) 0%, transparent 100%);
+      border-left: 3px solid var(--accent);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .panel-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border-accent), transparent);
+    }
+
+    .panel-cards {
+      display: flex;
+      gap: 10px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      flex: 1;
+      min-height: 0;
+      padding-bottom: 4px;
+      align-items: stretch;
+    }
+
+    .panel-cards::-webkit-scrollbar { height: 3px; }
+    .panel-cards::-webkit-scrollbar-track { background: transparent; }
+    .panel-cards::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 2px; }
+
+    /* ── Collapsible card wrapper ─────────────────────────────────────────── */
+    .card-details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--border);
+      border-radius: var(--radius);
+      min-width: 240px;
+      flex: 1;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .card-details:hover {
+      border-color: var(--border-accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    /* When open: cap height and scroll the entire card contents */
+    .card-details[open] {
+      border-top-color: var(--accent);
+      border-color: var(--border-accent);
+      max-height: calc(100vh - 160px);
+      overflow-y: scroll;
+    }
+
+    .card-details[open]::-webkit-scrollbar { width: 4px; }
+    .card-details[open]::-webkit-scrollbar-track { background: var(--surface2); border-radius: 2px; }
+    .card-details[open]::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 2px; }
+    .card-details[open]::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    .card-summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      background: linear-gradient(90deg, var(--surface2) 0%, var(--surface) 100%);
+      border-bottom: 1px solid transparent;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+
+    .card-details[open] > .card-summary {
+      border-bottom-color: var(--border);
+      background: linear-gradient(90deg, var(--surface3) 0%, var(--surface2) 100%);
+    }
+
+    .card-summary:hover {
+      background: linear-gradient(90deg, var(--surface3) 0%, var(--surface2) 100%);
+    }
+
+    .card-summary::marker,
+    .card-summary::-webkit-details-marker { display: none; }
+
+    .card-toggle-icon {
+      font-size: 0.55rem;
+      color: var(--accent);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .card-details[open] > .card-summary .card-toggle-icon {
+      transform: rotate(90deg);
+    }
+
+    .card-summary-slot {
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      padding-right: 10px;
+      border-right: 1px solid var(--border);
+    }
+
+    .card-summary-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-bright);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* The card body — no scroll needed here, scroll is on card-details[open] */
+    .card-body {
+      padding: 12px 14px;
+    }
+
+    /* ── Weapon / Gear card internals ────────────────────────────────────── */
+    .weapon-card, .gear-card { }
+
+    .slot-header {
+      font-weight: 700;
+      font-size: 0.7rem;
+      margin-bottom: 10px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .slot-header::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      background: var(--accent);
+      box-shadow: 0 0 6px var(--accent-glow);
+    }
+
+    select {
+      width: 100%;
+      background: var(--surface2);
+      color: var(--text-bright);
+      border: 1px solid var(--border);
+      border-bottom: 2px solid var(--accent-dim);
+      padding: 6px 28px 6px 10px;
+      margin-bottom: 6px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: var(--radius);
+      transition: border-color 0.2s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23f4a21e'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      outline: none;
+    }
+
+    select:focus {
+      border-bottom-color: var(--accent);
+      box-shadow: 0 2px 0 var(--accent-glow);
+    }
+
+    input[type="number"] {
+      background: var(--surface2);
+      color: var(--cyan);
+      border: 1px solid var(--border);
+      border-bottom: 2px solid var(--accent-dim);
+      padding: 5px 8px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      border-radius: var(--radius);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="number"]:focus {
+      border-bottom-color: var(--cyan);
+      box-shadow: 0 2px 0 var(--cyan-glow);
+    }
+
+    /* ── Stat rows ───────────────────────────────────────────────────────── */
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      gap: 8px;
+    }
+
+    .stat-row label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .stat-row input[type="number"] {
+      width: 90px;
+    }
+
+    .readonly-stat {
+      color: var(--cyan);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.88rem;
+      text-shadow: 0 0 8px var(--cyan-glow);
+    }
+
+    /* ── Attachment slots ────────────────────────────────────────────────── */
+    details > summary {
+      cursor: pointer;
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 8px 0 4px;
+      user-select: none;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 8px;
+      background: var(--surface2);
+      border-left: 3px solid var(--accent-dim);
+      border-radius: 1px;
+    }
+
+    details > summary::before {
+      content: '\25B6';
+      font-size: 0.6rem;
+      font-weight: 900;
+      transition: transform 0.15s;
+      display: inline-block;
+    }
+
+    details[open] > summary::before {
+      transform: rotate(90deg);
+    }
+
+    details > summary::-webkit-details-marker { display: none; }
+
+    .attachment-slot {
+      border-left: 2px solid var(--border);
+      padding-left: 10px;
+      margin-bottom: 8px;
+    }
+
+    .attachment-slot label {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .attachment-slot select {
+      margin-bottom: 4px;
+    }
+
+    .att-modifiers .stat-row input[type="number"] { width: 80px; }
+
+    /* ── Gear attributes / mods ──────────────────────────────────────────── */
+    .attr-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .attr-row select {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .attr-row input[type="number"] { width: 80px; }
+
+    .mod-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .mod-row select {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .mod-row input[type="number"] { width: 80px; }
+
+    /* ── Stat panel ──────────────────────────────────────────────────────── */
+    #stat-panel-wrapper {
+      flex-shrink: 0;
+      width: 290px;
+      position: sticky;
+      top: 70px;
+      max-height: calc(100vh - 90px);
+      overflow-y: auto;
+    }
+
+    #stat-panel-wrapper::-webkit-scrollbar { width: 4px; }
+    #stat-panel-wrapper::-webkit-scrollbar-track { background: transparent; }
+    #stat-panel-wrapper::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 2px; }
+    #stat-panel-wrapper::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    .stat-panel-card {
+      background: var(--surface);
+      border: 1px solid var(--border-accent);
+      border-top: 2px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+
+    .stat-section-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 10px;
+      padding: 5px 10px;
+      background: linear-gradient(90deg, var(--surface2) 0%, transparent 100%);
+      border-left: 3px solid var(--accent);
+    }
+
+    .stat-panel-card .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+      padding: 4px 6px;
+      background: var(--surface2);
+      border-radius: 1px;
+      border-left: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .stat-panel-card .stat-row:hover { border-left-color: var(--accent-dim); }
+
+    .stat-panel-card .stat-row label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .stat-panel-card .stat-row span {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.95rem;
+      color: var(--cyan);
+      text-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .dps-block {
+      margin-bottom: 8px;
+      padding: 8px 10px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-dim);
+      border-radius: 1px;
+    }
+
+    .dps-block:last-of-type { margin-bottom: 0; }
+
+    /* ── Bonus badges ────────────────────────────────────────────────────── */
+    .bonus-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: var(--radius);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .brand-badge { background: #061a0a; color: #00e676; border: 1px solid #00e67644; text-shadow: 0 0 6px #00e67644; }
+    .set-badge   { background: #060e1a; color: #00e5ff; border: 1px solid #00e5ff44; text-shadow: 0 0 6px #00e5ff44; }
+
+    /* ── Farming info ────────────────────────────────────────────────────── */
+    .farming-details {
+      margin-bottom: 6px;
+    }
+
+    .farming-details > summary {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin: 4px 0;
+    }
+
+    .farming-details .farming-text {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      padding: 4px 0 0 12px;
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    /* ── Quality tier colors ─────────────────────────────────────────────── */
+    .q-common    { color: #9e9e9e; }
+    .q-uncommon  { color: #00e676; }
+    .q-rare      { color: #40c4ff; }
+    .q-high-end  { color: #ffd740; }
+    .q-exotic    { color: #ff6d00; text-shadow: 0 0 8px #ff6d0044; }
+
+    /* ── Responsive ──────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      #app {
+        flex-direction: column;
+        overflow-y: auto;
+      }
+
+      #stat-panel-wrapper {
+        width: 100%;
+        max-height: 400px;
+      }
+
+      .panel-cards {
+        flex-wrap: wrap;
+        overflow-x: hidden;
+        overflow-y: visible;
+      }
+
+      .card-details {
+        min-width: 200px;
+        max-width: none;
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .header-controls {
+        width: 100%;
+      }
+
+      .header-controls input[type="text"] {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-title">Division 2 <span>Gear Calculator</span></div>
+    <div class="header-controls">
+      <input id="buildName" type="text" placeholder="Build name..." />
+      <button id="btnExport">Export</button>
+      <button id="btnImport">Import</button>
+      <input id="importFile" type="file" accept=".json" style="display:none;" />
+    </div>
+  </header>
+
+  <div id="app">
+    <!-- Weapons Panel, Gear Panel, Stat Panel rendered here by JS -->
+    <p style="color:#888;margin-top:40px;text-align:center;">Loading…</p>
+  </div>
+
+  <footer>Created by ImThatTeriyaki from the Sleepy Inc Clan</footer>
+
+<script>
+'use strict';
+
+// ─── DATA LAYER ──────────────────────────────────────────────────────────────
+const DB = {
+
+  // ── Weapons ────────────────────────────────────────────────────────────────
+  weapons: [
+    // ── Assault Rifles ──
+    { id:'w_m4',       name:'Military M4',         quality:'High-End', rpm:850,  baseDamage:11200, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_acr',      name:'Remington ACR',        quality:'High-End', rpm:650,  baseDamage:13800, magazineSize:30, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_akm',      name:'Kalashnikov AKM',      quality:'High-End', rpm:600,  baseDamage:14800, magazineSize:30, reloadSpeed:2.5, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_aug_ar',   name:'Steyr AUG A3 (AR)',    quality:'High-End', rpm:680,  baseDamage:12400, magazineSize:30, reloadSpeed:2.1, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_ctar',     name:'Tavor CTAR-21',        quality:'High-End', rpm:900,  baseDamage:9800,  magazineSize:30, reloadSpeed:2.1, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_fal',      name:'FN FAL',               quality:'High-End', rpm:650,  baseDamage:13000, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_famas',    name:'FAMAS',                quality:'High-End', rpm:900,  baseDamage:11900, magazineSize:30, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_g36',      name:'G36',                  quality:'High-End', rpm:750,  baseDamage:11700, magazineSize:30, reloadSpeed:2.1, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_colt_m4',  name:'Colt M4',              quality:'Rare',     rpm:850,  baseDamage:10400, magazineSize:30, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop' },
+    { id:'w_mk16',     name:'FN MK 16',             quality:'High-End', rpm:625,  baseDamage:13700, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_pof',      name:'POF P416',             quality:'High-End', rpm:750,  baseDamage:13000, magazineSize:30, reloadSpeed:2.1, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_lvoa',     name:'LVOA-C',               quality:'High-End', rpm:700,  baseDamage:12000, magazineSize:30, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    // ── Assault Rifles — Exotic ──
+    { id:'w_eagle_bearer', name:'Eagle Bearer',     quality:'Exotic',   rpm:750,  baseDamage:13500, magazineSize:30, reloadSpeed:2.1, critChance:6, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Dark Hours Raid — final boss (Boomer)' },
+    { id:'w_elmos',    name:"St. Elmo's Engine",    quality:'Exotic',   rpm:800,  baseDamage:12800, magazineSize:30, reloadSpeed:2.2, critChance:6, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Countdown — Season reward / Targeted loot' },
+    // ── SMGs ──
+    { id:'w_vector',   name:'Vector SBR 9mm',       quality:'High-End', rpm:1200, baseDamage:7400,  magazineSize:33, reloadSpeed:1.9, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_aug_smg',  name:'Steyr AUG A3 (SMG)',   quality:'High-End', rpm:725,  baseDamage:13000, magazineSize:25, reloadSpeed:2.4, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_t821',     name:'Socimi Type 821',       quality:'High-End', rpm:550,  baseDamage:16900, magazineSize:32, reloadSpeed:1.9, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_smg9',     name:'SMG-9',                quality:'High-End', rpm:825,  baseDamage:11700, magazineSize:32, reloadSpeed:2.0, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_thompson', name:'Thompson M1928',        quality:'High-End', rpm:600,  baseDamage:14300, magazineSize:30, reloadSpeed:2.3, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mp5',      name:'MP5',                  quality:'High-End', rpm:800,  baseDamage:9100,  magazineSize:32, reloadSpeed:2.1, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mp7',      name:'MP7',                  quality:'High-End', rpm:950,  baseDamage:9100,  magazineSize:40, reloadSpeed:2.0, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mpx',      name:'SIG MPX',              quality:'High-End', rpm:850,  baseDamage:10400, magazineSize:30, reloadSpeed:2.3, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_p90',      name:'FN P90',               quality:'High-End', rpm:900,  baseDamage:9100,  magazineSize:50, reloadSpeed:2.0, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_bizon',    name:'Bizon PP-19',           quality:'High-End', rpm:700,  baseDamage:12400, magazineSize:53, reloadSpeed:2.5, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    // ── SMGs — Exotic ──
+    { id:'w_ouroboros',name:'Ouroboros',             quality:'Exotic',   rpm:1200, baseDamage:8500,  magazineSize:32, reloadSpeed:1.9, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Paradise Lost Incursion' },
+    // ── LMGs ──
+    { id:'w_m60',      name:'M60',                  quality:'High-End', rpm:500,  baseDamage:18200, magazineSize:100,reloadSpeed:5.8, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_m249',     name:'M249 B',               quality:'High-End', rpm:550,  baseDamage:16300, magazineSize:100,reloadSpeed:5.6, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_l86',      name:'L86 LSW',              quality:'High-End', rpm:610,  baseDamage:14300, magazineSize:30, reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_rpk',      name:'RPK-74',               quality:'High-End', rpm:650,  baseDamage:13000, magazineSize:45, reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mg5',      name:'MG5',                  quality:'High-End', rpm:800,  baseDamage:10400, magazineSize:50, reloadSpeed:5.6, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mk46',     name:'MK46',                 quality:'High-End', rpm:550,  baseDamage:15600, magazineSize:100,reloadSpeed:5.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    // ── Rifles (Semi-Auto) ──
+    { id:'w_mk17',     name:'MK17',                 quality:'High-End', rpm:250,  baseDamage:36400, magazineSize:20, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_m1a',      name:'M1A',                  quality:'High-End', rpm:180,  baseDamage:32500, magazineSize:10, reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_sig716',   name:'SIG 716',              quality:'High-End', rpm:300,  baseDamage:31200, magazineSize:20, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mdr',      name:'MDR',                  quality:'High-End', rpm:280,  baseDamage:26000, magazineSize:20, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_usc',      name:'USC .45',              quality:'High-End', rpm:240,  baseDamage:26000, magazineSize:20, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_lar15',    name:'LAR-15',               quality:'High-End', rpm:240,  baseDamage:22100, magazineSize:30, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_acr_ss',   name:'ACR-SS',               quality:'High-End', rpm:420,  baseDamage:20800, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_m16a2',    name:'M16A2',                quality:'Rare',     rpm:300,  baseDamage:23400, magazineSize:30, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop' },
+    { id:'w_1886',     name:'Winchester 1886',       quality:'High-End', rpm:100,  baseDamage:52000, magazineSize:10, reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    // ── Marksman Rifles ──
+    { id:'w_m44',      name:'M44',                  quality:'High-End', rpm:75,   baseDamage:120000,magazineSize:5,  reloadSpeed:4.2, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_m700',     name:'Model 700',             quality:'High-End', rpm:65,   baseDamage:110000,magazineSize:4,  reloadSpeed:7.2, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_srs',      name:'Covert SRS',            quality:'High-End', rpm:260,  baseDamage:91000, magazineSize:7,  reloadSpeed:7.0, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_svd',      name:'SVD',                  quality:'High-End', rpm:260,  baseDamage:45500, magazineSize:10, reloadSpeed:2.6, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_sr1',      name:'SR-1',                 quality:'High-End', rpm:60,   baseDamage:130000,magazineSize:5,  reloadSpeed:3.2, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    // ── Marksman Rifles — Exotic ──
+    { id:'w_nemesis',  name:'Nemesis',              quality:'Exotic',   rpm:45,   baseDamage:180000,magazineSize:3,  reloadSpeed:4.5, critChance:5, critDamage:25, headshotDamage:150,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'Black Tusk strongholds / Targeted loot' },
+    // ── Shotguns ──
+    { id:'w_dbl',      name:'Double Barrel Shotgun', quality:'High-End', rpm:200,  baseDamage:86480, magazineSize:2,  reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_m870',     name:'Remington M870',        quality:'High-End', rpm:275,  baseDamage:79800, magazineSize:5,  reloadSpeed:3.7, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_super90',  name:'Super 90',              quality:'High-End', rpm:160,  baseDamage:73000, magazineSize:8,  reloadSpeed:4.8, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_sasg12',   name:'SASG-12',              quality:'High-End', rpm:218,  baseDamage:62400, magazineSize:7,  reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_acs12',    name:'ACS-12',               quality:'High-End', rpm:300,  baseDamage:31200, magazineSize:20, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_spas12',   name:'SPAS-12',              quality:'High-End', rpm:70,   baseDamage:110500,magazineSize:7,  reloadSpeed:5.4, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    // ── Shotguns — Exotic ──
+    { id:'w_scorpio',  name:'Scorpio',              quality:'Exotic',   rpm:218,  baseDamage:75000, magazineSize:7,  reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Targeted loot / Season reward' },
+    // ── Pistols / Sidearms ──
+    { id:'w_m9',       name:'M9',                   quality:'Rare',     rpm:310,  baseDamage:18500, magazineSize:17, reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop' },
+    { id:'w_m1911',    name:'M1911',                quality:'High-End', rpm:260,  baseDamage:30200, magazineSize:7,  reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_pf45',     name:'PF45',                 quality:'High-End', rpm:230,  baseDamage:51700, magazineSize:12, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_px4',      name:'PX4 Storm',             quality:'High-End', rpm:250,  baseDamage:16300, magazineSize:17, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_x45',      name:'X-45',                 quality:'High-End', rpm:250,  baseDamage:14800, magazineSize:10, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_93r',      name:'93R',                  quality:'High-End', rpm:1100, baseDamage:8500,  magazineSize:20, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_d50',      name:'Desert Eagle D50',      quality:'High-End', rpm:150,  baseDamage:62400, magazineSize:8,  reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_586mag',   name:'586 Magnum',            quality:'High-End', rpm:160,  baseDamage:31200, magazineSize:6,  reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_diceros',  name:'Diceros',              quality:'High-End', rpm:180,  baseDamage:44200, magazineSize:7,  reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'Demolitionist Specialization / World drop' },
+    // ── Pistols — Exotic ──
+    { id:'w_regulus',  name:'The Regulus',           quality:'Exotic',   rpm:160,  baseDamage:78000, magazineSize:6,  reloadSpeed:1.8, critChance:6, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle'], farmingSource:'Countdown — Season reward / Targeted loot' },
+  ],
+
+  // ── Attachments ────────────────────────────────────────────────────────────
+  attachments: {
+    Scope: [
+      { id:'att_scope_acog',        name:'ACOG Scope (4x)',          modifiers: { headshotDamage: 0,  critChance: 0,  weaponDamage: 0  } },
+      { id:'att_scope_cqbss',       name:'CQBSS Scope (8x)',         modifiers: { headshotDamage: 15, critChance: 0,  weaponDamage: 0  } },
+      { id:'att_scope_vx1',         name:'VX1 Scope (12x)',          modifiers: { headshotDamage: 20, critChance: 0,  weaponDamage: 0  } },
+      { id:'att_scope_552holo',     name:'552 Holo Sight',           modifiers: { headshotDamage: 0,  critChance: 0,  weaponDamage: 0  } },
+      { id:'att_scope_exps3',       name:'EXPS3 Holo Sight',         modifiers: { headshotDamage: -10,critChance: 0,  weaponDamage: 5  } },
+      { id:'att_scope_red_dot',     name:'PRO Red Dot Sight',        modifiers: { headshotDamage: 0,  critChance: 0,  weaponDamage: 0  } },
+      { id:'att_scope_reflex',      name:'Reflex Sight',             modifiers: { headshotDamage: 0,  critChance: 0,  critDamage: 5    } },
+      { id:'att_scope_t2micro',     name:'T2 Micro Red Dot Sight',   modifiers: { headshotDamage: 0,  critChance: -3, weaponDamage: 0  } },
+      { id:'att_scope_iron_open',   name:'Open Iron Sights',         modifiers: { headshotDamage: 0,  critChance: 0,  weaponDamage: 0  } },
+      { id:'att_scope_iron_stream', name:'Streamlined Iron Sights',  modifiers: { headshotDamage: 0,  critChance: -3, reloadSpeed: -0.2} },
+    ],
+    Muzzle: [
+      // 9mm
+      { id:'att_muzzle_comp9',      name:'Compensator 9mm',          modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 0  } },
+      { id:'att_muzzle_flash9',     name:'Flash Hider 9mm',          modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 5  } },
+      { id:'att_muzzle_supp9',      name:'Small Suppressor 9mm',     modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 0  } },
+      // .45 ACP
+      { id:'att_muzzle_brake45',    name:'Muzzle Brake .45',         modifiers: { weaponDamage: 3,  critChance: 0,  critDamage: 0  } },
+      { id:'att_muzzle_osprey45',   name:'Osprey 45 Suppressor',     modifiers: { weaponDamage: 0,  critChance: 5,  critDamage: 0  } },
+      { id:'att_muzzle_vent45',     name:'Loud Vent Brake .45',      modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 0  } },
+      // 5.56 NATO
+      { id:'att_muzzle_comp556',    name:'Compensator 5.56',         modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 0  } },
+      { id:'att_muzzle_vent556',    name:'Loud Brake Vent 5.56',     modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 0  } },
+      { id:'att_muzzle_brake556',   name:'Muzzle Brake 5.56',        modifiers: { weaponDamage: 3,  critChance: 0,  critDamage: 0  } },
+      { id:'att_muzzle_omega556',   name:'Omega 5.56 Suppressor',    modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 0  } },
+      // 7.62mm
+      { id:'att_muzzle_comp762',    name:'Compensator 7.62',         modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 0  } },
+      { id:'att_muzzle_flash762',   name:'Flash Hider 7.62',         modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 5  } },
+      { id:'att_muzzle_supp762',    name:'Large Suppressor 7.62',    modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 0  } },
+      { id:'att_muzzle_vent762',    name:'Loud Brake Vent 7.62',     modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 0  } },
+    ],
+    Underbarrel: [
+      { id:'att_ub_handstop',       name:'Handstop',                 modifiers: { weaponDamage: 0,  critChance: 0,  reloadSpeed: -0.2} },
+      { id:'att_ub_short_grip',     name:'Short Grip',               modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 5  } },
+      { id:'att_ub_vertical',       name:'Vertical Grip',            modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 0  } },
+      { id:'att_ub_angled',         name:'Angled Grip',              modifiers: { weaponDamage: 0,  critChance: 0,  critDamage: 0  } },
+      { id:'att_ub_laser',          name:'Laser Pointer',            modifiers: { weaponDamage: 0,  critChance: 5,  critDamage: 0  } },
+      { id:'att_ub_compact_laser',  name:'Compact Laser (Sidearms)', modifiers: { weaponDamage: 0,  critChance: 3,  critDamage: 0  } },
+    ],
+    Magazine: [
+      // .45 ACP (SMGs)
+      { id:'att_mag_ext45',         name:'Extended .45 ACP Mag',     modifiers: { magazineSize: 12, reloadSpeed: 0.3, weaponDamage: 0 } },
+      { id:'att_mag_force45',       name:'Force Feed .45 ACP Mag',   modifiers: { magazineSize: 0,  reloadSpeed: 0,   weaponDamage: 3 } },
+      // 5.56 NATO (ARs)
+      { id:'att_mag_bal556',        name:'Balanced Spring 5.56 Mag', modifiers: { magazineSize: 0,  reloadSpeed: 0,   weaponDamage: 0 } },
+      { id:'att_mag_light556',      name:'Light Extended 5.56 Mag',  modifiers: { magazineSize: 30, reloadSpeed: 0,   weaponDamage: 0 } },
+      { id:'att_mag_tac556',        name:'Tactical 5.56 Mag',        modifiers: { magazineSize: 0,  reloadSpeed: 0,   critDamage: 5   } },
+      // 5.56 NATO (Marksman)
+      { id:'att_mag_sturdy556',     name:'Sturdy Extended 5.56 Mag', modifiers: { magazineSize: 0,  reloadSpeed: 0,   weaponDamage: 0 } },
+      // 7.62mm (ARs)
+      { id:'att_mag_light762',      name:'Light Extended 7.62 Mag',  modifiers: { magazineSize: 30, reloadSpeed: 0,   weaponDamage: 0 } },
+      { id:'att_mag_prec762',       name:'Precision 7.62 Mag',       modifiers: { magazineSize: 0,  reloadSpeed: 0,   headshotDamage: 8} },
+      { id:'att_mag_weight762',     name:'Weighted 7.62 Mag',        modifiers: { magazineSize: 0,  reloadSpeed: 0,   weaponDamage: 0 } },
+      // 7.62mm (Marksman)
+      { id:'att_mag_mended762',     name:'Mended Marksman Mag',      modifiers: { magazineSize: 0,  reloadSpeed: 0,   weaponDamage: 0 } },
+      // 9mm (SMGs)
+      { id:'att_mag_ext9',          name:'Extended 9mm Mag',         modifiers: { magazineSize: 11, reloadSpeed: 0.3, weaponDamage: 0 } },
+      { id:'att_mag_heavy9',        name:'Heavy Spring 9mm Mag',     modifiers: { magazineSize: 0,  reloadSpeed: 0,   critDamage: 5   } },
+      { id:'att_mag_over9',         name:'Oversized 9mm Mag',        modifiers: { magazineSize: 15, reloadSpeed: 0.5, weaponDamage: 0 } },
+      { id:'att_mag_seg9',          name:'Segmented 9mm Mag',        modifiers: { magazineSize: -5, reloadSpeed: -0.4,weaponDamage: 0 } },
+      // Belt Fed (LMGs)
+      { id:'att_mag_nimble',        name:'Nimble Link Belt',         modifiers: { magazineSize: 0,  reloadSpeed: 0,   weaponDamage: 0 } },
+      { id:'att_mag_tac_pouch',     name:'Tactical Small Pouch',     modifiers: { magazineSize: -15,reloadSpeed: -0.8,weaponDamage: 0 } },
+      // Pistols
+      { id:'att_mag_ext_pistol',    name:'Extended Pistol Mag',      modifiers: { magazineSize: 11, reloadSpeed: 0.3, weaponDamage: 0 } },
+      // Revolvers
+      { id:'att_mag_speed_drum',    name:'Speed Loading Revolver Drum', modifiers: { magazineSize: -5, reloadSpeed: -0.4, weaponDamage: 0 } },
+      // Shotguns (Tubular)
+      { id:'att_mag_comp_spring',   name:'Compensated Integrated Spring', modifiers: { magazineSize: 0, reloadSpeed: -0.4, weaponDamage: 0 } },
+      { id:'att_mag_ccw_spring',    name:'Counter-Clockwise Tubular Spring', modifiers: { magazineSize: 0, reloadSpeed: 0, weaponDamage: 3 } },
+      { id:'att_mag_flex_spring',   name:'Flexible Tubular Spring',  modifiers: { magazineSize: 0,  reloadSpeed: -0.5,weaponDamage: 0 } },
+      { id:'att_mag_hard_spring',   name:'Hard Tubular Spring',      modifiers: { magazineSize: 0,  reloadSpeed: 0,   headshotDamage: -5} },
+    ]
+  },
+
+  // ── Weapon Talents ─────────────────────────────────────────────────────────
+  weaponTalents: [
+    { id:'wt_optimist',      name:'Optimist',      description:'Weapon damage increases by 1% for every 5% of missing ammo.',          modifiers: { weaponDamage: 10 } },
+    { id:'wt_measured',      name:'Measured',      description:'Top half of mag: +15% ROF, -15% damage. Bottom half: -15% ROF, +15% damage.', modifiers: { weaponDamage: 8 } },
+    { id:'wt_perpetuation',  name:'Perpetuation',  description:'Headshot kills grant +1 skill tier for 10s, up to 3.',                 modifiers: { headshotDamage: 12 } },
+    { id:'wt_flatline',      name:'Flatline',       description:'Killing an enemy with a status effect grants +20% weapon damage for 10s.', modifiers: { weaponDamage: 20 } },
+    { id:'wt_strained',      name:'Strained',       description:'+5% critical hit damage for every 10% of max armor depleted.',        modifiers: { critDamage: 20 } },
+    { id:'wt_spike',         name:'Spike',          description:'Headshots grant +25% skill damage for 5s.',                           modifiers: { headshotDamage: 15 } },
+    { id:'wt_ranger',        name:'Ranger',         description:'+2% weapon damage for every 5m distance to the target.',              modifiers: { weaponDamage: 15 } },
+    { id:'wt_close_and_personal', name:'Close & Personal', description:'Kills within 7m grant +50% weapon damage for 10s.',           modifiers: { weaponDamage: 25 } },
+    { id:'wt_preservation',  name:'Preservation',   description:'Kills repair 2% armor over 3s.',                                     modifiers: { weaponDamage: 5 } },
+    { id:'wt_rifleman',      name:'Rifleman',        description:'Headshots mark the target. Hitting a marked target grants +15% weapon damage for 5s.', modifiers: { headshotDamage: 10 } },
+    { id:'wt_boomerang',     name:'Boomerang',       description:'After reloading, the first bullet deals +100% weapon damage.',       modifiers: { weaponDamage: 12 } },
+    { id:'wt_pummel',        name:'Pummel',          description:'3 consecutive kills grant +50% melee damage for 10s.',               modifiers: { weaponDamage: 8 } },
+    { id:'wt_allegro',       name:'Allegro',         description:'+10% rate of fire.',                                                 modifiers: { weaponDamage: 5 } },
+    { id:'wt_frenzy',        name:'Frenzy',          description:'Reloading from empty grants +20% weapon damage and +20% rate of fire for 7s.', modifiers: { weaponDamage: 20 } },
+    { id:'wt_ignited',       name:'Ignited',         description:'+20% weapon damage to burning enemies.',                             modifiers: { weaponDamage: 20 } },
+    { id:'wt_determined',    name:'Determined',      description:'Kills reduce skill cooldowns by 10%.',                               modifiers: { weaponDamage: 8 } },
+    { id:'wt_surgical',      name:'Surgical',        description:'+15% critical hit chance for the first bullet in each magazine.',    modifiers: { critChance: 10 } },
+    { id:'wt_unhinged',      name:'Unhinged',        description:'+35% weapon damage, -35% weapon handling.',                          modifiers: { weaponDamage: 35 } },
+    { id:'wt_naked',         name:'Naked',           description:'+35% weapon damage when no attachments are equipped.',               modifiers: { weaponDamage: 35 } },
+    { id:'wt_in_sync',       name:'In Sync',         description:'Hitting an enemy with a skill grants +20% weapon damage for 5s.',   modifiers: { weaponDamage: 20 } },
+  ],
+
+  // ── Gear Items ─────────────────────────────────────────────────────────────
+  // Helper: gi(id, name, slot, quality, brand, gearSet, isNamed, armor, fixedAttrs, modSlots, hasTalent, farming)
+  gearItems: [
+    // ════════════════════════════════════════════════════════════════
+    // MASK
+    // ════════════════════════════════════════════════════════════════
+    // Brand items
+    { id:'gi_mask_511',      name:'5.11 Tactical Mask',          slot:'Mask', quality:'High-End', brand:'5.11 Tactical',                  gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_airaldi',  name:'Airaldi Holdings Mask',       slot:'Mask', quality:'High-End', brand:'Airaldi Holdings',               gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_alps',     name:'Alps Summit Mask',            slot:'Mask', quality:'High-End', brand:'Alps Summit Armament',           gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_badger',   name:'Badger Tuff Mask',            slot:'Mask', quality:'High-End', brand:'Badger Tuff',                    gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_belstone', name:'Belstone Armory Mask',        slot:'Mask', quality:'High-End', brand:'Belstone Armory',                gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_brazos',   name:'Brazos de Arcabuz Mask',      slot:'Mask', quality:'High-End', brand:'Brazos de Arcabuz',              gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_ceska',    name:'Česká Výroba Mask',           slot:'Mask', quality:'High-End', brand:'Česká Výroba S.R.O.',            gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_clic',     name:'China Light Industries Mask', slot:'Mask', quality:'High-End', brand:'China Light Industries Corporation', gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_dh',       name:'Douglas & Harding Mask',      slot:'Mask', quality:'High-End', brand:'Douglas & Harding',              gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_electrique',name:'Electrique Mask',            slot:'Mask', quality:'High-End', brand:'Electrique',                     gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_empress',  name:'Empress International Mask',  slot:'Mask', quality:'High-End', brand:'Empress International',          gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_fenris',   name:'Fenris Group Mask',           slot:'Mask', quality:'High-End', brand:'Fenris Group AB',                gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_gila',     name:'Gila Guard Mask',             slot:'Mask', quality:'High-End', brand:'Gila Guard',                     gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_grupo',    name:'Grupo Sombra Mask',           slot:'Mask', quality:'High-End', brand:'Grupo Sombra S.A.',              gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_golan',    name:'Golan Gear Mask',             slot:'Mask', quality:'High-End', brand:'Golan Gear',                     gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_habsburg', name:'Habsburg Guard Mask',         slot:'Mask', quality:'High-End', brand:'Habsburg Guard',                 gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_hanau',    name:'Hana-U Corporation Mask',     slot:'Mask', quality:'High-End', brand:'Hana-U Corporation',             gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_legatus',  name:'Legatus Mask',                slot:'Mask', quality:'High-End', brand:'Legatus S.p.A.',                 gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_lengmo',   name:'Lengmo Mask',                 slot:'Mask', quality:'High-End', brand:'Lengmo',                         gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_murakami', name:'Murakami Industries Mask',    slot:'Mask', quality:'High-End', brand:'Murakami Industries',            gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_overlord', name:'Overlord Armaments Mask',     slot:'Mask', quality:'High-End', brand:'Overlord Armaments',             gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_palisade', name:'Palisade Steelworks Mask',    slot:'Mask', quality:'High-End', brand:'Palisade Steelworks',            gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_petrov',   name:'Petrov Defense Mask',         slot:'Mask', quality:'High-End', brand:'Petrov Defense Group',           gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_providence',name:'Providence Defense Mask',    slot:'Mask', quality:'High-End', brand:'Providence Defense',             gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_richter',  name:'Richter & Kaiser Mask',       slot:'Mask', quality:'High-End', brand:'Richter & Kaiser GmbH',          gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_sokolov',  name:'Sokolov Concern Mask',        slot:'Mask', quality:'High-End', brand:'Sokolov Concern',                gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_walker',   name:'Walker Harris Mask',          slot:'Mask', quality:'High-End', brand:'Walker, Harris & Co.',           gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_yaahl',    name:'Yaahl Gear Mask',             slot:'Mask', quality:'High-End', brand:'Yaahl Gear',                     gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_wyvern',   name:'Wyvern Wear Mask',            slot:'Mask', quality:'High-End', brand:'Wyvern Wear',                    gearSet:null, isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    // Gear Set Masks
+    { id:'gi_mask_ongoing',  name:'Ongoing Directive Mask',      slot:'Mask', quality:'High-End', brand:null, gearSet:'Ongoing Directive',    isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_mask_striker',  name:"Striker's Battlegear Mask",   slot:'Mask', quality:'High-End', brand:null, gearSet:"Striker's Battlegear", isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_mask_patriot',  name:'True Patriot Mask',           slot:'Mask', quality:'High-End', brand:null, gearSet:'True Patriot',         isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_mask_foundry',  name:'Foundry Bulwark Mask',        slot:'Mask', quality:'High-End', brand:null, gearSet:'Foundry Bulwark',      isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_mask_hardwired',name:'Hard Wired Mask',             slot:'Mask', quality:'High-End', brand:null, gearSet:'Hard Wired',           isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_mask_eclipse',  name:'Eclipse Protocol Mask',       slot:'Mask', quality:'High-End', brand:null, gearSet:'Eclipse Protocol',     isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_mask_future',   name:'Future Initiative Mask',      slot:'Mask', quality:'High-End', brand:null, gearSet:'Future Initiative',    isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_mask_system',   name:'System Corruption Mask',      slot:'Mask', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    // Named / Exotic Masks
+    { id:'gi_mask_vile',     name:'Vile Mask',                   slot:'Mask', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:100000, fixedAttributes:[{statType:'critChance',value:6,isEditable:false}], modSlots:0, hasTalent:false, farmingSource:'Targeted loot — Contaminated Zone' },
+    { id:'gi_mask_tardigrade',name:'Tardigrade Armor System',    slot:'Mask', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:105000, fixedAttributes:[{statType:'armor',value:5000,isEditable:false}], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Season reward' },
+    // Lower quality
+    { id:'gi_mask_rare',     name:'Generic Mask (Rare)',         slot:'Mask', quality:'Rare',     brand:'Providence Defense',             gearSet:null, isNamedItem:false, baseArmor:72000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_mask_uncommon', name:'Generic Mask (Uncommon)',     slot:'Mask', quality:'Uncommon', brand:null,                             gearSet:null, isNamedItem:false, baseArmor:45000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    // ════════════════════════════════════════════════════════════════
+    // CHEST
+    // ════════════════════════════════════════════════════════════════
+    { id:'gi_chest_511',      name:'5.11 Tactical Chest',          slot:'Chest', quality:'High-End', brand:'5.11 Tactical',                  gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_airaldi',  name:'Airaldi Holdings Chest',       slot:'Chest', quality:'High-End', brand:'Airaldi Holdings',               gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_alps',     name:'Alps Summit Chest',            slot:'Chest', quality:'High-End', brand:'Alps Summit Armament',           gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_badger',   name:'Badger Tuff Chest',            slot:'Chest', quality:'High-End', brand:'Badger Tuff',                    gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_belstone', name:'Belstone Armory Chest',        slot:'Chest', quality:'High-End', brand:'Belstone Armory',                gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_brazos',   name:'Brazos de Arcabuz Chest',      slot:'Chest', quality:'High-End', brand:'Brazos de Arcabuz',              gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_ceska',    name:'Česká Výroba Chest',           slot:'Chest', quality:'High-End', brand:'Česká Výroba S.R.O.',            gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_clic',     name:'China Light Industries Chest', slot:'Chest', quality:'High-End', brand:'China Light Industries Corporation', gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_dh',       name:'Douglas & Harding Chest',      slot:'Chest', quality:'High-End', brand:'Douglas & Harding',              gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_electrique',name:'Electrique Chest',            slot:'Chest', quality:'High-End', brand:'Electrique',                     gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_empress',  name:'Empress International Chest',  slot:'Chest', quality:'High-End', brand:'Empress International',          gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_fenris',   name:'Fenris Group Chest',           slot:'Chest', quality:'High-End', brand:'Fenris Group AB',                gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_gila',     name:'Gila Guard Chest',             slot:'Chest', quality:'High-End', brand:'Gila Guard',                     gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_grupo',    name:'Grupo Sombra Chest',           slot:'Chest', quality:'High-End', brand:'Grupo Sombra S.A.',              gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_golan',    name:'Golan Gear Chest',             slot:'Chest', quality:'High-End', brand:'Golan Gear',                     gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_habsburg', name:'Habsburg Guard Chest',         slot:'Chest', quality:'High-End', brand:'Habsburg Guard',                 gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_hanau',    name:'Hana-U Corporation Chest',     slot:'Chest', quality:'High-End', brand:'Hana-U Corporation',             gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_legatus',  name:'Legatus Chest',                slot:'Chest', quality:'High-End', brand:'Legatus S.p.A.',                 gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_lengmo',   name:'Lengmo Chest',                 slot:'Chest', quality:'High-End', brand:'Lengmo',                         gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_murakami', name:'Murakami Industries Chest',    slot:'Chest', quality:'High-End', brand:'Murakami Industries',            gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_overlord', name:'Overlord Armaments Chest',     slot:'Chest', quality:'High-End', brand:'Overlord Armaments',             gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_palisade', name:'Palisade Steelworks Chest',    slot:'Chest', quality:'High-End', brand:'Palisade Steelworks',            gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_petrov',   name:'Petrov Defense Chest',         slot:'Chest', quality:'High-End', brand:'Petrov Defense Group',           gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_providence',name:'Providence Defense Chest',    slot:'Chest', quality:'High-End', brand:'Providence Defense',             gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_richter',  name:'Richter & Kaiser Chest',       slot:'Chest', quality:'High-End', brand:'Richter & Kaiser GmbH',          gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_sokolov',  name:'Sokolov Concern Chest',        slot:'Chest', quality:'High-End', brand:'Sokolov Concern',                gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_walker',   name:'Walker Harris Chest',          slot:'Chest', quality:'High-End', brand:'Walker, Harris & Co.',           gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_yaahl',    name:'Yaahl Gear Chest',             slot:'Chest', quality:'High-End', brand:'Yaahl Gear',                     gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_wyvern',   name:'Wyvern Wear Chest',            slot:'Chest', quality:'High-End', brand:'Wyvern Wear',                    gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    // Gear Set Chests
+    { id:'gi_chest_ongoing',  name:'Ongoing Directive Chest',      slot:'Chest', quality:'High-End', brand:null, gearSet:'Ongoing Directive',    isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_chest_striker',  name:"Striker's Battlegear Chest",   slot:'Chest', quality:'High-End', brand:null, gearSet:"Striker's Battlegear", isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_chest_patriot',  name:'True Patriot Chest',           slot:'Chest', quality:'High-End', brand:null, gearSet:'True Patriot',         isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_chest_foundry',  name:'Foundry Bulwark Chest',        slot:'Chest', quality:'High-End', brand:null, gearSet:'Foundry Bulwark',      isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_chest_hardwired',name:'Hard Wired Chest',             slot:'Chest', quality:'High-End', brand:null, gearSet:'Hard Wired',           isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_chest_eclipse',  name:'Eclipse Protocol Chest',       slot:'Chest', quality:'High-End', brand:null, gearSet:'Eclipse Protocol',     isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_chest_future',   name:'Future Initiative Chest',      slot:'Chest', quality:'High-End', brand:null, gearSet:'Future Initiative',    isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_chest_system',   name:'System Corruption Chest',      slot:'Chest', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    // Named / Exotic Chests
+    { id:'gi_chest_chainkiller',name:'Chainkiller',                slot:'Chest', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:135000, fixedAttributes:[{statType:'critChance',value:6,isEditable:false},{statType:'weaponDamage',value:15,isEditable:false}], modSlots:0, hasTalent:true, farmingSource:'Invaded missions / Targeted loot' },
+    { id:'gi_chest_memento',  name:'Memento',                      slot:'Chest', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:135000, fixedAttributes:[{statType:'weaponDamage',value:10,isEditable:false}], modSlots:0, hasTalent:true, farmingSource:'Targeted loot / Season reward' },
+    { id:'gi_chest_rare',     name:'Generic Chest (Rare)',         slot:'Chest', quality:'Rare',     brand:'Fenris Group AB',                gearSet:null, isNamedItem:false, baseArmor:100000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_chest_uncommon', name:'Generic Chest (Uncommon)',     slot:'Chest', quality:'Uncommon', brand:null,                             gearSet:null, isNamedItem:false, baseArmor:65000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    // ════════════════════════════════════════════════════════════════
+    // BACKPACK
+    // ════════════════════════════════════════════════════════════════
+    { id:'gi_bp_511',      name:'5.11 Tactical Backpack',          slot:'Backpack', quality:'High-End', brand:'5.11 Tactical',                  gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_airaldi',  name:'Airaldi Holdings Backpack',       slot:'Backpack', quality:'High-End', brand:'Airaldi Holdings',               gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_alps',     name:'Alps Summit Backpack',            slot:'Backpack', quality:'High-End', brand:'Alps Summit Armament',           gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_badger',   name:'Badger Tuff Backpack',            slot:'Backpack', quality:'High-End', brand:'Badger Tuff',                    gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_belstone', name:'Belstone Armory Backpack',        slot:'Backpack', quality:'High-End', brand:'Belstone Armory',                gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_brazos',   name:'Brazos de Arcabuz Backpack',      slot:'Backpack', quality:'High-End', brand:'Brazos de Arcabuz',              gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_ceska',    name:'Česká Výroba Backpack',           slot:'Backpack', quality:'High-End', brand:'Česká Výroba S.R.O.',            gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_clic',     name:'China Light Industries Backpack', slot:'Backpack', quality:'High-End', brand:'China Light Industries Corporation', gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_dh',       name:'Douglas & Harding Backpack',      slot:'Backpack', quality:'High-End', brand:'Douglas & Harding',              gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_electrique',name:'Electrique Backpack',            slot:'Backpack', quality:'High-End', brand:'Electrique',                     gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_empress',  name:'Empress International Backpack',  slot:'Backpack', quality:'High-End', brand:'Empress International',          gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_fenris',   name:'Fenris Group Backpack',           slot:'Backpack', quality:'High-End', brand:'Fenris Group AB',                gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_gila',     name:'Gila Guard Backpack',             slot:'Backpack', quality:'High-End', brand:'Gila Guard',                     gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_grupo',    name:'Grupo Sombra Backpack',           slot:'Backpack', quality:'High-End', brand:'Grupo Sombra S.A.',              gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_golan',    name:'Golan Gear Backpack',             slot:'Backpack', quality:'High-End', brand:'Golan Gear',                     gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_habsburg', name:'Habsburg Guard Backpack',         slot:'Backpack', quality:'High-End', brand:'Habsburg Guard',                 gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_hanau',    name:'Hana-U Corporation Backpack',     slot:'Backpack', quality:'High-End', brand:'Hana-U Corporation',             gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_legatus',  name:'Legatus Backpack',                slot:'Backpack', quality:'High-End', brand:'Legatus S.p.A.',                 gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_lengmo',   name:'Lengmo Backpack',                 slot:'Backpack', quality:'High-End', brand:'Lengmo',                         gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_murakami', name:'Murakami Industries Backpack',    slot:'Backpack', quality:'High-End', brand:'Murakami Industries',            gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_overlord', name:'Overlord Armaments Backpack',     slot:'Backpack', quality:'High-End', brand:'Overlord Armaments',             gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_palisade', name:'Palisade Steelworks Backpack',    slot:'Backpack', quality:'High-End', brand:'Palisade Steelworks',            gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_petrov',   name:'Petrov Defense Backpack',         slot:'Backpack', quality:'High-End', brand:'Petrov Defense Group',           gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_providence',name:'Providence Defense Backpack',    slot:'Backpack', quality:'High-End', brand:'Providence Defense',             gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_richter',  name:'Richter & Kaiser Backpack',       slot:'Backpack', quality:'High-End', brand:'Richter & Kaiser GmbH',          gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_sokolov',  name:'Sokolov Concern Backpack',        slot:'Backpack', quality:'High-End', brand:'Sokolov Concern',                gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_walker',   name:'Walker Harris Backpack',          slot:'Backpack', quality:'High-End', brand:'Walker, Harris & Co.',           gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_yaahl',    name:'Yaahl Gear Backpack',             slot:'Backpack', quality:'High-End', brand:'Yaahl Gear',                     gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_wyvern',   name:'Wyvern Wear Backpack',            slot:'Backpack', quality:'High-End', brand:'Wyvern Wear',                    gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    // Gear Set Backpacks
+    { id:'gi_bp_ongoing',  name:'Ongoing Directive Backpack',      slot:'Backpack', quality:'High-End', brand:null, gearSet:'Ongoing Directive',    isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_bp_striker',  name:"Striker's Battlegear Backpack",   slot:'Backpack', quality:'High-End', brand:null, gearSet:"Striker's Battlegear", isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_bp_patriot',  name:'True Patriot Backpack',           slot:'Backpack', quality:'High-End', brand:null, gearSet:'True Patriot',         isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_bp_foundry',  name:'Foundry Bulwark Backpack',        slot:'Backpack', quality:'High-End', brand:null, gearSet:'Foundry Bulwark',      isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_bp_hardwired',name:'Hard Wired Backpack',             slot:'Backpack', quality:'High-End', brand:null, gearSet:'Hard Wired',           isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_bp_eclipse',  name:'Eclipse Protocol Backpack',       slot:'Backpack', quality:'High-End', brand:null, gearSet:'Eclipse Protocol',     isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_bp_future',   name:'Future Initiative Backpack',      slot:'Backpack', quality:'High-End', brand:null, gearSet:'Future Initiative',    isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_bp_system',   name:'System Corruption Backpack',      slot:'Backpack', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
+    // Named / Exotic Backpacks
+    { id:'gi_bp_acosta',   name:"Acosta's Go-Bag",                 slot:'Backpack', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:115000, fixedAttributes:[{statType:'skillDamage',value:10,isEditable:false}], modSlots:0, hasTalent:true, farmingSource:'Targeted loot / Season reward' },
+    { id:'gi_bp_rare',     name:'Generic Backpack (Rare)',         slot:'Backpack', quality:'Rare',     brand:'Sokolov Concern',                gearSet:null, isNamedItem:false, baseArmor:85000,  fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
+    { id:'gi_bp_uncommon', name:'Generic Backpack (Uncommon)',     slot:'Backpack', quality:'Uncommon', brand:null,                             gearSet:null, isNamedItem:false, baseArmor:55000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    // ════════════════════════════════════════════════════════════════
+    // GLOVES
+    // ════════════════════════════════════════════════════════════════
+    { id:'gi_gloves_511',      name:'5.11 Tactical Gloves',          slot:'Gloves', quality:'High-End', brand:'5.11 Tactical',                  gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_airaldi',  name:'Airaldi Holdings Gloves',       slot:'Gloves', quality:'High-End', brand:'Airaldi Holdings',               gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_alps',     name:'Alps Summit Gloves',            slot:'Gloves', quality:'High-End', brand:'Alps Summit Armament',           gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_badger',   name:'Badger Tuff Gloves',            slot:'Gloves', quality:'High-End', brand:'Badger Tuff',                    gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_belstone', name:'Belstone Armory Gloves',        slot:'Gloves', quality:'High-End', brand:'Belstone Armory',                gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_brazos',   name:'Brazos de Arcabuz Gloves',      slot:'Gloves', quality:'High-End', brand:'Brazos de Arcabuz',              gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_ceska',    name:'Česká Výroba Gloves',           slot:'Gloves', quality:'High-End', brand:'Česká Výroba S.R.O.',            gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_clic',     name:'China Light Industries Gloves', slot:'Gloves', quality:'High-End', brand:'China Light Industries Corporation', gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_dh',       name:'Douglas & Harding Gloves',      slot:'Gloves', quality:'High-End', brand:'Douglas & Harding',              gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_electrique',name:'Electrique Gloves',            slot:'Gloves', quality:'High-End', brand:'Electrique',                     gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_empress',  name:'Empress International Gloves',  slot:'Gloves', quality:'High-End', brand:'Empress International',          gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_fenris',   name:'Fenris Group Gloves',           slot:'Gloves', quality:'High-End', brand:'Fenris Group AB',                gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_gila',     name:'Gila Guard Gloves',             slot:'Gloves', quality:'High-End', brand:'Gila Guard',                     gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_grupo',    name:'Grupo Sombra Gloves',           slot:'Gloves', quality:'High-End', brand:'Grupo Sombra S.A.',              gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_golan',    name:'Golan Gear Gloves',             slot:'Gloves', quality:'High-End', brand:'Golan Gear',                     gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_habsburg', name:'Habsburg Guard Gloves',         slot:'Gloves', quality:'High-End', brand:'Habsburg Guard',                 gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_hanau',    name:'Hana-U Corporation Gloves',     slot:'Gloves', quality:'High-End', brand:'Hana-U Corporation',             gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_legatus',  name:'Legatus Gloves',                slot:'Gloves', quality:'High-End', brand:'Legatus S.p.A.',                 gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_lengmo',   name:'Lengmo Gloves',                 slot:'Gloves', quality:'High-End', brand:'Lengmo',                         gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_murakami', name:'Murakami Industries Gloves',    slot:'Gloves', quality:'High-End', brand:'Murakami Industries',            gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_overlord', name:'Overlord Armaments Gloves',     slot:'Gloves', quality:'High-End', brand:'Overlord Armaments',             gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_palisade', name:'Palisade Steelworks Gloves',    slot:'Gloves', quality:'High-End', brand:'Palisade Steelworks',            gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_petrov',   name:'Petrov Defense Gloves',         slot:'Gloves', quality:'High-End', brand:'Petrov Defense Group',           gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_providence',name:'Providence Defense Gloves',    slot:'Gloves', quality:'High-End', brand:'Providence Defense',             gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_richter',  name:'Richter & Kaiser Gloves',       slot:'Gloves', quality:'High-End', brand:'Richter & Kaiser GmbH',          gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_sokolov',  name:'Sokolov Concern Gloves',        slot:'Gloves', quality:'High-End', brand:'Sokolov Concern',                gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_walker',   name:'Walker Harris Gloves',          slot:'Gloves', quality:'High-End', brand:'Walker, Harris & Co.',           gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_yaahl',    name:'Yaahl Gear Gloves',             slot:'Gloves', quality:'High-End', brand:'Yaahl Gear',                     gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_wyvern',   name:'Wyvern Wear Gloves',            slot:'Gloves', quality:'High-End', brand:'Wyvern Wear',                    gearSet:null, isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    // Gear Set Gloves
+    { id:'gi_gloves_ongoing',  name:'Ongoing Directive Gloves',      slot:'Gloves', quality:'High-End', brand:null, gearSet:'Ongoing Directive',    isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_gloves_striker',  name:"Striker's Battlegear Gloves",   slot:'Gloves', quality:'High-End', brand:null, gearSet:"Striker's Battlegear", isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_gloves_patriot',  name:'True Patriot Gloves',           slot:'Gloves', quality:'High-End', brand:null, gearSet:'True Patriot',         isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_gloves_foundry',  name:'Foundry Bulwark Gloves',        slot:'Gloves', quality:'High-End', brand:null, gearSet:'Foundry Bulwark',      isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_gloves_hardwired',name:'Hard Wired Gloves',             slot:'Gloves', quality:'High-End', brand:null, gearSet:'Hard Wired',           isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_gloves_eclipse',  name:'Eclipse Protocol Gloves',       slot:'Gloves', quality:'High-End', brand:null, gearSet:'Eclipse Protocol',     isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_gloves_future',   name:'Future Initiative Gloves',      slot:'Gloves', quality:'High-End', brand:null, gearSet:'Future Initiative',    isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_gloves_system',   name:'System Corruption Gloves',      slot:'Gloves', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    // Named / Exotic Gloves
+    { id:'gi_gloves_btsu',     name:'BTSU Datagloves',               slot:'Gloves', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:78000, fixedAttributes:[{statType:'skillDamage',value:15,isEditable:false}], modSlots:0, hasTalent:true, farmingSource:'Tidal Basin (Invaded) — final boss' },
+    { id:'gi_gloves_rare',     name:'Generic Gloves (Rare)',         slot:'Gloves', quality:'Rare',     brand:'Grupo Sombra S.A.',              gearSet:null, isNamedItem:false, baseArmor:58000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_gloves_uncommon', name:'Generic Gloves (Uncommon)',     slot:'Gloves', quality:'Uncommon', brand:null,                             gearSet:null, isNamedItem:false, baseArmor:38000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    // ════════════════════════════════════════════════════════════════
+    // HOLSTER
+    // ════════════════════════════════════════════════════════════════
+    { id:'gi_holster_511',      name:'5.11 Tactical Holster',          slot:'Holster', quality:'High-End', brand:'5.11 Tactical',                  gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_airaldi',  name:'Airaldi Holdings Holster',       slot:'Holster', quality:'High-End', brand:'Airaldi Holdings',               gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_alps',     name:'Alps Summit Holster',            slot:'Holster', quality:'High-End', brand:'Alps Summit Armament',           gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_badger',   name:'Badger Tuff Holster',            slot:'Holster', quality:'High-End', brand:'Badger Tuff',                    gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_belstone', name:'Belstone Armory Holster',        slot:'Holster', quality:'High-End', brand:'Belstone Armory',                gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_brazos',   name:'Brazos de Arcabuz Holster',      slot:'Holster', quality:'High-End', brand:'Brazos de Arcabuz',              gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_ceska',    name:'Česká Výroba Holster',           slot:'Holster', quality:'High-End', brand:'Česká Výroba S.R.O.',            gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_clic',     name:'China Light Industries Holster', slot:'Holster', quality:'High-End', brand:'China Light Industries Corporation', gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_dh',       name:'Douglas & Harding Holster',      slot:'Holster', quality:'High-End', brand:'Douglas & Harding',              gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_electrique',name:'Electrique Holster',            slot:'Holster', quality:'High-End', brand:'Electrique',                     gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_empress',  name:'Empress International Holster',  slot:'Holster', quality:'High-End', brand:'Empress International',          gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_fenris',   name:'Fenris Group Holster',           slot:'Holster', quality:'High-End', brand:'Fenris Group AB',                gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_gila',     name:'Gila Guard Holster',             slot:'Holster', quality:'High-End', brand:'Gila Guard',                     gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_grupo',    name:'Grupo Sombra Holster',           slot:'Holster', quality:'High-End', brand:'Grupo Sombra S.A.',              gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_golan',    name:'Golan Gear Holster',             slot:'Holster', quality:'High-End', brand:'Golan Gear',                     gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_habsburg', name:'Habsburg Guard Holster',         slot:'Holster', quality:'High-End', brand:'Habsburg Guard',                 gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_hanau',    name:'Hana-U Corporation Holster',     slot:'Holster', quality:'High-End', brand:'Hana-U Corporation',             gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_legatus',  name:'Legatus Holster',                slot:'Holster', quality:'High-End', brand:'Legatus S.p.A.',                 gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_lengmo',   name:'Lengmo Holster',                 slot:'Holster', quality:'High-End', brand:'Lengmo',                         gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_murakami', name:'Murakami Industries Holster',    slot:'Holster', quality:'High-End', brand:'Murakami Industries',            gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_overlord', name:'Overlord Armaments Holster',     slot:'Holster', quality:'High-End', brand:'Overlord Armaments',             gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_palisade', name:'Palisade Steelworks Holster',    slot:'Holster', quality:'High-End', brand:'Palisade Steelworks',            gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_petrov',   name:'Petrov Defense Holster',         slot:'Holster', quality:'High-End', brand:'Petrov Defense Group',           gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_providence',name:'Providence Defense Holster',    slot:'Holster', quality:'High-End', brand:'Providence Defense',             gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_richter',  name:'Richter & Kaiser Holster',       slot:'Holster', quality:'High-End', brand:'Richter & Kaiser GmbH',          gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_sokolov',  name:'Sokolov Concern Holster',        slot:'Holster', quality:'High-End', brand:'Sokolov Concern',                gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_walker',   name:'Walker Harris Holster',          slot:'Holster', quality:'High-End', brand:'Walker, Harris & Co.',           gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_yaahl',    name:'Yaahl Gear Holster',             slot:'Holster', quality:'High-End', brand:'Yaahl Gear',                     gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_wyvern',   name:'Wyvern Wear Holster',            slot:'Holster', quality:'High-End', brand:'Wyvern Wear',                    gearSet:null, isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    // Gear Set Holsters
+    { id:'gi_holster_ongoing',  name:'Ongoing Directive Holster',      slot:'Holster', quality:'High-End', brand:null, gearSet:'Ongoing Directive',    isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_holster_striker',  name:"Striker's Battlegear Holster",   slot:'Holster', quality:'High-End', brand:null, gearSet:"Striker's Battlegear", isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_holster_patriot',  name:'True Patriot Holster',           slot:'Holster', quality:'High-End', brand:null, gearSet:'True Patriot',         isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_holster_foundry',  name:'Foundry Bulwark Holster',        slot:'Holster', quality:'High-End', brand:null, gearSet:'Foundry Bulwark',      isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_holster_hardwired',name:'Hard Wired Holster',             slot:'Holster', quality:'High-End', brand:null, gearSet:'Hard Wired',           isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_holster_eclipse',  name:'Eclipse Protocol Holster',       slot:'Holster', quality:'High-End', brand:null, gearSet:'Eclipse Protocol',     isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_holster_future',   name:'Future Initiative Holster',      slot:'Holster', quality:'High-End', brand:null, gearSet:'Future Initiative',    isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_holster_system',   name:'System Corruption Holster',      slot:'Holster', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_holster_rare',     name:'Generic Holster (Rare)',         slot:'Holster', quality:'Rare',     brand:'Wyvern Wear',                    gearSet:null, isNamedItem:false, baseArmor:62000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_uncommon', name:'Generic Holster (Uncommon)',     slot:'Holster', quality:'Uncommon', brand:null,                             gearSet:null, isNamedItem:false, baseArmor:40000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    // ════════════════════════════════════════════════════════════════
+    // KNEEPADS
+    // ════════════════════════════════════════════════════════════════
+    { id:'gi_kp_511',      name:'5.11 Tactical Kneepads',          slot:'Kneepads', quality:'High-End', brand:'5.11 Tactical',                  gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_airaldi',  name:'Airaldi Holdings Kneepads',       slot:'Kneepads', quality:'High-End', brand:'Airaldi Holdings',               gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_alps',     name:'Alps Summit Kneepads',            slot:'Kneepads', quality:'High-End', brand:'Alps Summit Armament',           gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_badger',   name:'Badger Tuff Kneepads',            slot:'Kneepads', quality:'High-End', brand:'Badger Tuff',                    gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_belstone', name:'Belstone Armory Kneepads',        slot:'Kneepads', quality:'High-End', brand:'Belstone Armory',                gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_brazos',   name:'Brazos de Arcabuz Kneepads',      slot:'Kneepads', quality:'High-End', brand:'Brazos de Arcabuz',              gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_ceska',    name:'Česká Výroba Kneepads',           slot:'Kneepads', quality:'High-End', brand:'Česká Výroba S.R.O.',            gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_clic',     name:'China Light Industries Kneepads', slot:'Kneepads', quality:'High-End', brand:'China Light Industries Corporation', gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_dh',       name:'Douglas & Harding Kneepads',      slot:'Kneepads', quality:'High-End', brand:'Douglas & Harding',              gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_electrique',name:'Electrique Kneepads',            slot:'Kneepads', quality:'High-End', brand:'Electrique',                     gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_empress',  name:'Empress International Kneepads',  slot:'Kneepads', quality:'High-End', brand:'Empress International',          gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_fenris',   name:'Fenris Group Kneepads',           slot:'Kneepads', quality:'High-End', brand:'Fenris Group AB',                gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_gila',     name:'Gila Guard Kneepads',             slot:'Kneepads', quality:'High-End', brand:'Gila Guard',                     gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_grupo',    name:'Grupo Sombra Kneepads',           slot:'Kneepads', quality:'High-End', brand:'Grupo Sombra S.A.',              gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_golan',    name:'Golan Gear Kneepads',             slot:'Kneepads', quality:'High-End', brand:'Golan Gear',                     gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_habsburg', name:'Habsburg Guard Kneepads',         slot:'Kneepads', quality:'High-End', brand:'Habsburg Guard',                 gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_hanau',    name:'Hana-U Corporation Kneepads',     slot:'Kneepads', quality:'High-End', brand:'Hana-U Corporation',             gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_legatus',  name:'Legatus Kneepads',                slot:'Kneepads', quality:'High-End', brand:'Legatus S.p.A.',                 gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_lengmo',   name:'Lengmo Kneepads',                 slot:'Kneepads', quality:'High-End', brand:'Lengmo',                         gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_murakami', name:'Murakami Industries Kneepads',    slot:'Kneepads', quality:'High-End', brand:'Murakami Industries',            gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_overlord', name:'Overlord Armaments Kneepads',     slot:'Kneepads', quality:'High-End', brand:'Overlord Armaments',             gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_palisade', name:'Palisade Steelworks Kneepads',    slot:'Kneepads', quality:'High-End', brand:'Palisade Steelworks',            gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_petrov',   name:'Petrov Defense Kneepads',         slot:'Kneepads', quality:'High-End', brand:'Petrov Defense Group',           gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_providence',name:'Providence Defense Kneepads',    slot:'Kneepads', quality:'High-End', brand:'Providence Defense',             gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_richter',  name:'Richter & Kaiser Kneepads',       slot:'Kneepads', quality:'High-End', brand:'Richter & Kaiser GmbH',          gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_sokolov',  name:'Sokolov Concern Kneepads',        slot:'Kneepads', quality:'High-End', brand:'Sokolov Concern',                gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_walker',   name:'Walker Harris Kneepads',          slot:'Kneepads', quality:'High-End', brand:'Walker, Harris & Co.',           gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_yaahl',    name:'Yaahl Gear Kneepads',             slot:'Kneepads', quality:'High-End', brand:'Yaahl Gear',                     gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_wyvern',   name:'Wyvern Wear Kneepads',            slot:'Kneepads', quality:'High-End', brand:'Wyvern Wear',                    gearSet:null, isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    // Gear Set Kneepads
+    { id:'gi_kp_ongoing',  name:'Ongoing Directive Kneepads',      slot:'Kneepads', quality:'High-End', brand:null, gearSet:'Ongoing Directive',    isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_kp_striker',  name:"Striker's Battlegear Kneepads",   slot:'Kneepads', quality:'High-End', brand:null, gearSet:"Striker's Battlegear", isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_kp_patriot',  name:'True Patriot Kneepads',           slot:'Kneepads', quality:'High-End', brand:null, gearSet:'True Patriot',         isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_kp_foundry',  name:'Foundry Bulwark Kneepads',        slot:'Kneepads', quality:'High-End', brand:null, gearSet:'Foundry Bulwark',      isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_kp_hardwired',name:'Hard Wired Kneepads',             slot:'Kneepads', quality:'High-End', brand:null, gearSet:'Hard Wired',           isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_kp_eclipse',  name:'Eclipse Protocol Kneepads',       slot:'Kneepads', quality:'High-End', brand:null, gearSet:'Eclipse Protocol',     isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_kp_future',   name:'Future Initiative Kneepads',      slot:'Kneepads', quality:'High-End', brand:null, gearSet:'Future Initiative',    isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_kp_system',   name:'System Corruption Kneepads',      slot:'Kneepads', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
+    { id:'gi_kp_rare',     name:'Generic Kneepads (Rare)',         slot:'Kneepads', quality:'Rare',     brand:'Overlord Armaments',             gearSet:null, isNamedItem:false, baseArmor:66000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_uncommon', name:'Generic Kneepads (Uncommon)',     slot:'Kneepads', quality:'Uncommon', brand:null,                             gearSet:null, isNamedItem:false, baseArmor:42000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+  ],
+
+  // ── Gear Talents ───────────────────────────────────────────────────────────
+  gearTalents: [
+    // Chest talents
+    { id:'gt_obliterate',   name:'Obliterate',    slot:'Chest',    description:'Critical hits increase weapon damage by 1% for 5s, stacking up to 25%.', modifiers: { weaponDamage: 15 } },
+    { id:'gt_vigilance',    name:'Vigilance',     slot:'Chest',    description:'Increases weapon damage by 25%. Taking damage disables this bonus for 4s.', modifiers: { weaponDamage: 25 } },
+    { id:'gt_creeping_death',name:'Creeping Death',slot:'Chest',   description:'Applying a status effect to an enemy spreads it to all enemies within 10m.', modifiers: { weaponDamage: 10 } },
+    { id:'gt_composure',    name:'Composure',     slot:'Chest',    description:'+20% weapon damage when not in cover.',                                    modifiers: { weaponDamage: 20 } },
+    { id:'gt_braced',       name:'Braced',        slot:'Chest',    description:'+20% weapon damage when in cover.',                                        modifiers: { weaponDamage: 20 } },
+    { id:'gt_intimidate',   name:'Intimidate',    slot:'Chest',    description:'+20% weapon damage when an enemy is within 10m.',                          modifiers: { weaponDamage: 20 } },
+    { id:'gt_spark',        name:'Spark',         slot:'Chest',    description:'Applying a status effect grants +20% skill damage for 15s.',               modifiers: { skillDamage: 20 } },
+    { id:'gt_empathic_resolve',name:'Empathic Resolve',slot:'Chest',description:'Repairing an ally grants them +15% weapon damage for 10s.',               modifiers: { weaponDamage: 10 } },
+    { id:'gt_kinetic_momentum',name:'Kinetic Momentum',slot:'Chest',description:'Moving for 0.5s grants +3% weapon damage per second, up to 30%.',         modifiers: { weaponDamage: 15 } },
+    { id:'gt_perfect_vigilance',name:'Perfect Vigilance',slot:'Chest',description:'Increases weapon damage by 30%. Taking damage disables this bonus for 4s.', modifiers: { weaponDamage: 30 } },
+    // Backpack talents
+    { id:'gt_hardened',     name:'Hardened',      slot:'Backpack', description:'Increases armor by 10%.',                                                  modifiers: { armor: 10000 } },
+    { id:'gt_clutch',       name:'Clutch',        slot:'Backpack', description:'Critical hits restore 2% armor.',                                          modifiers: { critChance: 5 } },
+    { id:'gt_gift',         name:'Gift',          slot:'Backpack', description:'Every 60s, create a care package for an ally.',                            modifiers: { weaponDamage: 5 } },
+    { id:'gt_patience',     name:'Patience',      slot:'Backpack', description:'After being in cover for 3s, repair 3% armor per second.',                 modifiers: { armor: 5000 } },
+    { id:'gt_concussion',   name:'Concussion',    slot:'Backpack', description:'Headshots grant +10% headshot damage for 10s, stacking up to 5 times.',    modifiers: { headshotDamage: 15 } },
+    { id:'gt_spotter',      name:'Spotter',       slot:'Backpack', description:'+20% weapon damage to pulsed enemies.',                                    modifiers: { weaponDamage: 20 } },
+    { id:'gt_shock_and_awe',name:'Shock & Awe',   slot:'Backpack', description:'Applying a status effect grants +20% weapon damage for 10s.',              modifiers: { weaponDamage: 20 } },
+    { id:'gt_wicked',       name:'Wicked',        slot:'Backpack', description:'+10% weapon damage for 10s after applying a status effect.',               modifiers: { weaponDamage: 10 } },
+    { id:'gt_perfect_clutch',name:'Perfect Clutch',slot:'Backpack',description:'Critical hits restore 3% armor.',                                          modifiers: { critChance: 6 } },
+    { id:'gt_perfect_hardened',name:'Perfect Hardened',slot:'Backpack',description:'Increases armor by 15%.',                                              modifiers: { armor: 15000 } },
+  ],
+
+  // ── Brands ─────────────────────────────────────────────────────────────────
+  brands: {
+    '5.11 Tactical':                    { bonuses: { 2: { statType: 'armor', value: 5000 },       3: { statType: 'armor', value: 10000 } } },
+    'Airaldi Holdings':                 { bonuses: { 2: { statType: 'headshotDamage', value: 10 }, 3: { statType: 'headshotDamage', value: 13 } } },
+    'Alps Summit Armament':             { bonuses: { 2: { statType: 'skillDamage', value: 18 },    3: { statType: 'skillDamage', value: 30 } } },
+    'Badger Tuff':                      { bonuses: { 2: { statType: 'weaponDamage', value: 10 },   3: { statType: 'armor', value: 5000 } } },
+    'Belstone Armory':                  { bonuses: { 2: { statType: 'armor', value: 3000 },        3: { statType: 'armor', value: 10000 } } },
+    'Brazos de Arcabuz':                { bonuses: { 2: { statType: 'skillDamage', value: 10 },    3: { statType: 'skillDamage', value: 20 } } },
+    'Česká Výroba S.R.O.':              { bonuses: { 2: { statType: 'critChance', value: 8 },      3: { statType: 'critChance', value: 8 } } },
+    'China Light Industries Corporation':{ bonuses: { 2: { statType: 'weaponDamage', value: 15 },  3: { statType: 'weaponDamage', value: 25 } } },
+    'Douglas & Harding':                { bonuses: { 2: { statType: 'weaponDamage', value: 20 },   3: { statType: 'weaponDamage', value: 30 } } },
+    'Electrique':                       { bonuses: { 2: { statType: 'weaponDamage', value: 10 },   3: { statType: 'weaponDamage', value: 30 } } },
+    'Empress International':            { bonuses: { 2: { statType: 'skillDamage', value: 10 },    3: { statType: 'skillDamage', value: 18 } } },
+    'Fenris Group AB':                  { bonuses: { 2: { statType: 'weaponDamage', value: 10 },   3: { statType: 'reloadSpeed', value: 30 } } },
+    'Gila Guard':                       { bonuses: { 2: { statType: 'armor', value: 5000 },        3: { statType: 'armor', value: 10000 } } },
+    'Grupo Sombra S.A.':                { bonuses: { 2: { statType: 'critDamage', value: 13 },     3: { statType: 'headshotDamage', value: 13 } } },
+    'Golan Gear':                       { bonuses: { 2: { statType: 'weaponDamage', value: 10 },   3: { statType: 'armor', value: 10000 } } },
+    'Habsburg Guard':                   { bonuses: { 2: { statType: 'headshotDamage', value: 13 }, 3: { statType: 'headshotDamage', value: 20 } } },
+    'Hana-U Corporation':               { bonuses: { 2: { statType: 'skillDamage', value: 10 },    3: { statType: 'weaponDamage', value: 15 } } },
+    'Legatus S.p.A.':                   { bonuses: { 2: { statType: 'weaponDamage', value: 10 },   3: { statType: 'weaponDamage', value: 15 } } },
+    'Lengmo':                           { bonuses: { 2: { statType: 'weaponDamage', value: 10 },   3: { statType: 'weaponDamage', value: 30 } } },
+    'Murakami Industries':              { bonuses: { 2: { statType: 'skillDamage', value: 15 },    3: { statType: 'skillDamage', value: 18 } } },
+    'Overlord Armaments':               { bonuses: { 2: { statType: 'weaponDamage', value: 10 },   3: { statType: 'weaponDamage', value: 10 } } },
+    'Palisade Steelworks':              { bonuses: { 2: { statType: 'armor', value: 10000 },       3: { statType: 'armor', value: 15000 } } },
+    'Petrov Defense Group':             { bonuses: { 2: { statType: 'weaponDamage', value: 10 },   3: { statType: 'weaponDamage', value: 20 } } },
+    'Providence Defense':               { bonuses: { 2: { statType: 'headshotDamage', value: 13 }, 3: { statType: 'critDamage', value: 13 } } },
+    'Richter & Kaiser GmbH':            { bonuses: { 2: { statType: 'armor', value: 5000 },        3: { statType: 'armor', value: 10000 } } },
+    'Sokolov Concern':                  { bonuses: { 2: { statType: 'weaponDamage', value: 10 },   3: { statType: 'critDamage', value: 13 } } },
+    'Walker, Harris & Co.':             { bonuses: { 2: { statType: 'weaponDamage', value: 5 },    3: { statType: 'weaponDamage', value: 10 } } },
+    'Yaahl Gear':                       { bonuses: { 2: { statType: 'weaponDamage', value: 10 },   3: { statType: 'weaponDamage', value: 10 } } },
+    'Wyvern Wear':                      { bonuses: { 2: { statType: 'skillDamage', value: 8 },     3: { statType: 'skillDamage', value: 18 } } },
+  },
+
+  // ── Gear Sets ──────────────────────────────────────────────────────────────
+  gearSets: {
+    'Ongoing Directive': {
+      bonuses: {
+        2: { statType: 'weaponDamage', value: 10 },
+        3: { statType: 'critChance', value: 6 },
+        4: { statType: 'weaponDamage', value: 25 }
+      }
+    },
+    "Striker's Battlegear": {
+      bonuses: {
+        2: { statType: 'weaponDamage', value: 10 },
+        3: { statType: 'critChance', value: 5 },
+        4: { statType: 'weaponDamage', value: 15 }
+      }
+    },
+    'True Patriot': {
+      bonuses: {
+        2: { statType: 'weaponDamage', value: 10 },
+        3: { statType: 'armor', value: 10000 },
+        4: { statType: 'weaponDamage', value: 20 }
+      }
+    },
+    'Foundry Bulwark': {
+      bonuses: {
+        2: { statType: 'armor', value: 15000 },
+        3: { statType: 'armor', value: 20000 },
+        4: { statType: 'armor', value: 30000 }
+      }
+    },
+    'Hard Wired': {
+      bonuses: {
+        2: { statType: 'skillDamage', value: 10 },
+        3: { statType: 'skillDamage', value: 15 },
+        4: { statType: 'skillDamage', value: 25 }
+      }
+    },
+    'Eclipse Protocol': {
+      bonuses: {
+        2: { statType: 'weaponDamage', value: 10 },
+        3: { statType: 'critChance', value: 6 },
+        4: { statType: 'weaponDamage', value: 20 }
+      }
+    },
+    'Future Initiative': {
+      bonuses: {
+        2: { statType: 'skillDamage', value: 10 },
+        3: { statType: 'skillDamage', value: 15 },
+        4: { statType: 'skillDamage', value: 20 }
+      }
+    },
+    'System Corruption': {
+      bonuses: {
+        2: { statType: 'weaponDamage', value: 10 },
+        3: { statType: 'critDamage', value: 10 },
+        4: { statType: 'weaponDamage', value: 20 }
+      }
+    },
+  },
+
+  // ── Mods (gear mod slot stats) ─────────────────────────────────────────────
+  mods: [
+    { id: 'mod_crit_chance',    name: 'Critical Hit Chance',  statType: 'critChance',      maxValue: 6 },
+    { id: 'mod_crit_damage',    name: 'Critical Hit Damage',  statType: 'critDamage',      maxValue: 12 },
+    { id: 'mod_weapon_damage',  name: 'Weapon Damage',        statType: 'weaponDamage',    maxValue: 10 },
+    { id: 'mod_headshot',       name: 'Headshot Damage',      statType: 'headshotDamage',  maxValue: 12 },
+    { id: 'mod_armor',          name: 'Armor',                statType: 'armor',           maxValue: 15000 },
+    { id: 'mod_skill_damage',   name: 'Skill Damage',         statType: 'skillDamage',     maxValue: 10 }
+  ],
+
+  // ── Gear Core Attributes (1 per piece) ─────────────────────────────────────
+  gearCoreAttributes: [
+    { id: 'gca_weapon_damage', name: 'Weapon Damage %',  statType: 'weaponDamage',  maxValue: 15 },
+    { id: 'gca_armor',         name: 'Armor',             statType: 'armor',         maxValue: 170000 },
+    { id: 'gca_skill_tier',    name: 'Skill Tier',        statType: 'skillTier',     maxValue: 1 },
+  ],
+
+  // ── Gear Attributes (up to 3 per piece) ────────────────────────────────────
+  gearAttributes: [
+    // Offensive
+    { id: 'ga_crit_chance',    name: 'Critical Hit Chance %',   statType: 'critChance',       maxValue: 6,   category: 'Offensive' },
+    { id: 'ga_crit_damage',    name: 'Critical Hit Damage %',   statType: 'critDamage',       maxValue: 12,  category: 'Offensive' },
+    { id: 'ga_headshot',       name: 'Headshot Damage %',       statType: 'headshotDamage',   maxValue: 10,  category: 'Offensive' },
+    { id: 'ga_weapon_handling',name: 'Weapon Handling %',       statType: 'weaponHandling',   maxValue: 8,   category: 'Offensive' },
+    { id: 'ga_smg_dmg',        name: 'SMG Damage %',            statType: 'smgDamage',        maxValue: 15,  category: 'Offensive' },
+    { id: 'ga_ar_dmg',         name: 'Assault Rifle Damage %',  statType: 'arDamage',         maxValue: 15,  category: 'Offensive' },
+    { id: 'ga_lmg_dmg',        name: 'LMG Damage %',            statType: 'lmgDamage',        maxValue: 15,  category: 'Offensive' },
+    { id: 'ga_rifle_dmg',      name: 'Rifle Damage %',          statType: 'rifleDamage',      maxValue: 15,  category: 'Offensive' },
+    { id: 'ga_shotgun_dmg',    name: 'Shotgun Damage %',        statType: 'shotgunDamage',    maxValue: 15,  category: 'Offensive' },
+    { id: 'ga_pistol_dmg',     name: 'Pistol Damage %',         statType: 'pistolDamage',     maxValue: 15,  category: 'Offensive' },
+    { id: 'ga_mmr_dmg',        name: 'Marksman Rifle Damage %', statType: 'mmrDamage',        maxValue: 15,  category: 'Offensive' },
+    { id: 'ga_dte',            name: 'Damage to Elites %',      statType: 'damageToElites',   maxValue: 12,  category: 'Offensive' },
+    { id: 'ga_dta',            name: 'Damage to Armor %',       statType: 'damageToArmor',    maxValue: 12,  category: 'Offensive' },
+    { id: 'ga_dth',            name: 'Damage to Health %',      statType: 'damageToHealth',   maxValue: 12,  category: 'Offensive' },
+    // Defensive
+    { id: 'ga_armor_regen',    name: 'Armor Regeneration',      statType: 'armorRegen',       maxValue: 4925,category: 'Defensive' },
+    { id: 'ga_explosive_res',  name: 'Explosive Resistance %',  statType: 'explosiveRes',     maxValue: 10,  category: 'Defensive' },
+    { id: 'ga_hazard_prot',    name: 'Hazard Protection %',     statType: 'hazardProtection', maxValue: 10,  category: 'Defensive' },
+    { id: 'ga_health',         name: 'Health',                  statType: 'health',           maxValue: 18935,category:'Defensive' },
+    // Utility
+    { id: 'ga_skill_damage',   name: 'Skill Damage %',          statType: 'skillDamage',      maxValue: 10,  category: 'Utility' },
+    { id: 'ga_skill_haste',    name: 'Skill Haste %',           statType: 'skillHaste',       maxValue: 12,  category: 'Utility' },
+    { id: 'ga_skill_repair',   name: 'Skill Repair %',          statType: 'skillRepair',      maxValue: 20,  category: 'Utility' },
+    { id: 'ga_status_effects', name: 'Status Effects %',        statType: 'statusEffects',    maxValue: 10,  category: 'Utility' },
+  ],
+
+  // ── Weapon Attributes (up to 3 per weapon) ─────────────────────────────────
+  weaponAttributes: [
+    { id: 'wa_crit_chance',    name: 'Critical Hit Chance %',   statType: 'critChance',       maxValue: 6 },
+    { id: 'wa_crit_damage',    name: 'Critical Hit Damage %',   statType: 'critDamage',       maxValue: 12 },
+    { id: 'wa_headshot',       name: 'Headshot Damage %',       statType: 'headshotDamage',   maxValue: 10 },
+    { id: 'wa_weapon_damage',  name: 'Weapon Damage %',         statType: 'weaponDamage',     maxValue: 15 },
+    { id: 'wa_reload_speed',   name: 'Reload Speed %',          statType: 'reloadSpeed',      maxValue: 15 },
+    { id: 'wa_stability',      name: 'Stability %',             statType: 'stability',        maxValue: 15 },
+    { id: 'wa_accuracy',       name: 'Accuracy %',              statType: 'accuracy',         maxValue: 15 },
+    { id: 'wa_optimal_range',  name: 'Optimal Range %',         statType: 'optimalRange',     maxValue: 15 },
+    { id: 'wa_rate_of_fire',   name: 'Rate of Fire %',          statType: 'rateOfFire',       maxValue: 10 },
+    { id: 'wa_magazine_size',  name: 'Magazine Size %',         statType: 'magazineSizePct',  maxValue: 20 },
+    { id: 'wa_dte',            name: 'Damage to Elites %',      statType: 'damageToElites',   maxValue: 12 },
+  ],
+
+  // ── Farming Info ───────────────────────────────────────────────────────────
+  farmingInfo: {
+    // Weapons
+    'w_m4':          'World drop / Crafting — Blueprint from Inaya al-Khaliq',
+    'w_acr':         'World drop / Crafting',
+    'w_akm':         'World drop / Crafting',
+    'w_aug_ar':      'World drop / Crafting',
+    'w_ctar':        'World drop / Crafting',
+    'w_fal':         'World drop / Crafting',
+    'w_famas':       'World drop / Crafting',
+    'w_g36':         'World drop / Crafting',
+    'w_colt_m4':     'World drop',
+    'w_mk16':        'World drop / Crafting',
+    'w_pof':         'World drop / Crafting',
+    'w_lvoa':        'World drop / Crafting',
+    'w_eagle_bearer':'Dark Hours Raid — final boss (Boomer)',
+    'w_elmos':       'Countdown — Season reward / Targeted loot',
+    'w_vector':      'World drop / Crafting',
+    'w_aug_smg':     'World drop / Crafting',
+    'w_t821':        'World drop / Crafting',
+    'w_smg9':        'World drop / Crafting',
+    'w_thompson':    'World drop / Crafting',
+    'w_mp5':         'World drop / Crafting',
+    'w_mp7':         'World drop / Crafting',
+    'w_mpx':         'World drop / Crafting',
+    'w_p90':         'World drop / Crafting',
+    'w_bizon':       'World drop / Crafting',
+    'w_ouroboros':   'Paradise Lost Incursion',
+    'w_m60':         'World drop / Crafting',
+    'w_m249':        'World drop / Crafting',
+    'w_l86':         'World drop / Crafting',
+    'w_rpk':         'World drop / Crafting',
+    'w_mg5':         'World drop / Crafting',
+    'w_mk46':        'World drop / Crafting',
+    'w_mk17':        'World drop / Crafting',
+    'w_m1a':         'World drop / Crafting',
+    'w_sig716':      'World drop / Crafting',
+    'w_mdr':         'World drop / Crafting',
+    'w_usc':         'World drop / Crafting',
+    'w_lar15':       'World drop / Crafting',
+    'w_acr_ss':      'World drop / Crafting',
+    'w_m16a2':       'World drop',
+    'w_1886':        'World drop / Crafting',
+    'w_m44':         'World drop / Crafting',
+    'w_m700':        'World drop / Crafting',
+    'w_srs':         'World drop / Crafting',
+    'w_svd':         'World drop / Crafting',
+    'w_sr1':         'World drop / Crafting',
+    'w_nemesis':     'Black Tusk strongholds / Targeted loot',
+    'w_dbl':         'World drop / Crafting',
+    'w_m870':        'World drop / Crafting',
+    'w_super90':     'World drop / Crafting',
+    'w_sasg12':      'World drop / Crafting',
+    'w_acs12':       'World drop / Crafting',
+    'w_spas12':      'World drop / Crafting',
+    'w_scorpio':     'Targeted loot / Season reward',
+    'w_m9':          'World drop',
+    'w_m1911':       'World drop / Crafting',
+    'w_pf45':        'World drop / Crafting',
+    'w_px4':         'World drop / Crafting',
+    'w_x45':         'World drop / Crafting',
+    'w_93r':         'World drop / Crafting',
+    'w_d50':         'World drop / Crafting',
+    'w_586mag':      'World drop / Crafting',
+    'w_diceros':     'Demolitionist Specialization / World drop',
+    'w_regulus':     'Countdown — Season reward / Targeted loot',
+    // Named / Exotic Gear
+    'gi_mask_vile':          'Targeted loot — Contaminated Zone',
+    'gi_mask_tardigrade':    'Targeted loot / Season reward',
+    'gi_chest_chainkiller':  'Invaded missions / Targeted loot — Capitol Building (Invaded)',
+    'gi_chest_memento':      'Targeted loot / Season reward',
+    'gi_bp_acosta':          'Targeted loot / Season reward',
+    'gi_gloves_btsu':        'Tidal Basin (Invaded) — final boss drop',
+  }
+
+}; // end DB
+
+
+// ─── PLACEHOLDER STUBS (filled in later tasks) ───────────────────────────────
+
+// Build state — Task 2
+
+function defaultWeaponState() {
+  return {
+    weaponId: null,
+    baseDamage: 0,
+    critChance: 0,
+    critDamage: 0,
+    headshotDamage: 0,
+    // Up to 3 weapon attributes (offensive/utility rolls on the weapon itself)
+    weaponAttrs: [
+      { statType: null, value: 0 },
+      { statType: null, value: 0 },
+      { statType: null, value: 0 }
+    ],
+    attachments: {
+      Scope:       { id: null, modifiers: {} },
+      Muzzle:      { id: null, modifiers: {} },
+      Underbarrel: { id: null, modifiers: {} },
+      Magazine:    { id: null, modifiers: {} }
+    },
+    talent: { id: null, modifiers: {} }
+  };
+}
+
+function defaultGearState() {
+  return {
+    itemId: null,
+    armor: 0,
+    // 1 core attribute (Weapon Damage %, Armor, or Skill Tier)
+    coreAttribute: { statType: null, value: 0 },
+    // Up to 3 regular attributes (offensive/defensive/utility)
+    attributes: [
+      { statType: null, value: 0, isEditable: true },
+      { statType: null, value: 0, isEditable: true },
+      { statType: null, value: 0, isEditable: true }
+    ],
+    mods: [
+      { statType: null, value: 0 },
+      { statType: null, value: 0 }
+    ],
+    talent: { id: null, modifiers: {} }
+  };
+}
+
+let buildState = {
+  name: '',
+  weapons: [defaultWeaponState(), defaultWeaponState(), defaultWeaponState()],
+  gear: [
+    defaultGearState(), defaultGearState(), defaultGearState(),
+    defaultGearState(), defaultGearState(), defaultGearState()
+  ]
+};
+
+// Compute layer — Task 2
+
+function aggregateGlobalStats() {
+  const stats = {
+    weaponDamage: 0,
+    critChance: 0,
+    critDamage: 0,
+    headshotDamage: 0,
+    reloadSpeed: 0,
+    armor: 0,
+    skillTier: 0,
+    // Weapon-type specific damage
+    smgDamage: 0, arDamage: 0, lmgDamage: 0, rifleDamage: 0,
+    shotgunDamage: 0, pistolDamage: 0, mmrDamage: 0,
+    // Other offensive
+    damageToElites: 0, damageToArmor: 0, damageToHealth: 0,
+    weaponHandling: 0,
+    // Defensive
+    armorRegen: 0, explosiveRes: 0, hazardProtection: 0, health: 0,
+    // Utility
+    skillDamage: 0, skillHaste: 0, skillRepair: 0, statusEffects: 0,
+    // Weapon attrs
+    stability: 0, accuracy: 0, optimalRange: 0, rateOfFire: 0, magazineSizePct: 0,
+    activeBrandBonuses: [],
+    activeSetBonuses: []
+  };
+
+  // Iterate all 6 gear slots
+  for (const gearState of buildState.gear) {
+    stats.armor += gearState.armor || 0;
+
+    // Core attribute
+    if (gearState.coreAttribute && gearState.coreAttribute.statType && gearState.coreAttribute.statType in stats) {
+      stats[gearState.coreAttribute.statType] += gearState.coreAttribute.value || 0;
+    }
+
+    // Regular attributes (up to 3)
+    for (const attr of gearState.attributes) {
+      if (attr.statType !== null && attr.statType in stats) {
+        stats[attr.statType] += attr.value || 0;
+      }
+    }
+
+    // Mod contributions
+    for (const mod of gearState.mods) {
+      if (mod.statType !== null && mod.statType in stats) {
+        stats[mod.statType] += mod.value || 0;
+      }
+    }
+
+    // Gear talent modifiers
+    if (gearState.talent.id !== null) {
+      const talent = DB.gearTalents.find(t => t.id === gearState.talent.id);
+      if (talent) {
+        for (const [statType, defaultValue] of Object.entries(talent.modifiers)) {
+          if (statType in stats) {
+            const effectiveValue = (gearState.talent.modifiers[statType] !== undefined)
+              ? gearState.talent.modifiers[statType]
+              : defaultValue;
+            stats[statType] += effectiveValue || 0;
+          }
+        }
+      }
+    }
+  }
+
+  // Iterate all 3 weapon slots
+  for (const weaponState of buildState.weapons) {
+    // Weapon attributes (rolls on the weapon)
+    if (weaponState.weaponAttrs) {
+      for (const attr of weaponState.weaponAttrs) {
+        if (attr.statType !== null && attr.statType in stats) {
+          stats[attr.statType] += attr.value || 0;
+        }
+      }
+    }
+
+    // Attachment modifiers
+    for (const [slotType, attachment] of Object.entries(weaponState.attachments)) {
+      if (attachment.id !== null) {
+        const attachmentDef = (DB.attachments[slotType] || []).find(a => a.id === attachment.id);
+        if (attachmentDef) {
+          for (const [statType, value] of Object.entries(attachmentDef.modifiers)) {
+            if (statType in stats) {
+              const effectiveValue = (attachment.modifiers[statType] !== undefined)
+                ? attachment.modifiers[statType]
+                : value;
+              stats[statType] += effectiveValue || 0;
+            }
+          }
+        }
+      }
+    }
+
+    // Weapon talent modifiers
+    if (weaponState.talent.id !== null) {
+      const talent = DB.weaponTalents.find(t => t.id === weaponState.talent.id);
+      if (talent) {
+        for (const [statType, defaultValue] of Object.entries(talent.modifiers)) {
+          if (statType in stats) {
+            const effectiveValue = (weaponState.talent.modifiers[statType] !== undefined)
+              ? weaponState.talent.modifiers[statType]
+              : defaultValue;
+            stats[statType] += effectiveValue || 0;
+          }
+        }
+      }
+    }
+
+    // Base weapon crit stats
+    stats.critChance     += weaponState.critChance     || 0;
+    stats.critDamage     += weaponState.critDamage     || 0;
+    stats.headshotDamage += weaponState.headshotDamage || 0;
+  }
+
+  // Clamp critChance to 60%
+  stats.critChance = Math.min(stats.critChance, 60);
+
+  return stats;
+}
+
+function detectBonuses(gearStates, stats) {
+  const brandCounts = {};
+  const setCounts = {};
+
+  // Count brand and gear set occurrences across equipped gear pieces
+  for (const gearState of gearStates) {
+    if (!gearState.itemId) continue;
+
+    const itemDef = DB.gearItems.find(g => g.id === gearState.itemId);
+    if (!itemDef) continue;
+
+    if (itemDef.brand) {
+      brandCounts[itemDef.brand] = (brandCounts[itemDef.brand] || 0) + 1;
+    }
+
+    if (itemDef.gearSet) {
+      setCounts[itemDef.gearSet] = (setCounts[itemDef.gearSet] || 0) + 1;
+    }
+  }
+
+  // Apply brand bonuses — 2-piece threshold only
+  for (const [brandName, count] of Object.entries(brandCounts)) {
+    if (count >= 2) {
+      const brandDef = DB.brands[brandName];
+      if (brandDef && brandDef.bonuses && brandDef.bonuses[2]) {
+        const bonus = brandDef.bonuses[2];
+        if (bonus.statType in stats) {
+          stats[bonus.statType] += bonus.value || 0;
+        }
+        stats.activeBrandBonuses.push({ brand: brandName, pieces: count, bonus });
+      }
+    }
+  }
+
+  // Apply gear set bonuses — 2, 3, and 4-piece thresholds
+  for (const [setName, count] of Object.entries(setCounts)) {
+    const setDef = DB.gearSets[setName];
+    if (!setDef || !setDef.bonuses) continue;
+
+    for (const threshold of [2, 3, 4]) {
+      if (count >= threshold && setDef.bonuses[threshold]) {
+        const bonus = setDef.bonuses[threshold];
+        if (bonus.statType in stats) {
+          stats[bonus.statType] += bonus.value || 0;
+        }
+        stats.activeSetBonuses.push({ set: setName, pieces: count, bonus });
+      }
+    }
+  }
+
+  return stats;
+}
+
+function computeDPS(weaponState, globalStats) {
+  if (!weaponState.weaponId) {
+    return { trueDPS: 0, burstDPS: 0, sustainedDPS: 0 };
+  }
+
+  const weaponDef = DB.weapons.find(w => w.id === weaponState.weaponId);
+  if (!weaponDef) {
+    return { trueDPS: 0, burstDPS: 0, sustainedDPS: 0 };
+  }
+
+  const baseDamage   = weaponState.baseDamage;
+  const rpm          = weaponDef.rpm;
+  const magSize      = weaponDef.magazineSize;
+  const reloadSpeed  = weaponDef.reloadSpeed;
+
+  // Global stats already include weapon-level crit stats (aggregated in aggregateGlobalStats)
+  const totalCritChance = Math.min((globalStats.critChance  || 0), 60) / 100;
+  const totalCritDamage = (globalStats.critDamage  || 0) / 100;
+  const weaponDamagePct = (globalStats.weaponDamage || 0) / 100;
+
+  const effectiveDamage = baseDamage * (1 + weaponDamagePct);
+  const critMultiplier  = 1 + totalCritChance * totalCritDamage;
+  const shotsPerSecond  = rpm / 60;
+  const magDuration     = magSize / shotsPerSecond;
+
+  const trueDPS      = effectiveDamage * critMultiplier * shotsPerSecond;
+  const sustainedDPS = trueDPS * magSize / (magDuration + reloadSpeed);
+  const burstDPS     = effectiveDamage * critMultiplier * magSize / magDuration;
+
+  return { trueDPS, burstDPS, sustainedDPS };
+}
+
+function recalculate() {
+  // 1. Aggregate all gear/weapon/attachment/talent stats into a flat stats object
+  const stats = aggregateGlobalStats();
+
+  // 2. Detect brand and gear set bonuses; mutates stats in place and populates
+  //    stats.activeBrandBonuses / stats.activeSetBonuses
+  detectBonuses(buildState.gear, stats);
+
+  // Re-clamp critChance after bonuses are applied (brand/set bonuses may push it over 60%)
+  stats.critChance = Math.min(stats.critChance, 60);
+
+  // 3. Compute DPS for each of the 3 weapon slots
+  const dpsResults = buildState.weapons.map((weaponState, weaponIndex) => {
+    const { trueDPS, burstDPS, sustainedDPS } = computeDPS(weaponState, stats);
+    return { weaponIndex, trueDPS, burstDPS, sustainedDPS };
+  });
+
+  // 4. Push everything to the UI
+  renderStatPanel(stats, dpsResults);
+}
+
+// Render layer — Tasks 4–6
+function applyQualityColor(element, quality) {
+  const map = {
+    'Common':   '#9e9e9e',
+    'Uncommon': '#4caf50',
+    'Rare':     '#2196f3',
+    'High-End': '#ffc107',
+    'Exotic':   '#ff5722'
+  };
+  const color = map[quality];
+  if (color) element.style.color = color;
+}
+
+function renderWeaponSlot(index, keepOpen) {
+  const slotLabels = ['Primary', 'Secondary', 'Sidearm'];
+  const label = slotLabels[index] || `Weapon ${index + 1}`;
+
+  // Find or create container
+  const panel = document.getElementById('weapons-panel');
+  let container = document.getElementById(`weapon-slot-${index}`);
+  if (!container) {
+    container = document.createElement('div');
+    container.id = `weapon-slot-${index}`;
+    container.className = 'weapon-card';
+    panel.appendChild(container);
+  }
+
+  const weaponState = buildState.weapons[index];
+  const selectedWeapon = weaponState.weaponId
+    ? DB.weapons.find(w => w.id === weaponState.weaponId)
+    : null;
+
+  // Build inner HTML
+  let html = `<div class="slot-header" id="weapon-${index}-header">${label}</div>`;
+
+  // Weapon dropdown
+  html += `<select id="weapon-select-${index}">`;
+  html += `<option value="">-- Select Weapon --</option>`;
+  for (const w of [...DB.weapons].sort((a, b) => a.name.localeCompare(b.name))) {
+    const selected = weaponState.weaponId === w.id ? ' selected' : '';
+    html += `<option value="${w.id}"${selected} data-quality="${w.quality}">${w.name}</option>`;
+  }
+  html += `</select>`;
+
+  // Farming info — collapsible, shown only when an item is selected
+  const farmingText = selectedWeapon && DB.farmingInfo[selectedWeapon.id]
+    ? DB.farmingInfo[selectedWeapon.id]
+    : '';
+  if (farmingText) {
+    html += `<details class="farming-details" id="weapon-${index}-farming-details">
+      <summary>Farming Info</summary>
+      <div class="farming-text">${farmingText}</div>
+    </details>`;
+  } else {
+    html += `<div id="weapon-${index}-farming-details"></div>`;
+  }
+
+  // Stat rows
+  const editableFields = [
+    { key: 'baseDamage',      label: 'Base Damage' },
+    { key: 'critChance',      label: 'Crit Chance %' },
+    { key: 'critDamage',      label: 'Crit Damage %' },
+    { key: 'headshotDamage',  label: 'Headshot Damage %' }
+  ];
+
+  for (const field of editableFields) {
+    const val = weaponState[field.key] || 0;
+    html += `<div class="stat-row">
+      <label>${field.label}</label>
+      <input type="number" id="weapon-${index}-${field.key}" value="${val}" />
+    </div>`;
+  }
+
+  // RPM read-only
+  const rpmVal = selectedWeapon ? selectedWeapon.rpm : '--';
+  html += `<div class="stat-row">
+    <label>RPM</label>
+    <span id="weapon-${index}-rpm" class="readonly-stat">${rpmVal}</span>
+  </div>`;
+
+  // ── Weapon Attributes (up to 3 rolls on the weapon) ──────────────────────
+  html += `<details id="weapon-${index}-attrs-details"><summary>Attributes</summary>`;
+  const wAttrs = weaponState.weaponAttrs || [{statType:null,value:0},{statType:null,value:0},{statType:null,value:0}];
+  for (let i = 0; i < 3; i++) {
+    const wa = wAttrs[i] || { statType: null, value: 0 };
+    html += `<div class="attr-row" id="weapon-${index}-wattr-${i}-row">`;
+    html += `<select id="weapon-${index}-wattr-${i}-type">`;
+    html += `<option value="">-- Attribute --</option>`;
+    for (const a of DB.weaponAttributes.slice().sort((x,y) => x.name.localeCompare(y.name))) {
+      const sel = wa.statType === a.statType ? ' selected' : '';
+      html += `<option value="${a.statType}"${sel}>${a.name}</option>`;
+    }
+    html += `</select>`;
+    html += `<input type="number" id="weapon-${index}-wattr-${i}-val" value="${wa.value || 0}" />`;
+    html += `</div>`;
+  }
+  html += `</details>`;
+
+  // Attachments section
+  const attSlotTypes = ['Scope', 'Muzzle', 'Underbarrel', 'Magazine'];
+  html += `<details id="weapon-${index}-attachments-details"><summary>Attachments</summary>`;
+  for (const slotType of attSlotTypes) {
+    const slotKey = slotType.toLowerCase();
+    const isSupported = selectedWeapon && selectedWeapon.supportedSlots.includes(slotType);
+    const disabledStyle = (!selectedWeapon || !isSupported)
+      ? ' style="opacity:0.4;pointer-events:none;"'
+      : '';
+    const disabledAttr = (!selectedWeapon || !isSupported) ? ' disabled' : '';
+
+    const currentAttId = weaponState.attachments[slotType].id;
+    const currentAttDef = currentAttId
+      ? (DB.attachments[slotType] || []).find(a => a.id === currentAttId)
+      : null;
+
+    html += `<div class="attachment-slot" id="weapon-${index}-att-${slotKey}-slot"${disabledStyle}>`;
+    html += `<label>${slotType}</label>`;
+    html += `<select id="weapon-${index}-att-${slotKey}"${disabledAttr}>`;
+    html += `<option value="">-- None --</option>`;
+    for (const att of (DB.attachments[slotType] || []).sort((a, b) => a.name.localeCompare(b.name))) {
+      const sel = currentAttId === att.id ? ' selected' : '';
+      html += `<option value="${att.id}"${sel}>${att.name}</option>`;
+    }
+    html += `</select>`;
+
+    // Modifier inputs — only shown when an attachment is selected
+    html += `<div class="att-modifiers" id="weapon-${index}-att-${slotKey}-mods">`;
+    if (currentAttDef) {
+      for (const [key, val] of Object.entries(currentAttDef.modifiers)) {
+        const overrideVal = (weaponState.attachments[slotType].modifiers[key] !== undefined)
+          ? weaponState.attachments[slotType].modifiers[key]
+          : val;
+        html += `<div class="stat-row">
+          <label>${key}</label>
+          <input type="number" id="weapon-${index}-att-${slotKey}-mod-${key}" value="${overrideVal}" />
+        </div>`;
+      }
+    }
+    html += `</div>`; // .att-modifiers
+    html += `</div>`; // .attachment-slot
+  }
+  html += `</details>`;
+
+  // Talent section
+  const currentTalentId = weaponState.talent.id;
+  const currentTalentDef = currentTalentId
+    ? DB.weaponTalents.find(t => t.id === currentTalentId)
+    : null;
+
+  html += `<details id="weapon-${index}-talent-details"><summary>Talent</summary>`;
+  html += `<select id="weapon-${index}-talent">`;
+  html += `<option value="">-- None --</option>`;
+  for (const talent of DB.weaponTalents.slice().sort((a, b) => a.name.localeCompare(b.name))) {
+    const sel = currentTalentId === talent.id ? ' selected' : '';
+    html += `<option value="${talent.id}"${sel}>${talent.name}</option>`;
+  }
+  html += `</select>`;
+
+  // Modifier inputs — only shown when a talent is selected
+  html += `<div class="att-modifiers" id="weapon-${index}-talent-mods">`;
+  if (currentTalentDef) {
+    for (const [key, defaultVal] of Object.entries(currentTalentDef.modifiers)) {
+      const effectiveVal = (weaponState.talent.modifiers[key] !== undefined)
+        ? weaponState.talent.modifiers[key]
+        : defaultVal;
+      html += `<div class="stat-row">
+        <label>${key}</label>
+        <input type="number" id="weapon-${index}-talent-mod-${key}" value="${effectiveVal}" />
+      </div>`;
+    }
+  }
+  html += `</div>`; // .att-modifiers (talent)
+  html += `</details>`;
+
+  // Capture which <details> sections are currently open before re-render
+  const openIds = keepOpen || new Set(
+    [...(container.querySelectorAll('details[open]') || [])].map(d => d.id).filter(Boolean)
+  );
+
+  container.innerHTML = html;
+
+  // Restore open state for any <details> that were open before
+  for (const id of openIds) {
+    const el = container.querySelector(`#${id}`);
+    if (el) el.open = true;
+  }
+
+  // Apply quality color to header if weapon selected
+  if (selectedWeapon) {
+    const header = container.querySelector(`#weapon-${index}-header`);
+    applyQualityColor(header, selectedWeapon.quality);
+  }
+
+  // Apply quality colors to dropdown options
+  const select = container.querySelector(`#weapon-select-${index}`);
+  for (const option of select.options) {
+    if (option.value) {
+      const w = DB.weapons.find(wp => wp.id === option.value);
+      if (w) applyQualityColor(option, w.quality);
+    }
+  }
+
+  // Weapon select event
+  select.addEventListener('change', () => {
+    const wid = select.value;
+    if (wid) {
+      const w = DB.weapons.find(wp => wp.id === wid);
+      if (w) {
+        buildState.weapons[index].weaponId      = w.id;
+        buildState.weapons[index].baseDamage    = w.baseDamage;
+        buildState.weapons[index].critChance    = w.critChance;
+        buildState.weapons[index].critDamage    = w.critDamage;
+        buildState.weapons[index].headshotDamage = w.headshotDamage;
+        // Reset attachments and talent when weapon changes
+        buildState.weapons[index].attachments = {
+          Scope:       { id: null, modifiers: {} },
+          Muzzle:      { id: null, modifiers: {} },
+          Underbarrel: { id: null, modifiers: {} },
+          Magazine:    { id: null, modifiers: {} }
+        };
+        buildState.weapons[index].talent = { id: null, modifiers: {} };
+      }
+    } else {
+      buildState.weapons[index] = defaultWeaponState();
+    }
+    recalculate();
+    renderWeaponSlot(index);
+  });
+
+  // Editable input events
+  for (const field of editableFields) {
+    const input = container.querySelector(`#weapon-${index}-${field.key}`);
+    input.addEventListener('input', () => {
+      buildState.weapons[index][field.key] = parseFloat(input.value) || 0;
+      recalculate();
+    });
+  }
+
+  // Weapon attribute events (up to 3)
+  if (!buildState.weapons[index].weaponAttrs) {
+    buildState.weapons[index].weaponAttrs = [{statType:null,value:0},{statType:null,value:0},{statType:null,value:0}];
+  }
+  for (let i = 0; i < 3; i++) {
+    const typeSelect = container.querySelector(`#weapon-${index}-wattr-${i}-type`);
+    const valInput   = container.querySelector(`#weapon-${index}-wattr-${i}-val`);
+    if (!typeSelect || !valInput) continue;
+    typeSelect.addEventListener('change', () => {
+      buildState.weapons[index].weaponAttrs[i].statType = typeSelect.value || null;
+      recalculate();
+    });
+    valInput.addEventListener('input', () => {
+      buildState.weapons[index].weaponAttrs[i].value = parseFloat(valInput.value) || 0;
+      recalculate();
+    });
+  }
+
+  // Attachment slot events
+  for (const slotType of attSlotTypes) {
+    const slotKey = slotType.toLowerCase();
+    const attSelect = container.querySelector(`#weapon-${index}-att-${slotKey}`);
+    if (!attSelect) continue;
+
+    attSelect.addEventListener('change', () => {
+      const attId = attSelect.value || null;
+      buildState.weapons[index].attachments[slotType].id = attId;
+      // Reset overridden modifiers when attachment changes
+      buildState.weapons[index].attachments[slotType].modifiers = {};
+      recalculate();
+      const openIds = new Set([...container.querySelectorAll('details[open]')].map(d => d.id).filter(Boolean));
+      renderWeaponSlot(index, openIds);
+    });
+
+    // Wire modifier inputs for the currently selected attachment
+    const attId = buildState.weapons[index].attachments[slotType].id;
+    if (attId) {
+      const attDef = (DB.attachments[slotType] || []).find(a => a.id === attId);
+      if (attDef) {
+        for (const key of Object.keys(attDef.modifiers)) {
+          const modInput = container.querySelector(`#weapon-${index}-att-${slotKey}-mod-${key}`);
+          if (!modInput) continue;
+          modInput.addEventListener('input', () => {
+            buildState.weapons[index].attachments[slotType].modifiers[key] = parseFloat(modInput.value) || 0;
+            recalculate();
+          });
+        }
+      }
+    }
+  }
+
+  // Talent select event
+  const talentSelect = container.querySelector(`#weapon-${index}-talent`);
+  if (talentSelect) {
+    talentSelect.addEventListener('change', () => {
+      const tid = talentSelect.value || null;
+      buildState.weapons[index].talent.id = tid;
+      buildState.weapons[index].talent.modifiers = {};
+      recalculate();
+      const openIds = new Set([...container.querySelectorAll('details[open]')].map(d => d.id).filter(Boolean));
+      renderWeaponSlot(index, openIds);
+    });
+
+    // Wire modifier inputs for the currently selected talent
+    const talentId = buildState.weapons[index].talent.id;
+    if (talentId) {
+      const talentDef = DB.weaponTalents.find(t => t.id === talentId);
+      if (talentDef) {
+        for (const key of Object.keys(talentDef.modifiers)) {
+          const modInput = container.querySelector(`#weapon-${index}-talent-mod-${key}`);
+          if (!modInput) continue;
+          modInput.addEventListener('input', () => {
+            buildState.weapons[index].talent.modifiers[key] = parseFloat(modInput.value) || 0;
+            recalculate();
+          });
+        }
+      }
+    }
+  }
+
+  // Update collapsible summary name
+  updateWeaponSummaryName(index);
+}
+
+function renderGearSlot(index) {
+  const slotLabels = ['Mask', 'Chest', 'Backpack', 'Gloves', 'Holster', 'Kneepads'];
+  const slotName = slotLabels[index] || `Gear ${index + 1}`;
+
+  // Find or create container
+  const panel = document.getElementById('gear-panel');
+  let container = document.getElementById(`gear-slot-${index}`);
+  if (!container) {
+    container = document.createElement('div');
+    container.id = `gear-slot-${index}`;
+    container.className = 'gear-card';
+    panel.appendChild(container);
+  }
+
+  const gearState = buildState.gear[index];
+  const selectedItem = gearState.itemId
+    ? DB.gearItems.find(g => g.id === gearState.itemId)
+    : null;
+
+  // ── Slot header ──────────────────────────────────────────────────────────
+  let html = `<div class="slot-header" id="gear-${index}-header">${slotName}</div>`;
+
+  // ── Item dropdown ────────────────────────────────────────────────────────
+  html += `<select id="gear-select-${index}">`;
+  html += `<option value="">-- Select Item --</option>`;
+  const slotItems = DB.gearItems.filter(g => g.slot === slotName).sort((a, b) => {
+    const aGeneric = a.quality === 'Uncommon' || a.quality === 'Rare';
+    const bGeneric = b.quality === 'Uncommon' || b.quality === 'Rare';
+    if (aGeneric && !bGeneric) return -1;
+    if (!aGeneric && bGeneric) return 1;
+    return a.name.localeCompare(b.name);
+  });
+  for (const item of slotItems) {
+    const sel = gearState.itemId === item.id ? ' selected' : '';
+    html += `<option value="${item.id}"${sel} data-quality="${item.quality}">${item.name}</option>`;
+  }
+  html += `</select>`;
+
+  // ── Farming info ─────────────────────────────────────────────────────────
+  const farmingText = selectedItem && DB.farmingInfo[selectedItem.id]
+    ? DB.farmingInfo[selectedItem.id]
+    : '';
+  if (farmingText) {
+    html += `<details class="farming-details" id="gear-${index}-farming-details">
+      <summary>Farming Info</summary>
+      <div class="farming-text">${farmingText}</div>
+    </details>`;
+  } else {
+    html += `<div id="gear-${index}-farming-details"></div>`;
+  }
+
+  // ── Armor input ──────────────────────────────────────────────────────────
+  html += `<div class="stat-row">
+    <label>Armor</label>
+    <input type="number" id="gear-${index}-armor" value="${gearState.armor || 0}" />
+  </div>`;
+
+  // ── Core Attribute (1 per piece: Weapon Damage %, Armor, or Skill Tier) ──
+  const coreAttr = gearState.coreAttribute || { statType: null, value: 0 };
+  html += `<details id="gear-${index}-core-details"><summary>Core Attribute</summary>`;
+  html += `<div class="attr-row" id="gear-${index}-core-row">`;
+  html += `<select id="gear-${index}-core-type">`;
+  html += `<option value="">-- Core --</option>`;
+  for (const ca of DB.gearCoreAttributes) {
+    const sel = coreAttr.statType === ca.statType ? ' selected' : '';
+    html += `<option value="${ca.statType}"${sel}>${ca.name}</option>`;
+  }
+  html += `</select>`;
+  html += `<input type="number" id="gear-${index}-core-val" value="${coreAttr.value || 0}" />`;
+  html += `</div></details>`;
+
+  // ── Attribute rows (up to 3 — offensive/defensive/utility) ───────────────
+  html += `<details id="gear-${index}-attrs-details" open><summary>Attributes</summary>`;
+  for (let i = 0; i < 3; i++) {
+    const attr = gearState.attributes[i];
+    const isFixed = attr && attr.isEditable === false;
+    const statVal = attr ? (attr.statType || '') : '';
+    const numVal  = attr ? (attr.value || 0) : 0;
+
+    html += `<div class="attr-row" id="gear-${index}-attr-${i}-row">`;
+    html += `<select id="gear-${index}-attr-${i}-type"${isFixed ? ' disabled' : ''}>`;
+    html += `<option value="">-- Attribute --</option>`;
+    // Group by category
+    const categories = ['Offensive', 'Defensive', 'Utility'];
+    for (const cat of categories) {
+      html += `<optgroup label="${cat}">`;
+      for (const ga of DB.gearAttributes.filter(a => a.category === cat).sort((a,b) => a.name.localeCompare(b.name))) {
+        const sel = statVal === ga.statType ? ' selected' : '';
+        html += `<option value="${ga.statType}"${sel}>${ga.name}</option>`;
+      }
+      html += `</optgroup>`;
+    }
+    html += `</select>`;
+    html += `<input type="number" id="gear-${index}-attr-${i}" value="${numVal}"${isFixed ? ' readonly' : ''} />`;
+    html += `</div>`;
+  }
+  html += `</details>`;
+
+  // ── Mod slot inputs ──────────────────────────────────────────────────────
+  const modCount = selectedItem ? selectedItem.modSlots : 0;
+  if (modCount > 0) {
+    html += `<details><summary style="cursor:pointer;color:var(--accent);font-size:0.85rem;margin:8px 0 4px;user-select:none;">Mod Slots</summary>`;
+    for (let m = 0; m < modCount; m++) {
+      const mod = gearState.mods[m] || { statType: null, value: 0 };
+      html += `<div class="mod-row" id="gear-${index}-mod-${m}-row">`;
+      html += `<select id="gear-${index}-mod-${m}-type">`;
+      html += `<option value="">-- Mod Stat --</option>`;
+      for (const modDef of DB.mods) {
+        const sel = mod.statType === modDef.statType ? ' selected' : '';
+        html += `<option value="${modDef.statType}"${sel}>${modDef.name}</option>`;
+      }
+      html += `</select>`;
+      html += `<input type="number" id="gear-${index}-mod-${m}-value" value="${mod.value || 0}" />`;
+      html += `</div>`;
+    }
+    html += `</details>`;
+  }
+
+  // ── Gear talent slot (Chest = index 1, Backpack = index 2) ───────────────
+  const hasTalentSlot = (selectedItem && selectedItem.hasTalent) || index === 1 || index === 2;
+  if (hasTalentSlot) {
+    const currentTalentId = gearState.talent.id;
+    const currentTalentDef = currentTalentId
+      ? DB.gearTalents.find(t => t.id === currentTalentId)
+      : null;
+    const slotTalents = DB.gearTalents.filter(t => t.slot === slotName).sort((a, b) => a.name.localeCompare(b.name));
+
+    html += `<details id="gear-${index}-talent-details"><summary>Talent</summary>`;
+    html += `<select id="gear-${index}-talent">`;
+    html += `<option value="">-- None --</option>`;
+    for (const talent of slotTalents) {
+      const sel = currentTalentId === talent.id ? ' selected' : '';
+      html += `<option value="${talent.id}"${sel}>${talent.name}</option>`;
+    }
+    html += `</select>`;
+
+    // Modifier inputs — only shown when a talent is selected
+    if (currentTalentDef) {
+      for (const [key, defaultVal] of Object.entries(currentTalentDef.modifiers)) {
+        const effectiveVal = (gearState.talent.modifiers[key] !== undefined)
+          ? gearState.talent.modifiers[key]
+          : defaultVal;
+        html += `<div class="stat-row">
+          <label>${key}</label>
+          <input type="number" id="gear-${index}-talent-mod-${key}" value="${effectiveVal}" />
+        </div>`;
+      }
+    }
+    html += `</details>`;
+  }
+
+  container.innerHTML = html;
+
+  // ── Apply quality color to header and dropdown options ───────────────────
+  if (selectedItem) {
+    applyQualityColor(container.querySelector(`#gear-${index}-header`), selectedItem.quality);
+  }
+  const gearSelect = container.querySelector(`#gear-select-${index}`);
+  for (const option of gearSelect.options) {
+    if (option.value) {
+      const item = DB.gearItems.find(g => g.id === option.value);
+      if (item) applyQualityColor(option, item.quality);
+    }
+  }
+
+  // ── Item select event ────────────────────────────────────────────────────
+  gearSelect.addEventListener('change', () => {
+    const iid = gearSelect.value || null;
+    buildState.gear[index].itemId = iid;
+    if (iid) {
+      const itemDef = DB.gearItems.find(g => g.id === iid);
+      if (itemDef) {
+        buildState.gear[index].armor = itemDef.baseArmor;
+        // Reset core attribute
+        buildState.gear[index].coreAttribute = { statType: null, value: 0 };
+        // Populate fixed attributes for named items; reset editable ones
+        buildState.gear[index].attributes = [
+          { statType: null, value: 0, isEditable: true },
+          { statType: null, value: 0, isEditable: true },
+          { statType: null, value: 0, isEditable: true }
+        ];
+        if (itemDef.fixedAttributes && itemDef.fixedAttributes.length > 0) {
+          for (let i = 0; i < itemDef.fixedAttributes.length && i < 3; i++) {
+            buildState.gear[index].attributes[i] = { ...itemDef.fixedAttributes[i] };
+          }
+        }
+        // Reset mods and talent when item changes
+        buildState.gear[index].mods = [
+          { statType: null, value: 0 },
+          { statType: null, value: 0 }
+        ];
+        buildState.gear[index].talent = { id: null, modifiers: {} };
+      }
+    } else {
+      buildState.gear[index].armor = 0;
+      buildState.gear[index].coreAttribute = { statType: null, value: 0 };
+      buildState.gear[index].attributes = [
+        { statType: null, value: 0, isEditable: true },
+        { statType: null, value: 0, isEditable: true },
+        { statType: null, value: 0, isEditable: true }
+      ];
+      buildState.gear[index].mods = [
+        { statType: null, value: 0 },
+        { statType: null, value: 0 }
+      ];
+      buildState.gear[index].talent = { id: null, modifiers: {} };
+    }
+    recalculate();
+    renderGearSlot(index);
+  });
+
+  // ── Armor input event ────────────────────────────────────────────────────
+  const armorInput = container.querySelector(`#gear-${index}-armor`);
+  armorInput.addEventListener('input', () => {
+    buildState.gear[index].armor = parseFloat(armorInput.value) || 0;
+    recalculate();
+  });
+
+  // ── Core attribute events ─────────────────────────────────────────────────
+  if (!buildState.gear[index].coreAttribute) {
+    buildState.gear[index].coreAttribute = { statType: null, value: 0 };
+  }
+  const coreTypeSelect = container.querySelector(`#gear-${index}-core-type`);
+  const coreValInput   = container.querySelector(`#gear-${index}-core-val`);
+  if (coreTypeSelect) {
+    coreTypeSelect.addEventListener('change', () => {
+      buildState.gear[index].coreAttribute.statType = coreTypeSelect.value || null;
+      recalculate();
+    });
+  }
+  if (coreValInput) {
+    coreValInput.addEventListener('input', () => {
+      buildState.gear[index].coreAttribute.value = parseFloat(coreValInput.value) || 0;
+      recalculate();
+    });
+  }
+
+  // ── Attribute input events ───────────────────────────────────────────────
+  for (let i = 0; i < 3; i++) {
+    const attr = buildState.gear[index].attributes[i];
+    if (attr && attr.isEditable === false) continue; // fixed — skip wiring
+
+    const typeSelect = container.querySelector(`#gear-${index}-attr-${i}-type`);
+    const valInput   = container.querySelector(`#gear-${index}-attr-${i}`);
+    if (!typeSelect || !valInput) continue;
+
+    typeSelect.addEventListener('change', () => {
+      buildState.gear[index].attributes[i].statType = typeSelect.value || null;
+      recalculate();
+    });
+    valInput.addEventListener('input', () => {
+      buildState.gear[index].attributes[i].value = parseFloat(valInput.value) || 0;
+      recalculate();
+    });
+  }
+
+  // ── Mod slot events ──────────────────────────────────────────────────────
+  const effectiveModCount = selectedItem ? selectedItem.modSlots : 0;
+  for (let m = 0; m < effectiveModCount; m++) {
+    const modTypeSelect = container.querySelector(`#gear-${index}-mod-${m}-type`);
+    const modValInput   = container.querySelector(`#gear-${index}-mod-${m}-value`);
+    if (!modTypeSelect || !modValInput) continue;
+
+    modTypeSelect.addEventListener('change', () => {
+      if (!buildState.gear[index].mods[m]) buildState.gear[index].mods[m] = { statType: null, value: 0 };
+      buildState.gear[index].mods[m].statType = modTypeSelect.value || null;
+      recalculate();
+    });
+    modValInput.addEventListener('input', () => {
+      if (!buildState.gear[index].mods[m]) buildState.gear[index].mods[m] = { statType: null, value: 0 };
+      buildState.gear[index].mods[m].value = parseFloat(modValInput.value) || 0;
+      recalculate();
+    });
+  }
+
+  // ── Gear talent events (Chest = index 1, Backpack = index 2) ─────────────
+  const talentSelect = container.querySelector(`#gear-${index}-talent`);
+  if (talentSelect) {
+    talentSelect.addEventListener('change', () => {
+      const tid = talentSelect.value || null;
+      buildState.gear[index].talent.id = tid;
+      buildState.gear[index].talent.modifiers = {};
+      recalculate();
+      renderGearSlot(index);
+    });
+
+    // Wire modifier inputs for the currently selected talent
+    const gearTalentId = buildState.gear[index].talent.id;
+    if (gearTalentId) {
+      const gearTalentDef = DB.gearTalents.find(t => t.id === gearTalentId);
+      if (gearTalentDef) {
+        for (const key of Object.keys(gearTalentDef.modifiers)) {
+          const modInput = container.querySelector(`#gear-${index}-talent-mod-${key}`);
+          if (!modInput) continue;
+          modInput.addEventListener('input', () => {
+            buildState.gear[index].talent.modifiers[key] = parseFloat(modInput.value) || 0;
+            recalculate();
+          });
+        }
+      }
+    }
+  }
+
+  // Update collapsible summary name
+  updateGearSummaryName(index);
+}
+function renderBonusBadges(activeBonuses) {
+  const container = document.getElementById('stat-bonuses');
+  if (!container) return;
+
+  const { activeBrandBonuses = [], activeSetBonuses = [] } = activeBonuses || {};
+  let html = '';
+
+  for (const b of activeBrandBonuses) {
+    html += `<span class="bonus-badge brand-badge" title="${b.brand} (${b.pieces}pc): +${b.bonus.value} ${b.bonus.statType}">
+      ${b.brand} ×${b.pieces}
+    </span>`;
+  }
+
+  for (const s of activeSetBonuses) {
+    html += `<span class="bonus-badge set-badge" title="${s.set} (${s.pieces}pc): +${s.bonus.value} ${s.bonus.statType}">
+      ${s.set} ×${s.pieces}
+    </span>`;
+  }
+
+  container.innerHTML = html || '<span style="color:#666;font-size:0.8rem;">No active bonuses</span>';
+}
+
+function renderStatPanel(stats, dpsResults) {
+  const fmt = (v, decimals = 1) => isNaN(v) ? '0' : Number(v).toFixed(decimals);
+  const fmtFlat = v => Math.round(v || 0).toLocaleString();
+
+  const setEl = (id, text) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  };
+
+  // Offensive
+  setEl('sp-weaponDamage',    fmt(stats.weaponDamage) + '%');
+  setEl('sp-critChance',      fmt(stats.critChance) + '%');
+  setEl('sp-critDamage',      fmt(stats.critDamage) + '%');
+  setEl('sp-headshotDamage',  fmt(stats.headshotDamage) + '%');
+  setEl('sp-damageToElites',  fmt(stats.damageToElites) + '%');
+  setEl('sp-smgDamage',       fmt(stats.smgDamage) + '%');
+  setEl('sp-arDamage',        fmt(stats.arDamage) + '%');
+  setEl('sp-lmgDamage',       fmt(stats.lmgDamage) + '%');
+  setEl('sp-rifleDamage',     fmt(stats.rifleDamage) + '%');
+  setEl('sp-shotgunDamage',   fmt(stats.shotgunDamage) + '%');
+  setEl('sp-pistolDamage',    fmt(stats.pistolDamage) + '%');
+  setEl('sp-mmrDamage',       fmt(stats.mmrDamage) + '%');
+  // Defensive
+  setEl('sp-armor',           fmtFlat(stats.armor));
+  setEl('sp-armorRegen',      fmtFlat(stats.armorRegen));
+  setEl('sp-health',          fmtFlat(stats.health));
+  setEl('sp-hazardProtection',fmt(stats.hazardProtection) + '%');
+  setEl('sp-explosiveRes',    fmt(stats.explosiveRes) + '%');
+  // Utility
+  setEl('sp-skillTier',       String(stats.skillTier || 0));
+  setEl('sp-skillDamage',     fmt(stats.skillDamage) + '%');
+  setEl('sp-skillHaste',      fmt(stats.skillHaste) + '%');
+  setEl('sp-skillRepair',     fmt(stats.skillRepair) + '%');
+  setEl('sp-statusEffects',   fmt(stats.statusEffects) + '%');
+  setEl('sp-reloadSpeed',     fmt(stats.reloadSpeed) + '%');
+
+  // DPS per weapon slot
+  for (const result of (dpsResults || [])) {
+    const i = result.weaponIndex;
+    const fmtDPS = v => v > 0 ? Math.round(v).toLocaleString() : '--';
+    setEl(`sp-dps-${i}-true`,      fmtDPS(result.trueDPS));
+    setEl(`sp-dps-${i}-burst`,     fmtDPS(result.burstDPS));
+    setEl(`sp-dps-${i}-sustained`, fmtDPS(result.sustainedDPS));
+  }
+
+  renderBonusBadges({
+    activeBrandBonuses: stats.activeBrandBonuses || [],
+    activeSetBonuses:   stats.activeSetBonuses   || []
+  });
+}
+
+// Persistence layer — Task 8
+function exportBuild() {
+  const name = buildState.name || 'build';
+  const json = JSON.stringify(buildState, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${name}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importBuild(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      if (!parsed.weapons || !parsed.gear) {
+        const missing = [];
+        if (!parsed.weapons) missing.push('weapons');
+        if (!parsed.gear) missing.push('gear');
+        alert(`Import failed: Missing required fields: ${missing.join(', ')}`);
+        return;
+      }
+      buildState = parsed;
+      // Re-render all slots
+      for (let i = 0; i < 3; i++) renderWeaponSlot(i);
+      for (let i = 0; i < 6; i++) renderGearSlot(i);
+      document.getElementById('buildName').value = buildState.name || '';
+      recalculate();
+    } catch (err) {
+      alert('Import failed: Invalid JSON file');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ─── SUMMARY NAME UPDATERS ───────────────────────────────────────────────────
+function updateWeaponSummaryName(index) {
+  const el = document.getElementById(`weapon-summary-name-${index}`);
+  if (!el) return;
+  const wid = buildState.weapons[index].weaponId;
+  if (wid) {
+    const w = DB.weapons.find(wp => wp.id === wid);
+    if (w) {
+      el.textContent = w.name;
+      applyQualityColor(el, w.quality);
+      return;
+    }
+  }
+  el.textContent = '[ empty ]';
+  el.style.color = '';
+}
+
+function updateGearSummaryName(index) {
+  const el = document.getElementById(`gear-summary-name-${index}`);
+  if (!el) return;
+  const iid = buildState.gear[index].itemId;
+  if (iid) {
+    const item = DB.gearItems.find(g => g.id === iid);
+    if (item) {
+      el.textContent = item.name;
+      applyQualityColor(el, item.quality);
+      return;
+    }
+  }
+  el.textContent = '[ empty ]';
+  el.style.color = '';
+}
+
+// ─── BOOTSTRAP ───────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="main-panels">
+      <div class="panel-section">
+        <div class="panel-label">WEAPONS</div>
+        <div id="weapons-panel" class="panel-cards"></div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-label">GEAR</div>
+        <div id="gear-panel" class="panel-cards"></div>
+      </div>
+    </div>
+    <div id="stat-panel-wrapper"></div>
+  `;
+
+  // Create collapsible wrappers for weapon slots
+  const weaponsPanel = document.getElementById('weapons-panel');
+  const weaponLabels = ['Primary', 'Secondary', 'Sidearm'];
+  for (let i = 0; i < 3; i++) {
+    const details = document.createElement('details');
+    details.id = `weapon-slot-details-${i}`;
+    details.className = 'card-details';
+    details.open = true;
+
+    const summary = document.createElement('summary');
+    summary.className = 'card-summary';
+    summary.innerHTML = `
+      <span class="card-toggle-icon">&#9654;</span>
+      <span class="card-summary-slot">${weaponLabels[i]}</span>
+      <span class="card-summary-name" id="weapon-summary-name-${i}">[ empty ]</span>
+    `;
+    details.appendChild(summary);
+
+    const body = document.createElement('div');
+    body.className = 'card-body';
+
+    const card = document.createElement('div');
+    card.id = `weapon-slot-${i}`;
+    card.className = 'weapon-card';
+    body.appendChild(card);
+    details.appendChild(body);
+    weaponsPanel.appendChild(details);
+  }
+
+  // Create collapsible wrappers for gear slots
+  const gearPanel = document.getElementById('gear-panel');
+  const gearLabels = ['Mask', 'Chest', 'Backpack', 'Gloves', 'Holster', 'Kneepads'];
+  for (let i = 0; i < 6; i++) {
+    const details = document.createElement('details');
+    details.id = `gear-slot-details-${i}`;
+    details.className = 'card-details';
+    details.open = true;
+
+    const summary = document.createElement('summary');
+    summary.className = 'card-summary';
+    summary.innerHTML = `
+      <span class="card-toggle-icon">&#9654;</span>
+      <span class="card-summary-slot">${gearLabels[i]}</span>
+      <span class="card-summary-name" id="gear-summary-name-${i}">[ empty ]</span>
+    `;
+    details.appendChild(summary);
+
+    const body = document.createElement('div');
+    body.className = 'card-body';
+
+    const card = document.createElement('div');
+    card.id = `gear-slot-${i}`;
+    card.className = 'gear-card';
+    body.appendChild(card);
+    details.appendChild(body);
+    gearPanel.appendChild(details);
+  }
+
+  for (let i = 0; i < 3; i++) renderWeaponSlot(i);
+  for (let i = 0; i < 6; i++) renderGearSlot(i);
+
+  // Create stat panel inside its wrapper
+  const wrapper = document.getElementById('stat-panel-wrapper');
+  const panel = document.createElement('div');
+  panel.id = 'stat-panel';
+  panel.className = 'stat-panel-card';
+  wrapper.appendChild(panel);
+
+  panel.innerHTML = `
+    <div class="slot-header" style="margin-bottom:12px;">Stat Summary</div>
+
+    <div class="stat-section-title">Offensive</div>
+    <div class="stat-row"><label>Weapon Damage</label><span id="sp-weaponDamage">0%</span></div>
+    <div class="stat-row"><label>Crit Chance</label><span id="sp-critChance">0%</span></div>
+    <div class="stat-row"><label>Crit Damage</label><span id="sp-critDamage">0%</span></div>
+    <div class="stat-row"><label>Headshot Damage</label><span id="sp-headshotDamage">0%</span></div>
+    <div class="stat-row"><label>Damage to Elites</label><span id="sp-damageToElites">0%</span></div>
+    <div class="stat-row"><label>SMG Damage</label><span id="sp-smgDamage">0%</span></div>
+    <div class="stat-row"><label>AR Damage</label><span id="sp-arDamage">0%</span></div>
+    <div class="stat-row"><label>LMG Damage</label><span id="sp-lmgDamage">0%</span></div>
+    <div class="stat-row"><label>Rifle Damage</label><span id="sp-rifleDamage">0%</span></div>
+    <div class="stat-row"><label>Shotgun Damage</label><span id="sp-shotgunDamage">0%</span></div>
+    <div class="stat-row"><label>Pistol Damage</label><span id="sp-pistolDamage">0%</span></div>
+    <div class="stat-row"><label>MMR Damage</label><span id="sp-mmrDamage">0%</span></div>
+
+    <div class="stat-section-title" style="margin-top:10px;">Defensive</div>
+    <div class="stat-row"><label>Armor</label><span id="sp-armor">0</span></div>
+    <div class="stat-row"><label>Armor Regen</label><span id="sp-armorRegen">0</span></div>
+    <div class="stat-row"><label>Health</label><span id="sp-health">0</span></div>
+    <div class="stat-row"><label>Hazard Protection</label><span id="sp-hazardProtection">0%</span></div>
+    <div class="stat-row"><label>Explosive Resistance</label><span id="sp-explosiveRes">0%</span></div>
+
+    <div class="stat-section-title" style="margin-top:10px;">Utility</div>
+    <div class="stat-row"><label>Skill Tier</label><span id="sp-skillTier">0</span></div>
+    <div class="stat-row"><label>Skill Damage</label><span id="sp-skillDamage">0%</span></div>
+    <div class="stat-row"><label>Skill Haste</label><span id="sp-skillHaste">0%</span></div>
+    <div class="stat-row"><label>Skill Repair</label><span id="sp-skillRepair">0%</span></div>
+    <div class="stat-row"><label>Status Effects</label><span id="sp-statusEffects">0%</span></div>
+    <div class="stat-row"><label>Reload Speed</label><span id="sp-reloadSpeed">0%</span></div>
+
+    <div class="stat-section-title" style="margin-top:10px;">DPS</div>
+    ${[0,1,2].map(i => `
+      <div class="dps-block" id="sp-dps-${i}">
+        <div style="font-size:0.75rem;color:var(--accent);margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;">${['Primary','Secondary','Sidearm'][i]}</div>
+        <div class="stat-row"><label>True DPS</label><span id="sp-dps-${i}-true">--</span></div>
+        <div class="stat-row"><label>Burst DPS</label><span id="sp-dps-${i}-burst">--</span></div>
+        <div class="stat-row"><label>Sustained DPS</label><span id="sp-dps-${i}-sustained">--</span></div>
+      </div>
+    `).join('')}
+
+    <div class="stat-section-title" style="margin-top:10px;">Active Bonuses</div>
+    <div id="stat-bonuses" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;"></div>
+  `;
+
+  // Initial calculation to populate stat panel
+  recalculate();
+
+  // Wire export/import buttons
+  document.getElementById('btnExport').addEventListener('click', () => {
+    buildState.name = document.getElementById('buildName').value || '';
+    exportBuild();
+  });
+  document.getElementById('btnImport').addEventListener('click', () => {
+    document.getElementById('importFile').click();
+  });
+  document.getElementById('importFile').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      importBuild(file);
+      e.target.value = ''; // reset so same file can be re-imported
+    }
+  });
+  document.getElementById('buildName').addEventListener('input', (e) => {
+    buildState.name = e.target.value;
+  });
+
+  // ── Dynamic card body height ──────────────────────────────────────────────
+  function updateCardHeights() {
+    const header = document.querySelector('header');
+    const footer = document.querySelector('footer');
+    const headerH = header ? header.offsetHeight : 50;
+    const footerH = footer ? footer.offsetHeight : 36;
+    // Give each card body the full remaining viewport height minus header/footer/padding
+    // This ensures the scroll container is always tall enough to show all content
+    const cardBodyH = Math.max(200, window.innerHeight - headerH - footerH - 80);
+    document.querySelectorAll('.card-body').forEach(el => {
+      el.style.maxHeight = cardBodyH + 'px';
+    });
+  }
+
+  updateCardHeights();
+  window.addEventListener('resize', updateCardHeights);
+});
+
+</script>
+</body>
+</html>
