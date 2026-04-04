@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Division 2 Gear Calculator v1.5</title>
+  <title>Division 2 Gear Calculator v1.6</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
 
@@ -666,12 +666,27 @@
 </head>
 <body>
   <header>
-    <div class="header-title">Division 2 <span>Gear Calculator v1.5</span></div>
+  <div class="header-title">Division 2 <span>Gear Calculator v1.6</span></div>
     <div class="header-controls">
       <input id="buildName" type="text" placeholder="Build name..." />
       <button id="btnExport">Export</button>
       <button id="btnImport">Import</button>
       <input id="importFile" type="file" accept=".json" style="display:none;" />
+      <a href="https://github.com/ImThatTeriyaki/Tom-Clancy-The-Division-2-Gear-calculator"
+         target="_blank"
+         title="Check for updates on GitHub"
+         style="display:flex;align-items:center;gap:6px;color:var(--cyan);font-family:'Rajdhani',sans-serif;
+                font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+                text-decoration:none;border:1px solid var(--border);border-bottom:2px solid var(--cyan);
+                padding:5px 12px;border-radius:var(--radius);background:var(--surface2);
+                transition:all 0.15s;white-space:nowrap;"
+         onmouseover="this.style.background='var(--surface3)';this.style.boxShadow='0 0 12px #00e5ff22';"
+         onmouseout="this.style.background='var(--surface2)';this.style.boxShadow='';">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        Updates
+      </a>
     </div>
   </header>
 
@@ -1452,6 +1467,10 @@ const DB = {
     'Walker, Harris & Co.':             { bonuses: { 2: { statType: 'weaponDamage', value: 5 },    3: { statType: 'weaponDamage', value: 10 } } },
     'Yaahl Gear':                       { bonuses: { 2: { statType: 'weaponDamage', value: 10 },   3: { statType: 'weaponDamage', value: 10 } } },
     'Wyvern Wear':                      { bonuses: { 2: { statType: 'skillDamage', value: 8 },     3: { statType: 'skillDamage', value: 18 } } },
+    'Imminence Armaments':              { bonuses: { 2: { statType: 'weaponDamage', value: 10 },   3: { statType: 'weaponDamage', value: 20 } } },
+    'Shiny Monkey Gear':                { bonuses: { 2: { statType: 'critDamage', value: 10 },     3: { statType: 'critDamage', value: 20 } } },
+    'Uzina Getica':                     { bonuses: { 2: { statType: 'armor', value: 5000 },        3: { statType: 'armor', value: 15000 } } },
+    'Zwiadowka SP. z o.o.':             { bonuses: { 2: { statType: 'headshotDamage', value: 10 }, 3: { statType: 'headshotDamage', value: 20 } } },
   },
 
   // ── Gear Sets ──────────────────────────────────────────────────────────────
@@ -2279,9 +2298,7 @@ function renderGearSlot(index) {
   // ── Slot header ──────────────────────────────────────────────────────────
   let html = `<div class="slot-header" id="gear-${index}-header">${slotName}</div>`;
 
-  // ── Item dropdown ────────────────────────────────────────────────────────
-  html += `<select id="gear-select-${index}">`;
-  html += `<option value="">-- Select Item --</option>`;
+  // ── Item picker (custom search panel) ───────────────────────────────────
   const slotItems = DB.gearItems.filter(g => g.slot === slotName).sort((a, b) => {
     const aGeneric = a.quality === 'Uncommon' || a.quality === 'Rare';
     const bGeneric = b.quality === 'Uncommon' || b.quality === 'Rare';
@@ -2289,11 +2306,39 @@ function renderGearSlot(index) {
     if (!aGeneric && bGeneric) return 1;
     return a.name.localeCompare(b.name);
   });
+  html += `<div style="position:relative;margin-bottom:6px;" id="gpicker-wrap-${index}">`;
+  html += `<div id="gpicker-btn-${index}"
+    style="width:100%;background:var(--surface2);color:${selectedItem ? 'var(--text-bright)' : 'var(--text-muted)'};
+           border:1px solid var(--border);border-bottom:2px solid var(--accent-dim);
+           padding:6px 28px 6px 10px;font-family:Rajdhani,sans-serif;font-size:0.88rem;
+           cursor:pointer;border-radius:var(--radius);user-select:none;
+           background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22%3E%3Cpath d=%22M0 0l5 6 5-6z%22 fill=%22%23f4a21e%22/%3E%3C/svg%3E');
+           background-repeat:no-repeat;background-position:right 10px center;
+           white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+    ${selectedItem ? selectedItem.name : '-- Select Item --'}
+  </div>`;
+  html += `<div id="gpicker-panel-${index}"
+    style="display:none;position:absolute;top:100%;left:0;right:0;z-index:9999;
+           background:var(--surface);border:1px solid var(--border-accent);
+           border-top:2px solid var(--accent);
+           box-shadow:0 8px 24px #000c;">`;
+  html += `<input type="text" id="gpicker-search-${index}" placeholder="Search ${slotName}..."
+    autocomplete="off"
+    style="width:100%;background:var(--surface2);color:var(--text-bright);
+           border:none;border-bottom:1px solid var(--border);
+           padding:7px 12px;font-family:Rajdhani,sans-serif;font-size:0.88rem;outline:none;" />`;
+  html += `<div id="gpicker-list-${index}"
+    style="max-height:200px;overflow-y:scroll;
+           scrollbar-width:thin;scrollbar-color:var(--border-accent) var(--surface2);">`;
+  html += `<div class="gpi" data-gid="" style="padding:5px 12px;font-size:0.8rem;color:var(--text-muted);cursor:pointer;">-- Clear Selection --</div>`;
   for (const item of slotItems) {
-    const sel = gearState.itemId === item.id ? ' selected' : '';
-    html += `<option value="${item.id}"${sel} data-quality="${item.quality}">${item.name}</option>`;
+    const qc = {Common:'#9e9e9e',Uncommon:'#00e676',Rare:'#40c4ff','High-End':'#ffd740',Exotic:'#ff6d00','Gear Set':'#e040fb'}[item.quality] || 'var(--text-bright)';
+    const bg = gearState.itemId === item.id ? 'background:var(--surface3);' : '';
+    const safeName = item.name.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+    html += `<div class="gpi" data-gid="${item.id}" data-gname="${item.name.toLowerCase()}"
+      style="padding:5px 12px;font-size:0.85rem;color:${qc};cursor:pointer;${bg}font-family:Rajdhani,sans-serif;font-weight:600;">${safeName}</div>`;
   }
-  html += `</select>`;
+  html += `</div></div></div>`;
 
   // ── Farming info ─────────────────────────────────────────────────────────
   const farmingText = selectedItem && DB.farmingInfo[selectedItem.id]
@@ -2410,29 +2455,25 @@ function renderGearSlot(index) {
 
   container.innerHTML = html;
 
-  // ── Apply quality color to header and dropdown options ───────────────────
+  // ── Apply quality color to header ────────────────────────────────────────
   if (selectedItem) {
     applyQualityColor(container.querySelector(`#gear-${index}-header`), selectedItem.quality);
   }
-  const gearSelect = container.querySelector(`#gear-select-${index}`);
-  for (const option of gearSelect.options) {
-    if (option.value) {
-      const item = DB.gearItems.find(g => g.id === option.value);
-      if (item) applyQualityColor(option, item.quality);
-    }
-  }
 
-  // ── Item select event ────────────────────────────────────────────────────
-  gearSelect.addEventListener('change', () => {
-    const iid = gearSelect.value || null;
+  // ── Gear picker events ────────────────────────────────────────────────────
+  const gpBtn    = container.querySelector(`#gpicker-btn-${index}`);
+  const gpPanel  = container.querySelector(`#gpicker-panel-${index}`);
+  const gpSearch = container.querySelector(`#gpicker-search-${index}`);
+  const gpList   = container.querySelector(`#gpicker-list-${index}`);
+
+  function selectGearItem(gid) {
+    const iid = gid || null;
     buildState.gear[index].itemId = iid;
     if (iid) {
       const itemDef = DB.gearItems.find(g => g.id === iid);
       if (itemDef) {
         buildState.gear[index].armor = itemDef.baseArmor;
-        // Reset core attribute
         buildState.gear[index].coreAttribute = { statType: null, value: 0 };
-        // Populate fixed attributes for named items; reset editable ones
         buildState.gear[index].attributes = [
           { statType: null, value: 0, isEditable: true },
           { statType: null, value: 0, isEditable: true },
@@ -2443,7 +2484,6 @@ function renderGearSlot(index) {
             buildState.gear[index].attributes[i] = { ...itemDef.fixedAttributes[i] };
           }
         }
-        // Reset mods and talent when item changes
         buildState.gear[index].mods = [
           { statType: null, value: 0 },
           { statType: null, value: 0 }
@@ -2466,7 +2506,50 @@ function renderGearSlot(index) {
     }
     recalculate();
     renderGearSlot(index);
-  });
+  }
+
+  if (gpBtn && gpPanel && gpSearch && gpList) {
+    gpBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = gpPanel.style.display !== 'none';
+      document.querySelectorAll('[id^="gpicker-panel-"]').forEach(p => p.style.display = 'none');
+      document.querySelectorAll('[id^="wpicker-panel-"]').forEach(p => p.style.display = 'none');
+      if (!isOpen) {
+        gpPanel.style.display = 'block';
+        gpSearch.value = '';
+        gpList.querySelectorAll('.gpi').forEach(el => el.style.display = '');
+        setTimeout(() => gpSearch.focus(), 10);
+      }
+    });
+
+    gpSearch.addEventListener('input', () => {
+      const q = gpSearch.value.toLowerCase();
+      gpList.querySelectorAll('.gpi').forEach(el => {
+        const name = (el.dataset.gname || '');
+        el.style.display = (!q || !name || name.includes(q)) ? '' : 'none';
+      });
+    });
+
+    gpList.addEventListener('click', (e) => {
+      const item = e.target.closest('.gpi');
+      if (!item) return;
+      gpPanel.style.display = 'none';
+      selectGearItem(item.dataset.gid || '');
+    });
+
+    gpList.addEventListener('mouseover', (e) => {
+      const item = e.target.closest('.gpi');
+      if (item) item.style.background = 'var(--surface3)';
+    });
+    gpList.addEventListener('mouseout', (e) => {
+      const item = e.target.closest('.gpi');
+      if (item) item.style.background = (item.dataset.gid === (gearState.itemId || '')) ? 'var(--surface3)' : '';
+    });
+
+    // Close on outside click
+    document.addEventListener('click', () => { gpPanel.style.display = 'none'; });
+    gpPanel.addEventListener('click', e => e.stopPropagation());
+  }
 
   // ── Armor input event ────────────────────────────────────────────────────
   const armorInput = container.querySelector(`#gear-${index}-armor`);
