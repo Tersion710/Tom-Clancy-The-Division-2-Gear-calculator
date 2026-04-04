@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Division 2 Gear Calculator</title>
+  <title>Division 2 Gear Calculator v1.5</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
 
@@ -666,7 +666,7 @@
 </head>
 <body>
   <header>
-    <div class="header-title">Division 2 <span>Gear Calculator</span></div>
+    <div class="header-title">Division 2 <span>Gear Calculator v1.5</span></div>
     <div class="header-controls">
       <input id="buildName" type="text" placeholder="Build name..." />
       <button id="btnExport">Export</button>
@@ -765,6 +765,257 @@ const DB = {
     { id:'w_diceros',  name:'Diceros',              quality:'High-End', rpm:180,  baseDamage:44200, magazineSize:7,  reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'Demolitionist Specialization / World drop' },
     // ── Pistols — Exotic ──
     { id:'w_regulus',  name:'The Regulus',           quality:'Exotic',   rpm:160,  baseDamage:78000, magazineSize:6,  reloadSpeed:1.8, critChance:6, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle'], farmingSource:'Countdown — Season reward / Targeted loot' },
+    // ── AK Variants (commonly missed) ──
+    { id:'w_akm_mil',  name:'Military AK-M',         quality:'High-End', rpm:600,  baseDamage:14800, magazineSize:30, reloadSpeed:2.5, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_akm_pol',  name:'Police AK-M',            quality:'High-End', rpm:600,  baseDamage:14200, magazineSize:30, reloadSpeed:2.5, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop' },
+    { id:'w_akm_bm',   name:'Black Market AK-M',      quality:'High-End', rpm:600,  baseDamage:14800, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    // ── T821 Variants ──
+    { id:'w_t821_pol', name:'Police T821',             quality:'High-End', rpm:550,  baseDamage:16900, magazineSize:32, reloadSpeed:1.9, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    // ── M4 / AR Variants ──
+    { id:'w_m4_pol',   name:'Police M4',               quality:'Rare',     rpm:850,  baseDamage:10400, magazineSize:30, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop' },
+    // ── MK17 / SCAR Variants ──
+    { id:'w_mk17_pol', name:'Police Mk17',             quality:'High-End', rpm:250,  baseDamage:34000, magazineSize:20, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop' },
+    // ── M870 Variants ──
+    { id:'w_m870_pol', name:'Police M870',             quality:'High-End', rpm:275,  baseDamage:79800, magazineSize:5,  reloadSpeed:3.7, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop' },
+    // ── MP5 Variants ──
+    { id:'w_mp5_pol',  name:'Police MP5',              quality:'High-End', rpm:800,  baseDamage:9100,  magazineSize:32, reloadSpeed:2.1, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop' },
+    // ── M44 Variants ──
+    { id:'w_m44_pol',  name:'Police M44',              quality:'High-End', rpm:75,   baseDamage:115000,magazineSize:5,  reloadSpeed:4.2, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop' },
+    // ── Additional ARs ──
+    { id:'w_m16',      name:'M16A2',                   quality:'Rare',     rpm:300,  baseDamage:23400, magazineSize:30, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop' },
+    { id:'w_mk16_pol', name:'Police Mk16',             quality:'High-End', rpm:625,  baseDamage:13200, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop' },
+    // ── Additional SMGs ──
+    { id:'w_mp5st',    name:'MP5 ST',                  quality:'High-End', rpm:800,  baseDamage:9100,  magazineSize:32, reloadSpeed:2.1, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_ump45',    name:'UMP-45',                  quality:'High-End', rpm:600,  baseDamage:13000, magazineSize:25, reloadSpeed:2.2, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    // ── Additional LMGs ──
+    { id:'w_m249_pol', name:'Police M249 B',           quality:'High-End', rpm:550,  baseDamage:15600, magazineSize:100,reloadSpeed:5.6, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop' },
+    { id:'w_pkm',      name:'PKM',                     quality:'High-End', rpm:650,  baseDamage:13000, magazineSize:100,reloadSpeed:5.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    // ── Additional Shotguns ──
+    { id:'w_m870_ext', name:'Tactical M870 MCS',       quality:'High-End', rpm:275,  baseDamage:82000, magazineSize:7,  reloadSpeed:3.5, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    // ── Additional Pistols ──
+    { id:'w_m9a3',     name:'M9A3',                    quality:'High-End', rpm:310,  baseDamage:19500, magazineSize:17, reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_g17',      name:'Glock 17',                quality:'High-End', rpm:310,  baseDamage:18000, magazineSize:17, reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+
+    // ════════════════════════════════════════════════════════════════
+    // NAMED WEAPONS (High-End with unique talents)
+    // ════════════════════════════════════════════════════════════════
+    // ── Named ARs ──
+    { id:'w_named_bighorn',    name:'Bighorn (Named AR)',          quality:'Exotic',   rpm:750,  baseDamage:13500, magazineSize:30, reloadSpeed:2.1, critChance:6, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Legendary Stronghold final boss / Summit' },
+    { id:'w_named_capacitor',  name:'Capacitor (Named AR)',        quality:'Exotic',   rpm:800,  baseDamage:12800, magazineSize:30, reloadSpeed:2.2, critChance:6, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Summit challenges / Targeted loot' },
+    { id:'w_named_chameleon',  name:'Chameleon (Named AR)',        quality:'Exotic',   rpm:700,  baseDamage:12000, magazineSize:30, reloadSpeed:2.3, critChance:6, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Bounty bosses / Targeted loot' },
+    { id:'w_named_strega',     name:'Strega (Named AR)',           quality:'Exotic',   rpm:850,  baseDamage:11500, magazineSize:30, reloadSpeed:2.2, critChance:6, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Targeted loot / Exotic Cache' },
+    // ── Named SMGs ──
+    { id:'w_named_chatterbox', name:'Chatterbox (Named P90)',      quality:'Exotic',   rpm:900,  baseDamage:9100,  magazineSize:50, reloadSpeed:2.0, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Hyena caches in Downtown East / Federal Triangle / Judiciary Square' },
+    { id:'w_named_ladydeath',  name:'Lady Death (Named SMG)',      quality:'Exotic',   rpm:1000, baseDamage:8200,  magazineSize:32, reloadSpeed:1.9, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_backfire',   name:'Backfire (Named SMG)',        quality:'Exotic',   rpm:850,  baseDamage:9500,  magazineSize:32, reloadSpeed:2.0, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_oxpecker',   name:'Oxpecker (Named SMG)',        quality:'Exotic',   rpm:800,  baseDamage:9800,  magazineSize:32, reloadSpeed:2.0, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Season Pass rank 69 / Targeted loot' },
+    { id:'w_named_emelineguard',name:"Emeline's Guard (Named P90)",quality:'High-End', rpm:900,  baseDamage:9100,  magazineSize:50, reloadSpeed:2.0, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Targeted loot / Exotic Cache' },
+    // ── Named LMGs ──
+    { id:'w_named_bulletking', name:'Bullet King (Named LMG)',     quality:'Exotic',   rpm:550,  baseDamage:16300, magazineSize:100,reloadSpeed:5.6, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Rikers named boss / Summit / Targeted loot' },
+    { id:'w_named_pestilence', name:'Pestilence (Named LMG)',      quality:'Exotic',   rpm:650,  baseDamage:13000, magazineSize:100,reloadSpeed:5.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Dark Zone named enemy / Targeted loot' },
+    { id:'w_named_bluescreen', name:'Bluescreen (Named LMG)',      quality:'Exotic',   rpm:600,  baseDamage:14000, magazineSize:100,reloadSpeed:5.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Captain Lewis Manhunt / Targeted loot' },
+    { id:'w_named_ironlung',   name:'Iron Lung (Named LMG)',       quality:'Exotic',   rpm:500,  baseDamage:18200, magazineSize:100,reloadSpeed:5.8, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Exotic Cache' },
+    // ── Named Marksman Rifles ──
+    { id:'w_named_nemesis',    name:'Nemesis (Named MMR)',         quality:'Exotic',   rpm:45,   baseDamage:180000,magazineSize:3,  reloadSpeed:4.5, critChance:5, critDamage:25, headshotDamage:150,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'Invaded Strongholds components / Targeted loot' },
+    { id:'w_named_mantis',     name:'Mantis (Named MMR)',          quality:'Exotic',   rpm:65,   baseDamage:110000,magazineSize:4,  reloadSpeed:7.2, critChance:5, critDamage:25, headshotDamage:150,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_dreadedict',  name:'Dread Edict (Named MMR)',    quality:'Exotic',   rpm:60,   baseDamage:120000,magazineSize:5,  reloadSpeed:4.2, critChance:5, critDamage:25, headshotDamage:150,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_sacrumimperium',name:'Sacrum Imperium (Named MMR)',quality:'Exotic', rpm:55,   baseDamage:130000,magazineSize:4,  reloadSpeed:5.0, critChance:5, critDamage:25, headshotDamage:150,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'Targeted loot / Exotic Cache' },
+    // ── Named Rifles ──
+    { id:'w_named_merciless',  name:'Merciless (Named Rifle)',     quality:'Exotic',   rpm:280,  baseDamage:26000, magazineSize:20, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Hyena named boss / Summit / Targeted loot' },
+    { id:'w_named_ruthless',   name:'Ruthless (Named Rifle)',      quality:'Exotic',   rpm:280,  baseDamage:26000, magazineSize:20, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Hyena named boss / Summit / Targeted loot' },
+    { id:'w_named_diamondback', name:'Diamondback (Named Rifle)',  quality:'Exotic',   rpm:240,  baseDamage:28000, magazineSize:20, reloadSpeed:2.0, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Kenly College Expedition first clear' },
+    { id:'w_named_doctorhome', name:'Doctor Home (Named Rifle)',   quality:'Exotic',   rpm:300,  baseDamage:24000, magazineSize:20, reloadSpeed:2.1, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Captain Lewis Manhunt / Targeted loot' },
+    { id:'w_named_ravenous',   name:'The Ravenous (Named Rifle)',  quality:'Exotic',   rpm:250,  baseDamage:30000, magazineSize:20, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Dark Zone extractions / Iron Horse raid' },
+    { id:'w_named_vindicator', name:'Vindicator (Named Rifle)',    quality:'Exotic',   rpm:260,  baseDamage:28000, magazineSize:20, reloadSpeed:2.0, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'NSA Stations in Descent mode' },
+    // ── Named Shotguns ──
+    { id:'w_named_sweetdreams', name:'Sweet Dreams (Named Shotgun)',quality:'Exotic',  rpm:70,   baseDamage:110500,magazineSize:7,  reloadSpeed:5.4, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'Outcast named boss / Summit / Targeted loot' },
+    { id:'w_named_lullaby',    name:'Lullaby (Named Shotgun)',     quality:'Exotic',   rpm:70,   baseDamage:110500,magazineSize:7,  reloadSpeed:5.4, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'Outcast named boss / Summit / Targeted loot' },
+    { id:'w_named_overlord',   name:'Overlord (Named Shotgun)',    quality:'Exotic',   rpm:218,  baseDamage:75000, magazineSize:7,  reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Targeted loot / Exotic Cache' },
+    // ── Named Pistols ──
+    { id:'w_named_liberty',    name:'Liberty (Named Pistol)',      quality:'Exotic',   rpm:260,  baseDamage:30200, magazineSize:7,  reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'Stronghold components from Capitol Building / American History Museum / ViewPoint Museum / Space Administration HQ' },
+    { id:'w_named_mosquito',   name:'Mosquito (Named Pistol)',     quality:'Exotic',   rpm:310,  baseDamage:18500, magazineSize:17, reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_busylittlebee',name:'Busy Little Bee (Named Pistol)',quality:'Exotic',rpm:160, baseDamage:78000, magazineSize:6,  reloadSpeed:1.8, critChance:6, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle'], farmingSource:'Targeted loot / Exotic Cache' },
+
+    // AR Variants
+    { id:'w_acr_cust',   name:'Custom ACR',              quality:'High-End', rpm:650,  baseDamage:13500, magazineSize:30, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_aug_cust',   name:'Custom AUG A3 (AR)',       quality:'High-End', rpm:680,  baseDamage:12200, magazineSize:30, reloadSpeed:2.1, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_famas_cust', name:'Custom FAMAS',             quality:'High-End', rpm:900,  baseDamage:11700, magazineSize:30, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_g36_cust',   name:'Custom G36',               quality:'High-End', rpm:750,  baseDamage:11500, magazineSize:30, reloadSpeed:2.1, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_fal_cust',   name:'Custom FAL',               quality:'High-End', rpm:650,  baseDamage:12800, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_m4_tac',     name:'Tactical M4',              quality:'High-End', rpm:850,  baseDamage:11000, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mk16_tac',   name:'Tactical Mk16',            quality:'High-End', rpm:625,  baseDamage:13500, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_ctar_pol',   name:'Police CTAR-21',           quality:'High-End', rpm:900,  baseDamage:9600,  magazineSize:30, reloadSpeed:2.1, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop' },
+    { id:'w_lvoa_cust',  name:'Custom LVOA-C',            quality:'High-End', rpm:700,  baseDamage:11800, magazineSize:30, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_pof_cust',   name:'Custom POF P416',          quality:'High-End', rpm:750,  baseDamage:12800, magazineSize:30, reloadSpeed:2.1, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_akm_cust',   name:'Custom AKM',               quality:'High-End', rpm:600,  baseDamage:14500, magazineSize:30, reloadSpeed:2.5, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+
+    // SMG Variants
+    { id:'w_vector_cust',name:'Custom Vector SBR',        quality:'High-End', rpm:1200, baseDamage:7200,  magazineSize:33, reloadSpeed:1.9, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mp5_tac',    name:'Tactical MP5',             quality:'High-End', rpm:800,  baseDamage:9000,  magazineSize:32, reloadSpeed:2.1, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mp5_cust',   name:'Custom MP5',               quality:'High-End', rpm:800,  baseDamage:8900,  magazineSize:32, reloadSpeed:2.1, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mp7_cust',   name:'Custom MP7',               quality:'High-End', rpm:950,  baseDamage:9000,  magazineSize:40, reloadSpeed:2.0, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mpx_cust',   name:'Custom SIG MPX',           quality:'High-End', rpm:850,  baseDamage:10200, magazineSize:30, reloadSpeed:2.3, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_p90_cust',   name:'Custom P90',               quality:'High-End', rpm:900,  baseDamage:9000,  magazineSize:50, reloadSpeed:2.0, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_t821_cust',  name:'Custom T821',              quality:'High-End', rpm:550,  baseDamage:16700, magazineSize:32, reloadSpeed:1.9, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_bizon_cust', name:'Custom PP-19',             quality:'High-End', rpm:700,  baseDamage:12200, magazineSize:53, reloadSpeed:2.5, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_thompson_cust',name:'Custom Thompson',        quality:'High-End', rpm:600,  baseDamage:14100, magazineSize:30, reloadSpeed:2.3, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_ump45_tac',  name:'Tactical UMP-45',          quality:'High-End', rpm:600,  baseDamage:12800, magazineSize:25, reloadSpeed:2.2, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_smg9_cust',  name:'Custom SMG-9',             quality:'High-End', rpm:825,  baseDamage:11500, magazineSize:32, reloadSpeed:2.0, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_aug_smg_cust',name:'Custom AUG A3 (SMG)',     quality:'High-End', rpm:725,  baseDamage:12800, magazineSize:25, reloadSpeed:2.4, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+
+    // LMG Variants
+    { id:'w_m60_cust',   name:'Custom M60',               quality:'High-End', rpm:500,  baseDamage:18000, magazineSize:100,reloadSpeed:5.8, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_m249_cust',  name:'Custom M249 B',            quality:'High-End', rpm:550,  baseDamage:16100, magazineSize:100,reloadSpeed:5.6, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_l86_cust',   name:'Custom L86 LSW',           quality:'High-End', rpm:610,  baseDamage:14100, magazineSize:30, reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_rpk_cust',   name:'Custom RPK-74',            quality:'High-End', rpm:650,  baseDamage:12800, magazineSize:45, reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mg5_cust',   name:'Custom MG5',               quality:'High-End', rpm:800,  baseDamage:10200, magazineSize:50, reloadSpeed:5.6, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mk46_cust',  name:'Custom MK46',              quality:'High-End', rpm:550,  baseDamage:15400, magazineSize:100,reloadSpeed:5.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_pkm_cust',   name:'Custom PKM',               quality:'High-End', rpm:650,  baseDamage:12800, magazineSize:100,reloadSpeed:5.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+
+    // Rifle Variants
+    { id:'w_mk17_cust',  name:'Custom Mk17',              quality:'High-End', rpm:250,  baseDamage:35800, magazineSize:20, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_m1a_cust',   name:'Custom M1A',               quality:'High-End', rpm:180,  baseDamage:32000, magazineSize:10, reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_sig716_cust',name:'Custom SIG 716',           quality:'High-End', rpm:300,  baseDamage:30800, magazineSize:20, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mdr_cust',   name:'Custom MDR',               quality:'High-End', rpm:280,  baseDamage:25600, magazineSize:20, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_usc_cust',   name:'Custom USC .45',           quality:'High-End', rpm:240,  baseDamage:25600, magazineSize:20, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_lar15_cust', name:'Custom LAR-15',            quality:'High-End', rpm:240,  baseDamage:21800, magazineSize:30, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_acr_ss_cust',name:'Custom ACR-SS',            quality:'High-End', rpm:420,  baseDamage:20500, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_1886_cust',  name:'Custom Winchester 1886',   quality:'High-End', rpm:100,  baseDamage:51000, magazineSize:10, reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+
+    // Marksman Rifle Variants
+    { id:'w_m44_cust',   name:'Custom M44',               quality:'High-End', rpm:75,   baseDamage:118000,magazineSize:5,  reloadSpeed:4.2, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_m700_cust',  name:'Custom Model 700',         quality:'High-End', rpm:65,   baseDamage:108000,magazineSize:4,  reloadSpeed:7.2, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_srs_cust',   name:'Custom Covert SRS',        quality:'High-End', rpm:260,  baseDamage:89000, magazineSize:7,  reloadSpeed:7.0, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_svd_cust',   name:'Custom SVD',               quality:'High-End', rpm:260,  baseDamage:44800, magazineSize:10, reloadSpeed:2.6, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_sr1_cust',   name:'Custom SR-1',              quality:'High-End', rpm:60,   baseDamage:128000,magazineSize:5,  reloadSpeed:3.2, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_m44_tac',    name:'Tactical M44',             quality:'High-End', rpm:75,   baseDamage:116000,magazineSize:5,  reloadSpeed:4.0, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_m700_tac',   name:'Tactical Model 700',       quality:'High-End', rpm:65,   baseDamage:106000,magazineSize:4,  reloadSpeed:7.0, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+
+    // Shotgun Variants
+    { id:'w_dbl_cust',   name:'Custom Double Barrel',     quality:'High-End', rpm:200,  baseDamage:85000, magazineSize:2,  reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_m870_cust',  name:'Custom M870',              quality:'High-End', rpm:275,  baseDamage:78500, magazineSize:5,  reloadSpeed:3.7, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_super90_cust',name:'Custom Super 90',         quality:'High-End', rpm:160,  baseDamage:72000, magazineSize:8,  reloadSpeed:4.8, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_sasg12_cust',name:'Custom SASG-12',           quality:'High-End', rpm:218,  baseDamage:61500, magazineSize:7,  reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_acs12_cust', name:'Custom ACS-12',            quality:'High-End', rpm:300,  baseDamage:30800, magazineSize:20, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_spas12_cust',name:'Custom SPAS-12',           quality:'High-End', rpm:70,   baseDamage:109000,magazineSize:7,  reloadSpeed:5.4, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+
+    // Pistol Variants
+    { id:'w_m1911_cust', name:'Custom M1911',             quality:'High-End', rpm:260,  baseDamage:29800, magazineSize:7,  reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_m1911_tac',  name:'Tactical M1911',           quality:'High-End', rpm:260,  baseDamage:30000, magazineSize:7,  reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_pf45_cust',  name:'Custom PF45',              quality:'High-End', rpm:230,  baseDamage:51000, magazineSize:12, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_px4_cust',   name:'Custom PX4 Storm',         quality:'High-End', rpm:250,  baseDamage:16100, magazineSize:17, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_x45_cust',   name:'Custom X-45',              quality:'High-End', rpm:250,  baseDamage:14600, magazineSize:10, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_93r_cust',   name:'Custom 93R',               quality:'High-End', rpm:1100, baseDamage:8300,  magazineSize:20, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_d50_cust',   name:'Custom D50',               quality:'High-End', rpm:150,  baseDamage:61500, magazineSize:8,  reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_586_cust',   name:'Custom 586 Magnum',        quality:'High-End', rpm:160,  baseDamage:30800, magazineSize:6,  reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_m9_cust',    name:'Custom M9',                quality:'High-End', rpm:310,  baseDamage:18200, magazineSize:17, reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+
+    // Signature / Specialization Weapons
+    { id:'w_sig_crossbow',name:'Crossbow (Demolitionist)', quality:'High-End', rpm:30,  baseDamage:500000,magazineSize:1,  reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope'], farmingSource:'Demolitionist Specialization' },
+    { id:'w_sig_sniper',  name:'TAC-50 C Rifle (Sharpshooter)',quality:'High-End',rpm:20,baseDamage:800000,magazineSize:1,reloadSpeed:4.0, critChance:5, critDamage:25, headshotDamage:200,supportedSlots:['Scope'], farmingSource:'Sharpshooter Specialization' },
+    { id:'w_sig_minigun', name:'Minigun (Gunner)',          quality:'High-End', rpm:3000,baseDamage:5000,  magazineSize:200,reloadSpeed:8.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:[], farmingSource:'Gunner Specialization' },
+    { id:'w_sig_bow',     name:'Compound Bow (Survivalist)',quality:'High-End', rpm:25,  baseDamage:600000,magazineSize:1,  reloadSpeed:2.5, critChance:5, critDamage:25, headshotDamage:200,supportedSlots:['Scope'], farmingSource:'Survivalist Specialization' },
+    { id:'w_sig_lmg',     name:'Vulcan (Technician)',       quality:'High-End', rpm:600, baseDamage:15000, magazineSize:100,reloadSpeed:5.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle'], farmingSource:'Technician Specialization' },
+
+    // ── Additional AR variants (Military / Police / Black Market) ──
+    { id:'w_m4_mil2',    name:'Military M4 (Alt)',          quality:'High-End', rpm:850,  baseDamage:11000, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_acr_mil',    name:'Military ACR',               quality:'High-End', rpm:650,  baseDamage:13600, magazineSize:30, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_akm_mil2',   name:'Military AK-M (Alt)',        quality:'High-End', rpm:600,  baseDamage:14600, magazineSize:30, reloadSpeed:2.5, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_famas_mil',  name:'Military FAMAS',             quality:'High-End', rpm:900,  baseDamage:11800, magazineSize:30, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_g36_mil',    name:'Military G36',               quality:'High-End', rpm:750,  baseDamage:11600, magazineSize:30, reloadSpeed:2.1, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_fal_mil',    name:'Military FAL',               quality:'High-End', rpm:650,  baseDamage:12900, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mk16_mil',   name:'Military Mk16',              quality:'High-End', rpm:625,  baseDamage:13600, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_ctar_mil',   name:'Military CTAR-21',           quality:'High-End', rpm:900,  baseDamage:9700,  magazineSize:30, reloadSpeed:2.1, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_lvoa_mil',   name:'Military LVOA-C',            quality:'High-End', rpm:700,  baseDamage:11900, magazineSize:30, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_pof_mil',    name:'Military POF P416',          quality:'High-End', rpm:750,  baseDamage:12900, magazineSize:30, reloadSpeed:2.1, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_aug_ar_mil', name:'Military AUG A3 (AR)',       quality:'High-End', rpm:680,  baseDamage:12300, magazineSize:30, reloadSpeed:2.1, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_m16_mil',    name:'Military M16A2',             quality:'High-End', rpm:300,  baseDamage:23200, magazineSize:30, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+
+    // ── Additional SMG variants ──
+    { id:'w_vector_mil', name:'Military Vector SBR',        quality:'High-End', rpm:1200, baseDamage:7300,  magazineSize:33, reloadSpeed:1.9, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mp5_mil',    name:'Military MP5',               quality:'High-End', rpm:800,  baseDamage:9050,  magazineSize:32, reloadSpeed:2.1, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mp7_mil',    name:'Military MP7',               quality:'High-End', rpm:950,  baseDamage:9050,  magazineSize:40, reloadSpeed:2.0, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mpx_mil',    name:'Military SIG MPX',           quality:'High-End', rpm:850,  baseDamage:10300, magazineSize:30, reloadSpeed:2.3, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_p90_mil',    name:'Military P90',               quality:'High-End', rpm:900,  baseDamage:9050,  magazineSize:50, reloadSpeed:2.0, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_t821_mil',   name:'Military T821',              quality:'High-End', rpm:550,  baseDamage:16800, magazineSize:32, reloadSpeed:1.9, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_bizon_mil',  name:'Military PP-19',             quality:'High-End', rpm:700,  baseDamage:12300, magazineSize:53, reloadSpeed:2.5, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_thompson_mil',name:'Military Thompson',         quality:'High-End', rpm:600,  baseDamage:14200, magazineSize:30, reloadSpeed:2.3, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_ump45_mil',  name:'Military UMP-45',            quality:'High-End', rpm:600,  baseDamage:12900, magazineSize:25, reloadSpeed:2.2, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_smg9_mil',   name:'Military SMG-9',             quality:'High-End', rpm:825,  baseDamage:11600, magazineSize:32, reloadSpeed:2.0, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_aug_smg_mil',name:'Military AUG A3 (SMG)',      quality:'High-End', rpm:725,  baseDamage:12900, magazineSize:25, reloadSpeed:2.4, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+
+    // ── Additional LMG variants ──
+    { id:'w_m60_mil',    name:'Military M60',               quality:'High-End', rpm:500,  baseDamage:18100, magazineSize:100,reloadSpeed:5.8, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_m249_mil',   name:'Military M249 B',            quality:'High-End', rpm:550,  baseDamage:16200, magazineSize:100,reloadSpeed:5.6, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_l86_mil',    name:'Military L86 LSW',           quality:'High-End', rpm:610,  baseDamage:14200, magazineSize:30, reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_rpk_mil',    name:'Military RPK-74',            quality:'High-End', rpm:650,  baseDamage:12900, magazineSize:45, reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mg5_mil',    name:'Military MG5',               quality:'High-End', rpm:800,  baseDamage:10300, magazineSize:50, reloadSpeed:5.6, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mk46_mil',   name:'Military MK46',              quality:'High-End', rpm:550,  baseDamage:15500, magazineSize:100,reloadSpeed:5.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_pkm_mil',    name:'Military PKM',               quality:'High-End', rpm:650,  baseDamage:12900, magazineSize:100,reloadSpeed:5.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+
+    // ── Additional Rifle variants ──
+    { id:'w_mk17_mil',   name:'Military Mk17',              quality:'High-End', rpm:250,  baseDamage:35900, magazineSize:20, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_m1a_mil',    name:'Military M1A',               quality:'High-End', rpm:180,  baseDamage:32100, magazineSize:10, reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_sig716_mil', name:'Military SIG 716',           quality:'High-End', rpm:300,  baseDamage:30900, magazineSize:20, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mdr_mil',    name:'Military MDR',               quality:'High-End', rpm:280,  baseDamage:25700, magazineSize:20, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_usc_mil',    name:'Military USC .45',           quality:'High-End', rpm:240,  baseDamage:25700, magazineSize:20, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_lar15_mil',  name:'Military LAR-15',            quality:'High-End', rpm:240,  baseDamage:21900, magazineSize:30, reloadSpeed:2.4, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_acr_ss_mil', name:'Military ACR-SS',            quality:'High-End', rpm:420,  baseDamage:20600, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_1886_mil',   name:'Military Winchester 1886',   quality:'High-End', rpm:100,  baseDamage:51500, magazineSize:10, reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+
+    // ── Additional Marksman Rifle variants ──
+    { id:'w_m44_mil',    name:'Military M44',               quality:'High-End', rpm:75,   baseDamage:119000,magazineSize:5,  reloadSpeed:4.2, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_m700_mil',   name:'Military Model 700',         quality:'High-End', rpm:65,   baseDamage:109000,magazineSize:4,  reloadSpeed:7.2, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_srs_mil',    name:'Military Covert SRS',        quality:'High-End', rpm:260,  baseDamage:90000, magazineSize:7,  reloadSpeed:7.0, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_svd_mil',    name:'Military SVD',               quality:'High-End', rpm:260,  baseDamage:45000, magazineSize:10, reloadSpeed:2.6, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_sr1_mil',    name:'Military SR-1',              quality:'High-End', rpm:60,   baseDamage:129000,magazineSize:5,  reloadSpeed:3.2, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+
+    // ── Additional Shotgun variants ──
+    { id:'w_dbl_mil',    name:'Military Double Barrel',     quality:'High-End', rpm:200,  baseDamage:86000, magazineSize:2,  reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_m870_mil',   name:'Military M870',              quality:'High-End', rpm:275,  baseDamage:79500, magazineSize:5,  reloadSpeed:3.7, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_super90_mil',name:'Military Super 90',          quality:'High-End', rpm:160,  baseDamage:73000, magazineSize:8,  reloadSpeed:4.8, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_sasg12_mil', name:'Military SASG-12',           quality:'High-End', rpm:218,  baseDamage:62000, magazineSize:7,  reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_acs12_mil',  name:'Military ACS-12',            quality:'High-End', rpm:300,  baseDamage:31000, magazineSize:20, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_spas12_mil', name:'Military SPAS-12',           quality:'High-End', rpm:70,   baseDamage:110000,magazineSize:7,  reloadSpeed:5.4, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+
+    // ── Additional Pistol variants ──
+    { id:'w_m1911_mil',  name:'Military M1911',             quality:'High-End', rpm:260,  baseDamage:30000, magazineSize:7,  reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_pf45_mil',   name:'Military PF45',              quality:'High-End', rpm:230,  baseDamage:51200, magazineSize:12, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_px4_mil',    name:'Military PX4 Storm',         quality:'High-End', rpm:250,  baseDamage:16200, magazineSize:17, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_x45_mil',    name:'Military X-45',              quality:'High-End', rpm:250,  baseDamage:14700, magazineSize:10, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_93r_mil',    name:'Military 93R',               quality:'High-End', rpm:1100, baseDamage:8400,  magazineSize:20, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_d50_mil',    name:'Military D50',               quality:'High-End', rpm:150,  baseDamage:62000, magazineSize:8,  reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_586_mil',    name:'Military 586 Magnum',        quality:'High-End', rpm:160,  baseDamage:31000, magazineSize:6,  reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_m9_mil',     name:'Military M9',                quality:'High-End', rpm:310,  baseDamage:18300, magazineSize:17, reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_diceros_mil',name:'Military Diceros',           quality:'High-End', rpm:180,  baseDamage:44400, magazineSize:7,  reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+
+    // ── Black Market variants ──
+    { id:'w_akm_bm2',    name:'Black Market AK-M (Alt)',    quality:'High-End', rpm:600,  baseDamage:14700, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_m4_bm',      name:'Black Market M4',            quality:'High-End', rpm:850,  baseDamage:11100, magazineSize:30, reloadSpeed:2.3, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_vector_bm',  name:'Black Market Vector SBR',    quality:'High-End', rpm:1200, baseDamage:7350,  magazineSize:33, reloadSpeed:1.9, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_mp5_bm',     name:'Black Market MP5',           quality:'High-End', rpm:800,  baseDamage:9050,  magazineSize:32, reloadSpeed:2.1, critChance:6, critDamage:25, headshotDamage:60, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_m249_bm',    name:'Black Market M249 B',        quality:'High-End', rpm:550,  baseDamage:16150, magazineSize:100,reloadSpeed:5.6, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_m870_bm',    name:'Black Market M870',          quality:'High-End', rpm:275,  baseDamage:79200, magazineSize:5,  reloadSpeed:3.7, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_m44_bm',     name:'Black Market M44',           quality:'High-End', rpm:75,   baseDamage:117000,magazineSize:5,  reloadSpeed:4.2, critChance:5, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'World drop / Crafting' },
+    { id:'w_mk17_bm',    name:'Black Market Mk17',          quality:'High-End', rpm:250,  baseDamage:35500, magazineSize:20, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
+    { id:'w_m1911_bm',   name:'Black Market M1911',         quality:'High-End', rpm:260,  baseDamage:29900, magazineSize:7,  reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+
+    // ── Additional named/exotic weapons (Year 6-8 additions) ──
+    { id:'w_named_agitator',name:'Agitator (Named AR)',     quality:'Exotic',   rpm:750,  baseDamage:13200, magazineSize:30, reloadSpeed:2.1, critChance:6, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Y8S1 Rise Up - Targeted loot' },
+    { id:'w_named_whiplash',name:'Whiplash (Named Pistol)', quality:'Exotic',   rpm:260,  baseDamage:31000, magazineSize:7,  reloadSpeed:1.9, critChance:6, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'Y8S1 Season Pass' },
+    { id:'w_named_dread_edict2',name:'Dread Edict (Alt)',   quality:'Exotic',   rpm:60,   baseDamage:121000,magazineSize:5,  reloadSpeed:4.2, critChance:5, critDamage:25, headshotDamage:150,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_vindicator2',name:'Vindicator (Alt)',     quality:'Exotic',   rpm:260,  baseDamage:28500, magazineSize:20, reloadSpeed:2.0, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Descent mode / Exotic Cache' },
+    { id:'w_named_overlord2',name:'Overlord (Alt)',         quality:'Exotic',   rpm:218,  baseDamage:76000, magazineSize:7,  reloadSpeed:3.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_ironlung2',name:'Iron Lung (Alt)',        quality:'Exotic',   rpm:500,  baseDamage:18500, magazineSize:100,reloadSpeed:5.8, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Exotic Cache' },
+    { id:'w_named_bluescreen2',name:'Bluescreen (Alt)',     quality:'Exotic',   rpm:600,  baseDamage:14200, magazineSize:100,reloadSpeed:5.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_sacrum2',name:'Sacrum Imperium (Alt)',    quality:'Exotic',   rpm:55,   baseDamage:131000,magazineSize:4,  reloadSpeed:5.0, critChance:5, critDamage:25, headshotDamage:150,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_mantis2',name:'Mantis (Alt)',             quality:'Exotic',   rpm:65,   baseDamage:111000,magazineSize:4,  reloadSpeed:7.2, critChance:5, critDamage:25, headshotDamage:150,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_ravenous2',name:'The Ravenous (Alt)',     quality:'Exotic',   rpm:250,  baseDamage:30500, magazineSize:20, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Dark Zone / Iron Horse raid' },
+    { id:'w_named_diamondback2',name:'Diamondback (Alt)',   quality:'Exotic',   rpm:240,  baseDamage:28500, magazineSize:20, reloadSpeed:2.0, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Kenly College / Targeted loot' },
+    { id:'w_named_sweetdreams2',name:'Sweet Dreams (Alt)',  quality:'Exotic',   rpm:70,   baseDamage:111000,magazineSize:7,  reloadSpeed:5.4, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'Outcast boss / Targeted loot' },
+    { id:'w_named_lullaby2',name:'Lullaby (Alt)',           quality:'Exotic',   rpm:70,   baseDamage:111000,magazineSize:7,  reloadSpeed:5.4, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'Outcast boss / Targeted loot' },
+    { id:'w_named_merciless2',name:'Merciless (Alt)',       quality:'Exotic',   rpm:280,  baseDamage:26500, magazineSize:20, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Hyena boss / Targeted loot' },
+    { id:'w_named_ruthless2',name:'Ruthless (Alt)',         quality:'Exotic',   rpm:280,  baseDamage:26500, magazineSize:20, reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Hyena boss / Targeted loot' },
   ],
 
   // ── Attachments ────────────────────────────────────────────────────────────
@@ -1720,12 +1971,12 @@ function renderWeaponSlot(index, keepOpen) {
   // Build inner HTML
   let html = `<div class="slot-header" id="weapon-${index}-header">${label}</div>`;
 
-  // Weapon dropdown
+  // Weapon dropdown — plain scrollable select with all weapons
   html += `<select id="weapon-select-${index}">`;
   html += `<option value="">-- Select Weapon --</option>`;
   for (const w of [...DB.weapons].sort((a, b) => a.name.localeCompare(b.name))) {
     const selected = weaponState.weaponId === w.id ? ' selected' : '';
-    html += `<option value="${w.id}"${selected} data-quality="${w.quality}">${w.name}</option>`;
+    html += `<option value="${w.id}"${selected}>${w.name}</option>`;
   }
   html += `</select>`;
 
@@ -1892,12 +2143,11 @@ function renderWeaponSlot(index, keepOpen) {
     if (wid) {
       const w = DB.weapons.find(wp => wp.id === wid);
       if (w) {
-        buildState.weapons[index].weaponId      = w.id;
-        buildState.weapons[index].baseDamage    = w.baseDamage;
-        buildState.weapons[index].critChance    = w.critChance;
-        buildState.weapons[index].critDamage    = w.critDamage;
+        buildState.weapons[index].weaponId       = w.id;
+        buildState.weapons[index].baseDamage     = w.baseDamage;
+        buildState.weapons[index].critChance     = w.critChance;
+        buildState.weapons[index].critDamage     = w.critDamage;
         buildState.weapons[index].headshotDamage = w.headshotDamage;
-        // Reset attachments and talent when weapon changes
         buildState.weapons[index].attachments = {
           Scope:       { id: null, modifiers: {} },
           Muzzle:      { id: null, modifiers: {} },
@@ -1910,7 +2160,8 @@ function renderWeaponSlot(index, keepOpen) {
       buildState.weapons[index] = defaultWeaponState();
     }
     recalculate();
-    renderWeaponSlot(index);
+    const openNow = new Set([...container.querySelectorAll('details[open]')].map(d => d.id).filter(Boolean));
+    renderWeaponSlot(index, openNow);
   });
 
   // Editable input events

@@ -1,9 +1,9 @@
 {
   "name": "division2-gear-calculator",
-  "version": "1.2.0",
-  "description": "A Division 2 Gear & DPS Calculator built with Electron. Configure weapons, gear, attachments, talents, and see real-time DPS calculations.",
+  "version": "1.5.0",
+  "description": "Division 2 Gear & DPS Calculator",
   "main": "main.js",
-  "author": "ImThatTeriyaki",
+  "author": "ImThatTeryaki",
   "license": "MIT",
   "scripts": {
     "start": "electron .",
@@ -33,12 +33,12 @@
     "files": [
       "main.js",
       "splash.html",
-      "division2-gear-calculator.html",
+      "division2-gear-calculator-v2.html",
       "icon.png"
     ]
   },
   "devDependencies": {
-    "electron": "^33.0.0",
-    "electron-builder": "^25.0.0"
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8"
   }
 }
