@@ -666,7 +666,7 @@
 </head>
 <body>
   <header>
-  <div class="header-title">Division 2 <span>Gear Calculator v1.6</span></div>
+    <div class="header-title">Division 2 <span>Gear Calculator v1.6</span></div>
     <div class="header-controls">
       <input id="buildName" type="text" placeholder="Build name..." />
       <button id="btnExport">Export</button>
@@ -680,7 +680,7 @@
                 text-decoration:none;border:1px solid var(--border);border-bottom:2px solid var(--cyan);
                 padding:5px 12px;border-radius:var(--radius);background:var(--surface2);
                 transition:all 0.15s;white-space:nowrap;"
-         onmouseover="this.style.background='var(--surface3)';this.style.boxShadow='0 0 12px #00e5ff22';"
+         onmouseover="this.style.background='var(--surface3)';this.style.borderBottomColor='var(--cyan)';this.style.boxShadow='0 0 12px #00e5ff22';"
          onmouseout="this.style.background='var(--surface2)';this.style.boxShadow='';">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
@@ -1408,6 +1408,74 @@ const DB = {
     { id:'gi_kp_system',   name:'System Corruption Kneepads',      slot:'Kneepads', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_kp_rare',     name:'Generic Kneepads (Rare)',         slot:'Kneepads', quality:'Rare',     brand:'Overlord Armaments',             gearSet:null, isNamedItem:false, baseArmor:66000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
     { id:'gi_kp_uncommon', name:'Generic Kneepads (Uncommon)',     slot:'Kneepads', quality:'Uncommon', brand:null,                             gearSet:null, isNamedItem:false, baseArmor:42000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+
+    // ════════════════════════════════════════════════════════════════
+    // MISSING BRANDS — Imminence Armaments (all 6 slots)
+    // ════════════════════════════════════════════════════════════════
+    { id:'gi_mask_imminence',    name:'Imminence Armaments Mask',    slot:'Mask',     quality:'High-End', brand:'Imminence Armaments', gearSet:null, isNamedItem:false, baseArmor:95000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_chest_imminence',   name:'Imminence Armaments Chest',   slot:'Chest',    quality:'High-End', brand:'Imminence Armaments', gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'World drop' },
+    { id:'gi_bp_imminence',      name:'Imminence Armaments Backpack',slot:'Backpack', quality:'High-End', brand:'Imminence Armaments', gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'World drop' },
+    { id:'gi_gloves_imminence',  name:'Imminence Armaments Gloves',  slot:'Gloves',   quality:'High-End', brand:'Imminence Armaments', gearSet:null, isNamedItem:false, baseArmor:75000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_imminence', name:'Imminence Armaments Holster', slot:'Holster',  quality:'High-End', brand:'Imminence Armaments', gearSet:null, isNamedItem:false, baseArmor:80000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_imminence',      name:'Imminence Armaments Kneepads',slot:'Kneepads', quality:'High-End', brand:'Imminence Armaments', gearSet:null, isNamedItem:false, baseArmor:85000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+
+    // ════════════════════════════════════════════════════════════════
+    // MISSING BRANDS — Shiny Monkey Gear (all 6 slots)
+    // ════════════════════════════════════════════════════════════════
+    { id:'gi_mask_shinymonkey',    name:'Shiny Monkey Gear Mask',    slot:'Mask',     quality:'High-End', brand:'Shiny Monkey Gear', gearSet:null, isNamedItem:false, baseArmor:95000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_chest_shinymonkey',   name:'Shiny Monkey Gear Chest',   slot:'Chest',    quality:'High-End', brand:'Shiny Monkey Gear', gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'World drop' },
+    { id:'gi_bp_shinymonkey',      name:'Shiny Monkey Gear Backpack',slot:'Backpack', quality:'High-End', brand:'Shiny Monkey Gear', gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'World drop' },
+    { id:'gi_gloves_shinymonkey',  name:'Shiny Monkey Gear Gloves',  slot:'Gloves',   quality:'High-End', brand:'Shiny Monkey Gear', gearSet:null, isNamedItem:false, baseArmor:75000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_shinymonkey', name:'Shiny Monkey Gear Holster', slot:'Holster',  quality:'High-End', brand:'Shiny Monkey Gear', gearSet:null, isNamedItem:false, baseArmor:80000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_shinymonkey',      name:'Shiny Monkey Gear Kneepads',slot:'Kneepads', quality:'High-End', brand:'Shiny Monkey Gear', gearSet:null, isNamedItem:false, baseArmor:85000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+
+    // ════════════════════════════════════════════════════════════════
+    // MISSING BRANDS — Uzina Getica (all 6 slots)
+    // ════════════════════════════════════════════════════════════════
+    { id:'gi_mask_uzina',    name:'Uzina Getica Mask',    slot:'Mask',     quality:'High-End', brand:'Uzina Getica', gearSet:null, isNamedItem:false, baseArmor:95000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_chest_uzina',   name:'Uzina Getica Chest',   slot:'Chest',    quality:'High-End', brand:'Uzina Getica', gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'World drop' },
+    { id:'gi_bp_uzina',      name:'Uzina Getica Backpack',slot:'Backpack', quality:'High-End', brand:'Uzina Getica', gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'World drop' },
+    { id:'gi_gloves_uzina',  name:'Uzina Getica Gloves',  slot:'Gloves',   quality:'High-End', brand:'Uzina Getica', gearSet:null, isNamedItem:false, baseArmor:75000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_uzina', name:'Uzina Getica Holster', slot:'Holster',  quality:'High-End', brand:'Uzina Getica', gearSet:null, isNamedItem:false, baseArmor:80000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_uzina',      name:'Uzina Getica Kneepads',slot:'Kneepads', quality:'High-End', brand:'Uzina Getica', gearSet:null, isNamedItem:false, baseArmor:85000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+
+    // ════════════════════════════════════════════════════════════════
+    // MISSING BRANDS — Zwiadowka SP. z o.o. (all 6 slots)
+    // ════════════════════════════════════════════════════════════════
+    { id:'gi_mask_zwiadowka',    name:'Zwiadowka SP. z o.o. Mask',    slot:'Mask',     quality:'High-End', brand:'Zwiadowka SP. z o.o.', gearSet:null, isNamedItem:false, baseArmor:95000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_chest_zwiadowka',   name:'Zwiadowka SP. z o.o. Chest',   slot:'Chest',    quality:'High-End', brand:'Zwiadowka SP. z o.o.', gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'World drop' },
+    { id:'gi_bp_zwiadowka',      name:'Zwiadowka SP. z o.o. Backpack',slot:'Backpack', quality:'High-End', brand:'Zwiadowka SP. z o.o.', gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'World drop' },
+    { id:'gi_gloves_zwiadowka',  name:'Zwiadowka SP. z o.o. Gloves',  slot:'Gloves',   quality:'High-End', brand:'Zwiadowka SP. z o.o.', gearSet:null, isNamedItem:false, baseArmor:75000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_zwiadowka', name:'Zwiadowka SP. z o.o. Holster', slot:'Holster',  quality:'High-End', brand:'Zwiadowka SP. z o.o.', gearSet:null, isNamedItem:false, baseArmor:80000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_zwiadowka',      name:'Zwiadowka SP. z o.o. Kneepads',slot:'Kneepads', quality:'High-End', brand:'Zwiadowka SP. z o.o.', gearSet:null, isNamedItem:false, baseArmor:85000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+
+    // ════════════════════════════════════════════════════════════════
+    // MISSING NAMED / EXOTIC ITEMS
+    // ════════════════════════════════════════════════════════════════
+    // Masks
+    { id:'gi_mask_coyote',       name:"Coyote's Mask",               slot:'Mask',     quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:100000, fixedAttributes:[{statType:'critChance',value:6,isEditable:false}], modSlots:0, hasTalent:false, farmingSource:'Jefferson Trade Center final boss / Targeted loot' },
+    { id:'gi_mask_catharsis',    name:'Catharsis',                   slot:'Mask',     quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:100000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Exotic Cache' },
+    // Chests
+    { id:'gi_chest_ridgeway',    name:"Ridgeway's Pride",            slot:'Chest',    quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:135000, fixedAttributes:[{statType:'weaponDamage',value:10,isEditable:false}], modSlots:0, hasTalent:true, farmingSource:'The Summit floors 1-100 / Targeted loot' },
+    { id:'gi_chest_collector',   name:'Collector',                   slot:'Chest',    quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:135000, fixedAttributes:[], modSlots:0, hasTalent:true, farmingSource:'Exotic Cache' },
+    { id:'gi_chest_provocateur', name:'Provocateur',                 slot:'Chest',    quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:135000, fixedAttributes:[], modSlots:0, hasTalent:true, farmingSource:'Space Administration: Theo Parnell mission' },
+    // Backpacks
+    { id:'gi_bp_birdie',         name:"Birdie's Quick Fix",          slot:'Backpack', quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:115000, fixedAttributes:[], modSlots:0, hasTalent:true, farmingSource:'Y6S3 Manhunt Climax mission' },
+    { id:'gi_bp_ninjabike',      name:'NinjaBike Messenger Backpack',slot:'Backpack', quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:115000, fixedAttributes:[], modSlots:0, hasTalent:true, farmingSource:'Targeted loot / Exotic Cache' },
+    // Gloves
+    { id:'gi_gloves_bloodyknuckles', name:'Bloody Knuckles',         slot:'Gloves',   quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:78000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'gi_gloves_ruggedgauntlets',name:'Rugged Gauntlets',        slot:'Gloves',   quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:78000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'gi_gloves_exodus',     name:'Exodus',                      slot:'Gloves',   quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:78000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Y6S3 Season Pass rank 29' },
+    // Holsters
+    { id:'gi_holster_dodgecity', name:"Dodge City Gunslinger's Holster", slot:'Holster', quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:82000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Blueprint from Inaya al-Khaliq / Control point components' },
+    { id:'gi_holster_imperialdynasty', name:'Imperial Dynasty',      slot:'Holster',  quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:82000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Cleaner named boss / Summit / Targeted loot' },
+    { id:'gi_holster_centurion', name:"Centurion's Scabbard",        slot:'Holster',  quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:82000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Y6S2 Season Pass rank 29' },
+    { id:'gi_holster_shockerpunch', name:'Shocker Punch',            slot:'Holster',  quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:82000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'gi_holster_waveform',  name:'Waveform',                    slot:'Holster',  quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:82000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Exotic Cache' },
+    // Kneepads
+    { id:'gi_kp_sawyer',         name:"Sawyer's Kneepads",           slot:'Kneepads', quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:87000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Hyena named boss / Summit / Targeted loot' },
+    { id:'gi_kp_ninjabike',      name:'NinjaBike Messenger Kneepads',slot:'Kneepads', quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:87000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'gi_kp_acostas',        name:"Acosta's Kneepads",           slot:'Kneepads', quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:87000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Exotic Cache' },
   ],
 
   // ── Gear Talents ───────────────────────────────────────────────────────────
@@ -1990,14 +2058,42 @@ function renderWeaponSlot(index, keepOpen) {
   // Build inner HTML
   let html = `<div class="slot-header" id="weapon-${index}-header">${label}</div>`;
 
-  // Weapon dropdown — plain scrollable select with all weapons
-  html += `<select id="weapon-select-${index}">`;
-  html += `<option value="">-- Select Weapon --</option>`;
+  // Original select box (collapsed, shows selected weapon name)
+  html += `<div style="position:relative;margin-bottom:6px;" id="wpicker-wrap-${index}">`;
+  html += `<div id="wpicker-btn-${index}"
+    style="width:100%;background:var(--surface2);color:${selectedWeapon ? 'var(--text-bright)' : 'var(--text-muted)'};
+           border:1px solid var(--border);border-bottom:2px solid var(--accent-dim);
+           padding:6px 28px 6px 10px;font-family:Rajdhani,sans-serif;font-size:0.88rem;
+           cursor:pointer;border-radius:var(--radius);user-select:none;
+           background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22%3E%3Cpath d=%22M0 0l5 6 5-6z%22 fill=%22%23f4a21e%22/%3E%3C/svg%3E');
+           background-repeat:no-repeat;background-position:right 10px center;
+           white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+    ${selectedWeapon ? selectedWeapon.name : '-- Select Weapon --'}
+  </div>`;
+
+  // Hidden panel — shown on click
+  html += `<div id="wpicker-panel-${index}"
+    style="display:none;position:absolute;top:100%;left:0;right:0;z-index:9999;
+           background:var(--surface);border:1px solid var(--border-accent);
+           border-top:2px solid var(--accent);
+           box-shadow:0 8px 24px #000c;">`;
+  html += `<input type="text" id="wpicker-search-${index}" placeholder="Search weapons..."
+    autocomplete="off"
+    style="width:100%;background:var(--surface2);color:var(--text-bright);
+           border:none;border-bottom:1px solid var(--border);
+           padding:7px 12px;font-family:Rajdhani,sans-serif;font-size:0.88rem;outline:none;" />`;
+  html += `<div id="wpicker-list-${index}"
+    style="max-height:200px;overflow-y:scroll;
+           scrollbar-width:thin;scrollbar-color:var(--border-accent) var(--surface2);">`;
+  html += `<div class="wpi" data-wid="" style="padding:5px 12px;font-size:0.8rem;color:var(--text-muted);cursor:pointer;">-- Clear Selection --</div>`;
   for (const w of [...DB.weapons].sort((a, b) => a.name.localeCompare(b.name))) {
-    const selected = weaponState.weaponId === w.id ? ' selected' : '';
-    html += `<option value="${w.id}"${selected}>${w.name}</option>`;
+    const qc = {Common:'#9e9e9e',Uncommon:'#00e676',Rare:'#40c4ff','High-End':'#ffd740',Exotic:'#ff6d00'}[w.quality] || 'var(--text-bright)';
+    const bg = weaponState.weaponId === w.id ? 'background:var(--surface3);' : '';
+    const safeName = w.name.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+    html += `<div class="wpi" data-wid="${w.id}" data-wname="${w.name.toLowerCase()}"
+      style="padding:5px 12px;font-size:0.85rem;color:${qc};cursor:pointer;${bg}font-family:Rajdhani,sans-serif;font-weight:600;">${safeName}</div>`;
   }
-  html += `</select>`;
+  html += `</div></div></div>`;
 
   // Farming info — collapsible, shown only when an item is selected
   const farmingText = selectedWeapon && DB.farmingInfo[selectedWeapon.id]
@@ -2149,16 +2245,22 @@ function renderWeaponSlot(index, keepOpen) {
 
   // Apply quality colors to dropdown options
   const select = container.querySelector(`#weapon-select-${index}`);
-  for (const option of select.options) {
-    if (option.value) {
-      const w = DB.weapons.find(wp => wp.id === option.value);
-      if (w) applyQualityColor(option, w.quality);
+  if (select) {
+    for (const option of select.options) {
+      if (option.value) {
+        const w = DB.weapons.find(wp => wp.id === option.value);
+        if (w) applyQualityColor(option, w.quality);
+      }
     }
   }
 
-  // Weapon select event
-  select.addEventListener('change', () => {
-    const wid = select.value;
+  // ── Weapon picker events ──────────────────────────────────────────────────
+  const wpBtn    = container.querySelector(`#wpicker-btn-${index}`);
+  const wpPanel  = container.querySelector(`#wpicker-panel-${index}`);
+  const wpSearch = container.querySelector(`#wpicker-search-${index}`);
+  const wpList   = container.querySelector(`#wpicker-list-${index}`);
+
+  function selectWeapon(wid) {
     if (wid) {
       const w = DB.weapons.find(wp => wp.id === wid);
       if (w) {
@@ -2181,7 +2283,55 @@ function renderWeaponSlot(index, keepOpen) {
     recalculate();
     const openNow = new Set([...container.querySelectorAll('details[open]')].map(d => d.id).filter(Boolean));
     renderWeaponSlot(index, openNow);
-  });
+  }
+
+  if (wpBtn && wpPanel && wpSearch && wpList) {
+    // Toggle panel on button click
+    wpBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = wpPanel.style.display !== 'none';
+      document.querySelectorAll('[id^="wpicker-panel-"]').forEach(p => p.style.display = 'none');
+      if (!isOpen) {
+        wpPanel.style.display = 'block';
+        wpSearch.value = '';
+        wpList.querySelectorAll('.wpi').forEach(el => el.style.display = '');
+        setTimeout(() => wpSearch.focus(), 10);
+      }
+    });
+
+    // Filter list as user types
+    wpSearch.addEventListener('input', () => {
+      const q = wpSearch.value.toLowerCase();
+      wpList.querySelectorAll('.wpi').forEach(el => {
+        const name = (el.dataset.wname || '');
+        el.style.display = (!q || !name || name.includes(q)) ? '' : 'none';
+      });
+    });
+
+    // Select on click
+    wpList.addEventListener('click', (e) => {
+      const item = e.target.closest('.wpi');
+      if (!item) return;
+      wpPanel.style.display = 'none';
+      selectWeapon(item.dataset.wid || '');
+    });
+
+    // Hover highlight
+    wpList.addEventListener('mouseover', e => {
+      const item = e.target.closest('.wpi');
+      if (item) item.style.background = 'var(--surface3)';
+    });
+    wpList.addEventListener('mouseout', e => {
+      const item = e.target.closest('.wpi');
+      if (item && item.dataset.wid !== (buildState.weapons[index].weaponId || '')) {
+        item.style.background = '';
+      }
+    });
+
+    // Close on outside click
+    document.addEventListener('click', () => { wpPanel.style.display = 'none'; });
+    wpPanel.addEventListener('click', e => e.stopPropagation());
+  }
 
   // Editable input events
   for (const field of editableFields) {
