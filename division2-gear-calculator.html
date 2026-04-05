@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Division 2 Gear Calculator v1.7</title>
+  <title>Division 2 Gear Calculator v1.7.2</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
 
@@ -666,7 +666,7 @@
 </head>
 <body>
   <header>
-    <div class="header-title">Division 2 <span>Gear Calculator v1.7</span></div>
+    <div class="header-title">Division 2 <span>Gear Calculator v1.7.2</span></div>
     <div class="header-controls">
       <input id="buildName" type="text" placeholder="Build name..." />
       <button id="btnExport">Export</button>
@@ -1180,7 +1180,7 @@ const DB = {
     { id:'gi_mask_eclipse',  name:'Eclipse Protocol Mask',       slot:'Mask', quality:'High-End', brand:null, gearSet:'Eclipse Protocol',     isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_mask_future',   name:'Future Initiative Mask',      slot:'Mask', quality:'High-End', brand:null, gearSet:'Future Initiative',    isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_mask_system',   name:'System Corruption Mask',      slot:'Mask', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
-    // Named / Exotic Masks
+    { id:'gi_mask_corestrength', name:'Core Strength Mask',       slot:'Mask', quality:'High-End', brand:null, gearSet:'Core Strength',        isNamedItem:false, baseArmor:95000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Escalation' },
     { id:'gi_mask_vile',     name:'Vile Mask',                   slot:'Mask', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:100000, fixedAttributes:[{statType:'critChance',value:6,isEditable:false}], modSlots:0, hasTalent:false, farmingSource:'Targeted loot — Contaminated Zone' },
     { id:'gi_mask_tardigrade',name:'Tardigrade Armor System',    slot:'Mask', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:105000, fixedAttributes:[{statType:'armor',value:5000,isEditable:false}], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Season reward' },
     // Lower quality
@@ -1227,7 +1227,7 @@ const DB = {
     { id:'gi_chest_eclipse',  name:'Eclipse Protocol Chest',       slot:'Chest', quality:'High-End', brand:null, gearSet:'Eclipse Protocol',     isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_chest_future',   name:'Future Initiative Chest',      slot:'Chest', quality:'High-End', brand:null, gearSet:'Future Initiative',    isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_chest_system',   name:'System Corruption Chest',      slot:'Chest', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
-    // Named / Exotic Chests
+    { id:'gi_chest_corestrength', name:'Core Strength Chest',       slot:'Chest', quality:'High-End', brand:null, gearSet:'Core Strength',        isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'Targeted loot / Escalation' },
     { id:'gi_chest_chainkiller',name:'Chainkiller',                slot:'Chest', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:135000, fixedAttributes:[{statType:'critChance',value:6,isEditable:false},{statType:'weaponDamage',value:15,isEditable:false}], modSlots:0, hasTalent:true, farmingSource:'Invaded missions / Targeted loot' },
     { id:'gi_chest_memento',  name:'Memento',                      slot:'Chest', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:135000, fixedAttributes:[{statType:'weaponDamage',value:10,isEditable:false}], modSlots:0, hasTalent:true, farmingSource:'Targeted loot / Season reward' },
     { id:'gi_chest_rare',     name:'Generic Chest (Rare)',         slot:'Chest', quality:'Rare',     brand:'Fenris Group AB',                gearSet:null, isNamedItem:false, baseArmor:100000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
@@ -1273,7 +1273,7 @@ const DB = {
     { id:'gi_bp_eclipse',  name:'Eclipse Protocol Backpack',       slot:'Backpack', quality:'High-End', brand:null, gearSet:'Eclipse Protocol',     isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_bp_future',   name:'Future Initiative Backpack',      slot:'Backpack', quality:'High-End', brand:null, gearSet:'Future Initiative',    isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_bp_system',   name:'System Corruption Backpack',      slot:'Backpack', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
-    // Named / Exotic Backpacks
+    { id:'gi_bp_corestrength', name:'Core Strength Backpack',       slot:'Backpack', quality:'High-End', brand:null, gearSet:'Core Strength',        isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'Targeted loot / Escalation' },
     { id:'gi_bp_acosta',   name:"Acosta's Go-Bag",                 slot:'Backpack', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:115000, fixedAttributes:[{statType:'skillDamage',value:10,isEditable:false}], modSlots:0, hasTalent:true, farmingSource:'Targeted loot / Season reward' },
     { id:'gi_bp_rare',     name:'Generic Backpack (Rare)',         slot:'Backpack', quality:'Rare',     brand:'Sokolov Concern',                gearSet:null, isNamedItem:false, baseArmor:85000,  fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
     { id:'gi_bp_uncommon', name:'Generic Backpack (Uncommon)',     slot:'Backpack', quality:'Uncommon', brand:null,                             gearSet:null, isNamedItem:false, baseArmor:55000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
@@ -1318,7 +1318,7 @@ const DB = {
     { id:'gi_gloves_eclipse',  name:'Eclipse Protocol Gloves',       slot:'Gloves', quality:'High-End', brand:null, gearSet:'Eclipse Protocol',     isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_gloves_future',   name:'Future Initiative Gloves',      slot:'Gloves', quality:'High-End', brand:null, gearSet:'Future Initiative',    isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_gloves_system',   name:'System Corruption Gloves',      slot:'Gloves', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:75000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
-    // Named / Exotic Gloves
+    { id:'gi_gloves_corestrength', name:'Core Strength Gloves',       slot:'Gloves', quality:'High-End', brand:null, gearSet:'Core Strength',        isNamedItem:false, baseArmor:75000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Escalation' },
     { id:'gi_gloves_btsu',     name:'BTSU Datagloves',               slot:'Gloves', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:78000, fixedAttributes:[{statType:'skillDamage',value:15,isEditable:false}], modSlots:0, hasTalent:true, farmingSource:'Tidal Basin (Invaded) — final boss' },
     { id:'gi_gloves_rare',     name:'Generic Gloves (Rare)',         slot:'Gloves', quality:'Rare',     brand:'Grupo Sombra S.A.',              gearSet:null, isNamedItem:false, baseArmor:58000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
     { id:'gi_gloves_uncommon', name:'Generic Gloves (Uncommon)',     slot:'Gloves', quality:'Uncommon', brand:null,                             gearSet:null, isNamedItem:false, baseArmor:38000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
@@ -1363,7 +1363,7 @@ const DB = {
     { id:'gi_holster_eclipse',  name:'Eclipse Protocol Holster',       slot:'Holster', quality:'High-End', brand:null, gearSet:'Eclipse Protocol',     isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_holster_future',   name:'Future Initiative Holster',      slot:'Holster', quality:'High-End', brand:null, gearSet:'Future Initiative',    isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_holster_system',   name:'System Corruption Holster',      slot:'Holster', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:80000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
-    { id:'gi_holster_rare',     name:'Generic Holster (Rare)',         slot:'Holster', quality:'Rare',     brand:'Wyvern Wear',                    gearSet:null, isNamedItem:false, baseArmor:62000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_corestrength', name:'Core Strength Holster',       slot:'Holster', quality:'High-End', brand:null, gearSet:'Core Strength',        isNamedItem:false, baseArmor:80000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Escalation' },     name:'Generic Holster (Rare)',         slot:'Holster', quality:'Rare',     brand:'Wyvern Wear',                    gearSet:null, isNamedItem:false, baseArmor:62000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
     { id:'gi_holster_uncommon', name:'Generic Holster (Uncommon)',     slot:'Holster', quality:'Uncommon', brand:null,                             gearSet:null, isNamedItem:false, baseArmor:40000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
     // ════════════════════════════════════════════════════════════════
     // KNEEPADS
@@ -1406,7 +1406,7 @@ const DB = {
     { id:'gi_kp_eclipse',  name:'Eclipse Protocol Kneepads',       slot:'Kneepads', quality:'High-End', brand:null, gearSet:'Eclipse Protocol',     isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_kp_future',   name:'Future Initiative Kneepads',      slot:'Kneepads', quality:'High-End', brand:null, gearSet:'Future Initiative',    isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_kp_system',   name:'System Corruption Kneepads',      slot:'Kneepads', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:85000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Crafting' },
-    { id:'gi_kp_rare',     name:'Generic Kneepads (Rare)',         slot:'Kneepads', quality:'Rare',     brand:'Overlord Armaments',             gearSet:null, isNamedItem:false, baseArmor:66000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_corestrength', name:'Core Strength Kneepads',         slot:'Kneepads', quality:'High-End', brand:null, gearSet:'Core Strength',        isNamedItem:false, baseArmor:85000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'Targeted loot / Escalation' },     name:'Generic Kneepads (Rare)',         slot:'Kneepads', quality:'Rare',     brand:'Overlord Armaments',             gearSet:null, isNamedItem:false, baseArmor:66000, fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
     { id:'gi_kp_uncommon', name:'Generic Kneepads (Uncommon)',     slot:'Kneepads', quality:'Uncommon', brand:null,                             gearSet:null, isNamedItem:false, baseArmor:42000, fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
 
     // ════════════════════════════════════════════════════════════════
@@ -1597,6 +1597,13 @@ const DB = {
         2: { statType: 'weaponDamage', value: 10 },
         3: { statType: 'critDamage', value: 10 },
         4: { statType: 'weaponDamage', value: 20 }
+      }
+    },
+    'Core Strength': {
+      bonuses: {
+        2: { statType: 'weaponHandling', value: 10 },
+        3: { statType: 'weaponDamage',   value: 5  },
+        4: { statType: 'weaponDamage',   value: 15 }
       }
     },
   },
@@ -1964,6 +1971,37 @@ function detectBonuses(gearStates, stats) {
         }
         stats.activeSetBonuses.push({ set: setName, pieces: count, bonus });
       }
+    }
+  }
+
+  // ── Core Strength 4pc: "Core Exercise" dynamic calculation ───────────────
+  if ((setCounts['Core Strength'] || 0) >= 4) {
+    let redCores = 0, blueCores = 0, yellowCores = 0;
+    for (const gearState of gearStates) {
+      const ct = gearState.coreAttribute && gearState.coreAttribute.statType;
+      if (ct === 'weaponDamage') redCores++;
+      else if (ct === 'armor')   blueCores++;
+      else if (ct === 'skillTier') yellowCores++;
+    }
+    if (redCores > 0) {
+      stats.armor      += redCores * 170000 * 0.4;
+      stats.skillDamage += redCores * 15 * 0.4;
+    }
+    if (blueCores > 0) {
+      stats.weaponDamage += blueCores * 15 * 0.4;
+      stats.skillDamage  += blueCores * 15 * 0.4;
+    }
+    if (yellowCores > 0) {
+      stats.weaponDamage += yellowCores * 15 * 0.4;
+      stats.armor        += yellowCores * 170000 * 0.4;
+    }
+    if (redCores > 0 || blueCores > 0 || yellowCores > 0) {
+      stats.activeSetBonuses.push({
+        set: 'Core Strength',
+        pieces: setCounts['Core Strength'],
+        bonus: { statType: 'weaponDamage', value: Math.round((blueCores + yellowCores) * 15 * 0.4) },
+        note: `Core Exercise: ${redCores}🔴 ${blueCores}🔵 ${yellowCores}🟡`
+      });
     }
   }
 
