@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Division 2 Gear Calculator v1.7.2</title>
+  <title>Division 2 Gear Calculator v1.7.3</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
 
@@ -666,7 +666,7 @@
 </head>
 <body>
   <header>
-    <div class="header-title">Division 2 <span>Gear Calculator v1.7.2</span></div>
+    <div class="header-title">Division 2 <span>Gear Calculator v1.7.3</span></div>
     <div class="header-controls">
       <input id="buildName" type="text" placeholder="Build name..." />
       <button id="btnExport">Export</button>
@@ -687,8 +687,131 @@
         </svg>
         Updates
       </a>
+      <button id="btn-credits"
+         title="Credits & Contributors"
+         style="display:flex;align-items:center;gap:6px;color:var(--accent);font-family:'Rajdhani',sans-serif;
+                font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+                text-decoration:none;border:1px solid var(--border);border-bottom:2px solid var(--accent);
+                padding:5px 12px;border-radius:var(--radius);background:var(--surface2);
+                transition:all 0.15s;white-space:nowrap;cursor:pointer;"
+         onmouseover="this.style.background='var(--surface3)';this.style.boxShadow='0 0 12px #f4a21e22';"
+         onmouseout="this.style.background='var(--surface2)';this.style.boxShadow='';">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+        Credits
+      </button>
     </div>
   </header>
+
+  <!-- Credits modal -->
+  <div id="credits-modal" style="display:none;position:fixed;inset:0;z-index:99999;
+       background:rgba(8,12,16,0.85);align-items:center;justify-content:center;">
+    <div style="background:var(--surface);border:1px solid var(--border-accent);border-top:2px solid var(--accent);
+                width:480px;max-width:90vw;border-radius:var(--radius);box-shadow:0 0 40px #000c;
+                font-family:'Rajdhani',sans-serif;position:relative;">
+      <div style="position:absolute;top:8px;left:8px;width:20px;height:20px;border-top:1px solid #f4a21e55;border-left:1px solid #f4a21e55;"></div>
+      <div style="position:absolute;top:8px;right:8px;width:20px;height:20px;border-top:1px solid #f4a21e55;border-right:1px solid #f4a21e55;"></div>
+      <div style="position:absolute;bottom:8px;left:8px;width:20px;height:20px;border-bottom:1px solid #f4a21e55;border-left:1px solid #f4a21e55;"></div>
+      <div style="position:absolute;bottom:8px;right:8px;width:20px;height:20px;border-bottom:1px solid #f4a21e55;border-right:1px solid #f4a21e55;"></div>
+      <div style="padding:14px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
+        <div style="width:28px;height:28px;background:linear-gradient(135deg,var(--accent),#c07010);
+                    clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+                    display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#080c10"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        </div>
+        <div>
+          <div style="color:var(--accent);font-size:0.8rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;">Credits</div>
+          <div style="color:var(--text-muted);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;margin-top:2px;">Division 2 Gear Calculator</div>
+        </div>
+        <button onclick="document.getElementById('credits-modal').style.display='none';"
+                style="margin-left:auto;background:none;border:none;color:var(--text-muted);
+                       font-size:1.2rem;cursor:pointer;padding:0 4px;line-height:1;"
+                onmouseover="this.style.color='var(--text-bright)';"
+                onmouseout="this.style.color='var(--text-muted)';">✕</button>
+      </div>
+      <div style="padding:20px 24px;max-height:400px;overflow-y:auto;
+                  scrollbar-width:thin;scrollbar-color:var(--border-accent) var(--surface2);">
+        <div style="margin-bottom:18px;">
+          <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;
+                      color:var(--accent);padding:4px 10px;background:var(--surface2);
+                      border-left:3px solid var(--accent);margin-bottom:10px;">Creator</div>
+          <div style="display:flex;align-items:center;gap:12px;padding:8px 10px;background:var(--surface2);border-radius:var(--radius);">
+            <div style="width:32px;height:32px;background:linear-gradient(135deg,var(--accent),#c07010);
+                        border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+                        font-size:0.8rem;font-weight:700;color:#080c10;">IT</div>
+            <div>
+              <div style="color:var(--text-bright);font-size:0.88rem;font-weight:700;">ImThatTeriyaki</div>
+              <div style="color:var(--text-muted);font-size:0.68rem;letter-spacing:0.1em;">Sleepy Inc Clan</div>
+            </div>
+            <a href="https://github.com/ImThatTeriyaki" target="_blank"
+               style="margin-left:auto;color:var(--cyan);font-size:0.68rem;text-decoration:none;
+                      letter-spacing:0.1em;text-transform:uppercase;opacity:0.8;"
+               onmouseover="this.style.opacity='1';" onmouseout="this.style.opacity='0.8';">GitHub ↗</a>
+            <a href="https://www.reddit.com/user/SleepySeiko/" target="_blank"
+               style="color:var(--cyan);font-size:0.68rem;text-decoration:none;
+                      letter-spacing:0.1em;text-transform:uppercase;opacity:0.8;margin-left:6px;"
+               onmouseover="this.style.opacity='1';" onmouseout="this.style.opacity='0.8';">Reddit ↗</a>
+            <a href="https://www.youtube.com/@ImThatTeriyaki" target="_blank"
+               style="color:#ff4444;font-size:0.68rem;text-decoration:none;
+                      letter-spacing:0.1em;text-transform:uppercase;opacity:0.8;margin-left:6px;"
+               onmouseover="this.style.opacity='1';" onmouseout="this.style.opacity='0.8';">YouTube ↗</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;
+                      color:var(--cyan);padding:4px 10px;background:var(--surface2);
+                      border-left:3px solid var(--cyan);margin-bottom:10px;">Contributors</div>
+          <div id="credits-list">
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 10px;background:var(--surface2);border-radius:var(--radius);margin-bottom:6px;">
+              <div style="width:32px;height:32px;background:linear-gradient(135deg,var(--cyan),#0090aa);
+                          border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+                          font-size:0.75rem;font-weight:700;color:#080c10;">GG</div>
+              <div style="flex:1;">
+                <div style="color:var(--text-bright);font-size:0.88rem;font-weight:700;">ghostofghoul</div>
+                <div style="color:var(--text-muted);font-size:0.68rem;letter-spacing:0.05em;margin-top:2px;">
+                  Provided real-world builds for testing and helped identify gear &amp; talent mismatches throughout development.
+                </div>
+              </div>
+              <a href="https://discord.gg/paGBuhbS" target="_blank"
+                 style="flex-shrink:0;color:var(--cyan);font-size:0.65rem;text-decoration:none;
+                        letter-spacing:0.08em;text-transform:uppercase;opacity:0.8;white-space:nowrap;
+                        border:1px solid var(--border);padding:3px 8px;border-radius:var(--radius);"
+                 onmouseover="this.style.opacity='1';this.style.borderColor='var(--cyan)';"
+                 onmouseout="this.style.opacity='0.8';this.style.borderColor='var(--border)';">His Build Server ↗</a>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 10px;background:var(--surface2);border-radius:var(--radius);margin-bottom:6px;">
+              <div style="width:32px;height:32px;background:linear-gradient(135deg,#f4a21e,#c07010);
+                          border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+                          font-size:0.75rem;font-weight:700;color:#080c10;">EW</div>
+              <div style="flex:1;">
+                <div style="color:var(--text-bright);font-size:0.88rem;font-weight:700;">ew_interceptor</div>
+                <div style="color:var(--text-muted);font-size:0.68rem;letter-spacing:0.05em;margin-top:2px;">
+                  Contributed feedback and assistance throughout development.
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 10px;background:var(--surface2);border-radius:var(--radius);margin-bottom:6px;">
+              <div style="width:32px;height:32px;background:linear-gradient(135deg,#e040fb,#9c27b0);
+                          border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+                          font-size:0.75rem;font-weight:700;color:#080c10;">SC</div>
+              <div style="flex:1;">
+                <div style="color:var(--text-bright);font-size:0.88rem;font-weight:700;">Strange_Cherry_2578</div>
+                <div style="color:var(--text-muted);font-size:0.68rem;letter-spacing:0.05em;margin-top:2px;">
+                  Suggested sorting gear by Gear Sets &amp; Brand Sets, and the idea to categorize weapons by type rather than search-only.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:12px 20px;border-top:1px solid var(--border);text-align:center;">
+        <div style="font-size:0.62rem;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;">
+          Thank you to everyone who provided feedback, tested builds, and helped make this tool more accurate for the community.
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="app">
     <!-- Weapons Panel, Gear Panel, Stat Panel rendered here by JS -->
@@ -810,6 +933,15 @@ const DB = {
     // ── Additional Pistols ──
     { id:'w_m9a3',     name:'M9A3',                    quality:'High-End', rpm:310,  baseDamage:19500, magazineSize:17, reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
     { id:'w_g17',      name:'Glock 17',                quality:'High-End', rpm:310,  baseDamage:18000, magazineSize:17, reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_dbl_sawed', name:'Double Barrel Sawed Off', quality:'High-End', rpm:200,  baseDamage:86480, magazineSize:2,  reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_dbl_sawed_mil', name:'Military Double Barrel Sawed Off', quality:'High-End', rpm:200, baseDamage:86480, magazineSize:2, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Muzzle'], farmingSource:'World drop' },
+    { id:'w_dbl_sawed_cust', name:'Custom Double Barrel Sawed Off', quality:'High-End', rpm:200, baseDamage:90000, magazineSize:2, reloadSpeed:2.0, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Muzzle'], farmingSource:'World drop / Crafting' },
+    { id:'w_named_orbit',   name:'Orbit (Named Pistol)',        quality:'Exotic',   rpm:160,  baseDamage:78000, magazineSize:6,  reloadSpeed:1.8, critChance:6, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle'], farmingSource:'Dark Zone / Targeted loot' },
+    { id:'w_named_tempest', name:'Tempest (Named Pistol)',      quality:'Exotic',   rpm:310,  baseDamage:20000, magazineSize:17, reloadSpeed:1.8, critChance:6, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_prophet', name:'Prophet (Named Pistol)',      quality:'Exotic',   rpm:160,  baseDamage:62400, magazineSize:8,  reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_kard',    name:'TDI "Kard" Custom (Named)',   quality:'Exotic',   rpm:310,  baseDamage:22000, magazineSize:17, reloadSpeed:1.8, critChance:6, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_lefty',   name:'Lefty (Named Pistol)',        quality:'Exotic',   rpm:160,  baseDamage:78000, magazineSize:6,  reloadSpeed:1.8, critChance:6, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_sheriff', name:'Sheriff (Named Pistol)',      quality:'Exotic',   rpm:160,  baseDamage:78000, magazineSize:6,  reloadSpeed:1.8, critChance:6, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle'], farmingSource:'Targeted loot / Exotic Cache' },
 
     // ════════════════════════════════════════════════════════════════
     // NAMED WEAPONS (High-End with unique talents)
@@ -850,6 +982,7 @@ const DB = {
     { id:'w_named_liberty',    name:'Liberty (Named Pistol)',      quality:'Exotic',   rpm:260,  baseDamage:30200, magazineSize:7,  reloadSpeed:1.9, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'Stronghold components from Capitol Building / American History Museum / ViewPoint Museum / Space Administration HQ' },
     { id:'w_named_mosquito',   name:'Mosquito (Named Pistol)',     quality:'Exotic',   rpm:310,  baseDamage:18500, magazineSize:17, reloadSpeed:1.8, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'Targeted loot / Exotic Cache' },
     { id:'w_named_busylittlebee',name:'Busy Little Bee (Named Pistol)',quality:'Exotic',rpm:160, baseDamage:78000, magazineSize:6,  reloadSpeed:1.8, critChance:6, critDamage:25, headshotDamage:125,supportedSlots:['Scope','Muzzle'], farmingSource:'Targeted loot / Exotic Cache' },
+    { id:'w_named_quickstep',  name:'Quickstep (Named Pistol)',    quality:'Exotic',   rpm:310,  baseDamage:19500, magazineSize:17, reloadSpeed:1.8, critChance:6, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'Targeted loot / Exotic Cache' },
 
     // AR Variants
     { id:'w_acr_cust',   name:'Custom ACR',              quality:'High-End', rpm:650,  baseDamage:13500, magazineSize:30, reloadSpeed:2.2, critChance:5, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'World drop / Crafting' },
@@ -1017,6 +1150,7 @@ const DB = {
 
     // ── Additional named/exotic weapons (Year 6-8 additions) ──
     { id:'w_named_agitator',name:'Agitator (Named AR)',     quality:'Exotic',   rpm:750,  baseDamage:13200, magazineSize:30, reloadSpeed:2.1, critChance:6, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Y8S1 Rise Up - Targeted loot' },
+    { id:'w_named_lexington',name:'Lexington (Named AR)',   quality:'Exotic',   rpm:700,  baseDamage:12500, magazineSize:30, reloadSpeed:2.2, critChance:6, critDamage:25, headshotDamage:65, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Targeted loot / Exotic Cache' },
     { id:'w_named_whiplash',name:'Whiplash (Named Pistol)', quality:'Exotic',   rpm:260,  baseDamage:31000, magazineSize:7,  reloadSpeed:1.9, critChance:6, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle'], farmingSource:'Y8S1 Season Pass' },
     { id:'w_named_dread_edict2',name:'Dread Edict (Alt)',   quality:'Exotic',   rpm:60,   baseDamage:121000,magazineSize:5,  reloadSpeed:4.2, critChance:5, critDamage:25, headshotDamage:150,supportedSlots:['Scope','Muzzle','Underbarrel'], farmingSource:'Targeted loot / Exotic Cache' },
     { id:'w_named_vindicator2',name:'Vindicator (Alt)',     quality:'Exotic',   rpm:260,  baseDamage:28500, magazineSize:20, reloadSpeed:2.0, critChance:5, critDamage:25, headshotDamage:95, supportedSlots:['Scope','Muzzle','Underbarrel','Magazine'], farmingSource:'Descent mode / Exotic Cache' },
@@ -1229,7 +1363,6 @@ const DB = {
     { id:'gi_chest_system',   name:'System Corruption Chest',      slot:'Chest', quality:'High-End', brand:null, gearSet:'System Corruption',    isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'Targeted loot / Crafting' },
     { id:'gi_chest_corestrength', name:'Core Strength Chest',       slot:'Chest', quality:'High-End', brand:null, gearSet:'Core Strength',        isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'Targeted loot / Escalation' },
     { id:'gi_chest_chainkiller',name:'Chainkiller',                slot:'Chest', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:135000, fixedAttributes:[{statType:'critChance',value:6,isEditable:false},{statType:'weaponDamage',value:15,isEditable:false}], modSlots:0, hasTalent:true, farmingSource:'Invaded missions / Targeted loot' },
-    { id:'gi_chest_memento',  name:'Memento',                      slot:'Chest', quality:'Exotic',   brand:null, gearSet:null, isNamedItem:true, baseArmor:135000, fixedAttributes:[{statType:'weaponDamage',value:10,isEditable:false}], modSlots:0, hasTalent:true, farmingSource:'Targeted loot / Season reward' },
     { id:'gi_chest_rare',     name:'Generic Chest (Rare)',         slot:'Chest', quality:'Rare',     brand:'Fenris Group AB',                gearSet:null, isNamedItem:false, baseArmor:100000, fixedAttributes:[], modSlots:1, hasTalent:true, farmingSource:'World drop' },
     { id:'gi_chest_uncommon', name:'Generic Chest (Uncommon)',     slot:'Chest', quality:'Uncommon', brand:null,                             gearSet:null, isNamedItem:false, baseArmor:65000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
     // ════════════════════════════════════════════════════════════════
@@ -1451,6 +1584,22 @@ const DB = {
     { id:'gi_holster_zwiadowka', name:'Zwiadowka SP. z o.o. Holster', slot:'Holster',  quality:'High-End', brand:'Zwiadowka SP. z o.o.', gearSet:null, isNamedItem:false, baseArmor:80000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
     { id:'gi_kp_zwiadowka',      name:'Zwiadowka SP. z o.o. Kneepads',slot:'Kneepads', quality:'High-End', brand:'Zwiadowka SP. z o.o.', gearSet:null, isNamedItem:false, baseArmor:85000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
 
+    // Unit Alloys (all 6 slots)
+    { id:'gi_mask_unitalloys',    name:'Unit Alloys Mask',    slot:'Mask',     quality:'High-End', brand:'Unit Alloys', gearSet:null, isNamedItem:false, baseArmor:95000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_chest_unitalloys',   name:'Unit Alloys Chest',   slot:'Chest',    quality:'High-End', brand:'Unit Alloys', gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'World drop' },
+    { id:'gi_bp_unitalloys',      name:'Unit Alloys Backpack',slot:'Backpack', quality:'High-End', brand:'Unit Alloys', gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'World drop' },
+    { id:'gi_gloves_unitalloys',  name:'Unit Alloys Gloves',  slot:'Gloves',   quality:'High-End', brand:'Unit Alloys', gearSet:null, isNamedItem:false, baseArmor:75000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_unitalloys', name:'Unit Alloys Holster', slot:'Holster',  quality:'High-End', brand:'Unit Alloys', gearSet:null, isNamedItem:false, baseArmor:80000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_unitalloys',      name:'Unit Alloys Kneepads',slot:'Kneepads', quality:'High-End', brand:'Unit Alloys', gearSet:null, isNamedItem:false, baseArmor:85000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+
+    // Urban Lookout (all 6 slots)
+    { id:'gi_mask_urbanlookout',    name:'Urban Lookout Mask',    slot:'Mask',     quality:'High-End', brand:'Urban Lookout', gearSet:null, isNamedItem:false, baseArmor:95000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_chest_urbanlookout',   name:'Urban Lookout Chest',   slot:'Chest',    quality:'High-End', brand:'Urban Lookout', gearSet:null, isNamedItem:false, baseArmor:130000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'World drop' },
+    { id:'gi_bp_urbanlookout',      name:'Urban Lookout Backpack',slot:'Backpack', quality:'High-End', brand:'Urban Lookout', gearSet:null, isNamedItem:false, baseArmor:110000, fixedAttributes:[], modSlots:1, hasTalent:true,  farmingSource:'World drop' },
+    { id:'gi_gloves_urbanlookout',  name:'Urban Lookout Gloves',  slot:'Gloves',   quality:'High-End', brand:'Urban Lookout', gearSet:null, isNamedItem:false, baseArmor:75000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_holster_urbanlookout', name:'Urban Lookout Holster', slot:'Holster',  quality:'High-End', brand:'Urban Lookout', gearSet:null, isNamedItem:false, baseArmor:80000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'World drop' },
+    { id:'gi_kp_urbanlookout',      name:'Urban Lookout Kneepads',slot:'Kneepads', quality:'High-End', brand:'Urban Lookout', gearSet:null, isNamedItem:false, baseArmor:85000,  fixedAttributes:[], modSlots:1, hasTalent:false, farmingSource:'World drop' },
+
     // ════════════════════════════════════════════════════════════════
     // MISSING NAMED / EXOTIC ITEMS
     // ════════════════════════════════════════════════════════════════
@@ -1463,6 +1612,8 @@ const DB = {
     { id:'gi_chest_provocateur', name:'Provocateur',                 slot:'Chest',    quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:135000, fixedAttributes:[], modSlots:0, hasTalent:true, farmingSource:'Space Administration: Theo Parnell mission' },
     // Backpacks
     { id:'gi_bp_birdie',         name:"Birdie's Quick Fix",          slot:'Backpack', quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:115000, fixedAttributes:[], modSlots:0, hasTalent:true, farmingSource:'Y6S3 Manhunt Climax mission' },
+    { id:'gi_bp_memento',        name:'Memento',                     slot:'Backpack', quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:115000, fixedAttributes:[{statType:'weaponDamage',value:10,isEditable:false}], modSlots:0, hasTalent:true, farmingSource:'Targeted loot / Season reward' },
+    { id:'gi_bp_gift',           name:'The Gift',                    slot:'Backpack', quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:115000, fixedAttributes:[], modSlots:0, hasTalent:true, farmingSource:'Targeted loot / Exotic Cache' },
     { id:'gi_bp_ninjabike',      name:'NinjaBike Messenger Backpack',slot:'Backpack', quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:115000, fixedAttributes:[], modSlots:0, hasTalent:true, farmingSource:'Targeted loot / Exotic Cache' },
     // Gloves
     { id:'gi_gloves_bloodyknuckles', name:'Bloody Knuckles',         slot:'Gloves',   quality:'Exotic', brand:null, gearSet:null, isNamedItem:true, baseArmor:78000,  fixedAttributes:[], modSlots:0, hasTalent:false, farmingSource:'Targeted loot / Exotic Cache' },
@@ -1484,24 +1635,29 @@ const DB = {
   gearTalents: [
     // Chest talents
     { id:'gt_obliterate',   name:'Obliterate',    slot:'Chest',    description:'Critical hits increase weapon damage by 1% for 5s, stacking up to 25%.', modifiers: { weaponDamage: 15 } },
-    { id:'gt_vigilance',    name:'Vigilance',     slot:'Chest',    description:'Increases weapon damage by 25%. Taking damage disables this bonus for 4s.', modifiers: { weaponDamage: 25 } },
-    { id:'gt_creeping_death',name:'Creeping Death',slot:'Chest',   description:'Applying a status effect to an enemy spreads it to all enemies within 10m.', modifiers: { weaponDamage: 10 } },
-    { id:'gt_composure',    name:'Composure',     slot:'Chest',    description:'+20% weapon damage when not in cover.',                                    modifiers: { weaponDamage: 20 } },
-    { id:'gt_braced',       name:'Braced',        slot:'Chest',    description:'+20% weapon damage when in cover.',                                        modifiers: { weaponDamage: 20 } },
-    { id:'gt_intimidate',   name:'Intimidate',    slot:'Chest',    description:'+20% weapon damage when an enemy is within 10m.',                          modifiers: { weaponDamage: 20 } },
-    { id:'gt_spark',        name:'Spark',         slot:'Chest',    description:'Applying a status effect grants +20% skill damage for 15s.',               modifiers: { skillDamage: 20 } },
-    { id:'gt_empathic_resolve',name:'Empathic Resolve',slot:'Chest',description:'Repairing an ally grants them +15% weapon damage for 10s.',               modifiers: { weaponDamage: 10 } },
-    { id:'gt_kinetic_momentum',name:'Kinetic Momentum',slot:'Chest',description:'Moving for 0.5s grants +3% weapon damage per second, up to 30%.',         modifiers: { weaponDamage: 15 } },
-    { id:'gt_perfect_vigilance',name:'Perfect Vigilance',slot:'Chest',description:'Increases weapon damage by 30%. Taking damage disables this bonus for 4s.', modifiers: { weaponDamage: 30 } },
+    { id:'gt_intimidate',   name:'Intimidate',    slot:'Chest',    description:'+35% weapon damage to enemies within 10m while you have bonus armor.',       modifiers: { weaponDamage: 35 } },
+    { id:'gt_spark',        name:'Spark',         slot:'Chest',    description:'Applying a status effect grants +15% weapon damage for 15s.',               modifiers: { skillDamage: 15 } },
+    { id:'gt_empathic_resolve',name:'Empathic Resolve',slot:'Chest',description:'Repairing an ally increases their weapon and skill damage by up to 15% for 20s.', modifiers: { weaponDamage: 10 } },
+    { id:'gt_kinetic_momentum',name:'Kinetic Momentum',slot:'Chest',description:'Each active skill generates stacks granting +1% skill damage and +2% skill repair, up to 15 stacks.', modifiers: { weaponDamage: 15 } },
+    { id:'gt_vanguard',     name:'Vanguard',      slot:'Chest',    description:'Deploying a shield makes it invulnerable for 5s and grants 45% armor as bonus armor to allies for 20s.', modifiers: { weaponDamage: 0 } },
+    { id:'gt_spotter',      name:'Spotter',       slot:'Chest',    description:'+15% weapon and skill damage to pulsed enemies.',                            modifiers: { weaponDamage: 15 } },
+    { id:'gt_glass_cannon', name:'Glass Cannon',  slot:'Chest',    description:'All damage amplified by 25%. All damage taken amplified by 50%.',            modifiers: { weaponDamage: 25 } },
+    { id:'gt_unbreakable',  name:'Unbreakable',   slot:'Chest',    description:'When armor is depleted, repair 95% of total armor. Cooldown 60s.',           modifiers: { armor: 10000 } },
+    { id:'gt_gunslinger',   name:'Gunslinger',    slot:'Chest',    description:'Weapon swapping increases total weapon damage by 20% for 5s.',               modifiers: { weaponDamage: 20 } },
+    { id:'gt_perfect_vigilance',name:'Perfect Vigilance',slot:'Backpack',description:'Increases weapon damage by 30%. Taking damage disables this bonus for 4s.', modifiers: { weaponDamage: 30 } },
     // Backpack talents
+    { id:'gt_vigilance',    name:'Vigilance',     slot:'Backpack', description:'Increases weapon damage by 25%. Taking damage disables this bonus for 4s.', modifiers: { weaponDamage: 25 } },
+    { id:'gt_creeping_death',name:'Creeping Death',slot:'Backpack', description:'When you apply a status effect it also applies to all enemies within 8m. Cooldown 15s.', modifiers: { weaponDamage: 10 } },
+    { id:'gt_composure',    name:'Composure',     slot:'Backpack', description:'While in cover, increases total weapon damage by 15%.',                      modifiers: { weaponDamage: 15 } },
     { id:'gt_hardened',     name:'Hardened',      slot:'Backpack', description:'Increases armor by 10%.',                                                  modifiers: { armor: 10000 } },
     { id:'gt_clutch',       name:'Clutch',        slot:'Backpack', description:'Critical hits restore 2% armor.',                                          modifiers: { critChance: 5 } },
-    { id:'gt_gift',         name:'Gift',          slot:'Backpack', description:'Every 60s, create a care package for an ally.',                            modifiers: { weaponDamage: 5 } },
     { id:'gt_patience',     name:'Patience',      slot:'Backpack', description:'After being in cover for 3s, repair 3% armor per second.',                 modifiers: { armor: 5000 } },
     { id:'gt_concussion',   name:'Concussion',    slot:'Backpack', description:'Headshots grant +10% headshot damage for 10s, stacking up to 5 times.',    modifiers: { headshotDamage: 15 } },
-    { id:'gt_spotter',      name:'Spotter',       slot:'Backpack', description:'+20% weapon damage to pulsed enemies.',                                    modifiers: { weaponDamage: 20 } },
     { id:'gt_shock_and_awe',name:'Shock & Awe',   slot:'Backpack', description:'Applying a status effect grants +20% weapon damage for 10s.',              modifiers: { weaponDamage: 20 } },
-    { id:'gt_wicked',       name:'Wicked',        slot:'Backpack', description:'+10% weapon damage for 10s after applying a status effect.',               modifiers: { weaponDamage: 10 } },
+    { id:'gt_wicked',       name:'Wicked',        slot:'Backpack', description:'+18% weapon damage for 20s after applying a status effect.',               modifiers: { weaponDamage: 18 } },
+    { id:'gt_bloodsucker',  name:'Bloodsucker',   slot:'Backpack', description:'Killing an enemy adds +10% bonus armor for 10s. Max 10 stacks.',           modifiers: { armor: 5000 } },
+    { id:'gt_unstoppable',  name:'Unstoppable Force',slot:'Backpack',description:'Killing an enemy increases weapon damage by 5% for 15s. Stacks up to 5.', modifiers: { weaponDamage: 25 } },
+    { id:'gt_versatile',    name:'Versatile',     slot:'Backpack', description:'Swapping weapons amplifies weapon damage based on weapon type for 10s.',    modifiers: { weaponDamage: 35 } },
     { id:'gt_perfect_clutch',name:'Perfect Clutch',slot:'Backpack',description:'Critical hits restore 3% armor.',                                          modifiers: { critChance: 6 } },
     { id:'gt_perfect_hardened',name:'Perfect Hardened',slot:'Backpack',description:'Increases armor by 15%.',                                              modifiers: { armor: 15000 } },
   ],
@@ -1541,6 +1697,8 @@ const DB = {
     'Shiny Monkey Gear':                { bonuses: { 2: { statType: 'critDamage', value: 10 },     3: { statType: 'critDamage', value: 20 } } },
     'Uzina Getica':                     { bonuses: { 2: { statType: 'armor', value: 5000 },        3: { statType: 'armor', value: 15000 } } },
     'Zwiadowka SP. z o.o.':             { bonuses: { 2: { statType: 'headshotDamage', value: 10 }, 3: { statType: 'headshotDamage', value: 20 } } },
+    'Unit Alloys':                      { bonuses: { 2: { statType: 'magazineSizePct', value: 20 }, 3: { statType: 'weaponDamage',   value: 10 } } },
+    'Urban Lookout':                    { bonuses: { 2: { statType: 'skillHaste',      value: 30 }, 3: { statType: 'mmrDamage',      value: 30 } } },
   },
 
   // ── Gear Sets ──────────────────────────────────────────────────────────────
@@ -1641,7 +1799,7 @@ const DB = {
     { id: 'ga_shotgun_dmg',    name: 'Shotgun Damage %',        statType: 'shotgunDamage',    maxValue: 15,  category: 'Offensive' },
     { id: 'ga_pistol_dmg',     name: 'Pistol Damage %',         statType: 'pistolDamage',     maxValue: 15,  category: 'Offensive' },
     { id: 'ga_mmr_dmg',        name: 'Marksman Rifle Damage %', statType: 'mmrDamage',        maxValue: 15,  category: 'Offensive' },
-    { id: 'ga_dte',            name: 'Damage to Elites %',      statType: 'damageToElites',   maxValue: 12,  category: 'Offensive' },
+    { id: 'ga_dte',            name: 'Protection From Elites %', statType: 'damageToElites',   maxValue: 12,  category: 'Defensive' },
     { id: 'ga_dta',            name: 'Damage to Armor %',       statType: 'damageToArmor',    maxValue: 12,  category: 'Offensive' },
     { id: 'ga_dth',            name: 'Damage to Health %',      statType: 'damageToHealth',   maxValue: 12,  category: 'Offensive' },
     // Defensive
@@ -1668,7 +1826,7 @@ const DB = {
     { id: 'wa_optimal_range',  name: 'Optimal Range %',         statType: 'optimalRange',     maxValue: 15 },
     { id: 'wa_rate_of_fire',   name: 'Rate of Fire %',          statType: 'rateOfFire',       maxValue: 10 },
     { id: 'wa_magazine_size',  name: 'Magazine Size %',         statType: 'magazineSizePct',  maxValue: 20 },
-    { id: 'wa_dte',            name: 'Damage to Elites %',      statType: 'damageToElites',   maxValue: 12 },
+    { id: 'wa_dte',            name: 'Protection From Elites %', statType: 'damageToElites',   maxValue: 12 },
   ],
 
   // ── Farming Info ───────────────────────────────────────────────────────────
@@ -1741,12 +1899,124 @@ const DB = {
     'gi_mask_vile':          'Targeted loot — Contaminated Zone',
     'gi_mask_tardigrade':    'Targeted loot / Season reward',
     'gi_chest_chainkiller':  'Invaded missions / Targeted loot — Capitol Building (Invaded)',
-    'gi_chest_memento':      'Targeted loot / Season reward',
+    'gi_bp_memento':         'Targeted loot / Season reward',
     'gi_bp_acosta':          'Targeted loot / Season reward',
     'gi_gloves_btsu':        'Tidal Basin (Invaded) — final boss drop',
   }
 
 }; // end DB
+
+// ── Weapon type classifier ────────────────────────────────────────────────────
+function getWeaponType(w) {
+  const typeMap = {
+    'w_m4':'Assault Rifle','w_acr':'Assault Rifle','w_akm':'Assault Rifle','w_aug_ar':'Assault Rifle',
+    'w_ctar':'Assault Rifle','w_fal':'Assault Rifle','w_famas':'Assault Rifle','w_g36':'Assault Rifle',
+    'w_colt_m4':'Assault Rifle','w_mk16':'Assault Rifle','w_pof':'Assault Rifle','w_lvoa':'Assault Rifle',
+    'w_eagle_bearer':'Assault Rifle','w_elmos':'Assault Rifle',
+    'w_akm_mil':'Assault Rifle','w_akm_pol':'Assault Rifle','w_akm_bm':'Assault Rifle',
+    'w_akm_bm2':'Assault Rifle','w_akm_cust':'Assault Rifle','w_akm_mil2':'Assault Rifle',
+    'w_m4_pol':'Assault Rifle','w_m4_bm':'Assault Rifle','w_m4_mil2':'Assault Rifle','w_m4_tac':'Assault Rifle',
+    'w_m16':'Assault Rifle','w_m16a2':'Assault Rifle','w_m16_mil':'Assault Rifle',
+    'w_mk16_pol':'Assault Rifle','w_mk16_mil':'Assault Rifle','w_mk16_tac':'Assault Rifle',
+    'w_aug_ar_mil':'Assault Rifle','w_aug_cust':'Assault Rifle',
+    'w_ctar_mil':'Assault Rifle','w_ctar_pol':'Assault Rifle',
+    'w_acr_mil':'Assault Rifle','w_acr_cust':'Assault Rifle',
+    'w_fal_mil':'Assault Rifle','w_fal_cust':'Assault Rifle',
+    'w_famas_mil':'Assault Rifle','w_famas_cust':'Assault Rifle',
+    'w_g36_mil':'Assault Rifle','w_g36_cust':'Assault Rifle',
+    'w_lvoa_mil':'Assault Rifle','w_lvoa_cust':'Assault Rifle',
+    'w_pof_mil':'Assault Rifle','w_pof_cust':'Assault Rifle',
+    'w_named_bighorn':'Assault Rifle','w_named_capacitor':'Assault Rifle',
+    'w_named_chameleon':'Assault Rifle','w_named_strega':'Assault Rifle',
+    'w_named_agitator':'Assault Rifle','w_named_lexington':'Assault Rifle',
+    'w_vector':'SMG','w_aug_smg':'SMG','w_t821':'SMG','w_smg9':'SMG',
+    'w_thompson':'SMG','w_mp5':'SMG','w_mp7':'SMG','w_mpx':'SMG',
+    'w_p90':'SMG','w_bizon':'SMG','w_ouroboros':'SMG','w_ump45':'SMG',
+    'w_t821_pol':'SMG','w_t821_mil':'SMG','w_t821_cust':'SMG',
+    'w_mp5_pol':'SMG','w_mp5_bm':'SMG','w_mp5_mil':'SMG','w_mp5_cust':'SMG','w_mp5_tac':'SMG','w_mp5st':'SMG',
+    'w_mp7_mil':'SMG','w_mp7_cust':'SMG',
+    'w_mpx_mil':'SMG','w_mpx_cust':'SMG',
+    'w_p90_mil':'SMG','w_p90_cust':'SMG',
+    'w_bizon_mil':'SMG','w_bizon_cust':'SMG',
+    'w_vector_mil':'SMG','w_vector_bm':'SMG','w_vector_cust':'SMG',
+    'w_aug_smg_mil':'SMG','w_aug_smg_cust':'SMG',
+    'w_smg9_mil':'SMG','w_smg9_cust':'SMG',
+    'w_thompson_mil':'SMG','w_thompson_cust':'SMG',
+    'w_ump45_mil':'SMG','w_ump45_tac':'SMG',
+    'w_named_chatterbox':'SMG','w_named_ladydeath':'SMG','w_named_backfire':'SMG',
+    'w_named_oxpecker':'SMG','w_named_emelineguard':'SMG',
+    'w_m60':'LMG','w_m249':'LMG','w_l86':'LMG','w_rpk':'LMG','w_mg5':'LMG','w_mk46':'LMG','w_pkm':'LMG',
+    'w_m60_mil':'LMG','w_m60_cust':'LMG',
+    'w_m249_mil':'LMG','w_m249_bm':'LMG','w_m249_cust':'LMG','w_m249_pol':'LMG',
+    'w_l86_mil':'LMG','w_l86_cust':'LMG',
+    'w_rpk_mil':'LMG','w_rpk_cust':'LMG',
+    'w_mg5_mil':'LMG','w_mg5_cust':'LMG',
+    'w_mk46_mil':'LMG','w_mk46_cust':'LMG',
+    'w_pkm_mil':'LMG','w_pkm_cust':'LMG',
+    'w_named_bulletking':'LMG','w_named_pestilence':'LMG',
+    'w_named_bluescreen':'LMG','w_named_bluescreen2':'LMG',
+    'w_named_ironlung':'LMG','w_named_ironlung2':'LMG',
+    'w_mk17':'Rifle','w_m1a':'Rifle','w_sig716':'Rifle','w_mdr':'Rifle',
+    'w_usc':'Rifle','w_lar15':'Rifle','w_acr_ss':'Rifle','w_1886':'Rifle',
+    'w_mk17_pol':'Rifle','w_mk17_bm':'Rifle','w_mk17_mil':'Rifle','w_mk17_cust':'Rifle',
+    'w_m1a_mil':'Rifle','w_m1a_cust':'Rifle',
+    'w_sig716_mil':'Rifle','w_sig716_cust':'Rifle',
+    'w_mdr_mil':'Rifle','w_mdr_cust':'Rifle',
+    'w_usc_mil':'Rifle','w_usc_cust':'Rifle',
+    'w_lar15_mil':'Rifle','w_lar15_cust':'Rifle',
+    'w_acr_ss_mil':'Rifle','w_acr_ss_cust':'Rifle',
+    'w_1886_mil':'Rifle','w_1886_cust':'Rifle',
+    'w_named_merciless':'Rifle','w_named_merciless2':'Rifle',
+    'w_named_ruthless':'Rifle','w_named_ruthless2':'Rifle',
+    'w_named_diamondback':'Rifle','w_named_diamondback2':'Rifle',
+    'w_named_doctorhome':'Rifle',
+    'w_named_ravenous':'Rifle','w_named_ravenous2':'Rifle',
+    'w_named_vindicator':'Rifle','w_named_vindicator2':'Rifle',
+    'w_m44':'Marksman Rifle','w_m700':'Marksman Rifle','w_srs':'Marksman Rifle',
+    'w_svd':'Marksman Rifle','w_sr1':'Marksman Rifle','w_nemesis':'Marksman Rifle',
+    'w_m44_pol':'Marksman Rifle','w_m44_bm':'Marksman Rifle',
+    'w_m44_mil':'Marksman Rifle','w_m44_cust':'Marksman Rifle','w_m44_tac':'Marksman Rifle',
+    'w_m700_mil':'Marksman Rifle','w_m700_cust':'Marksman Rifle','w_m700_tac':'Marksman Rifle',
+    'w_srs_mil':'Marksman Rifle','w_srs_cust':'Marksman Rifle',
+    'w_svd_mil':'Marksman Rifle','w_svd_cust':'Marksman Rifle',
+    'w_sr1_mil':'Marksman Rifle','w_sr1_cust':'Marksman Rifle',
+    'w_named_nemesis':'Marksman Rifle','w_named_mantis':'Marksman Rifle','w_named_mantis2':'Marksman Rifle',
+    'w_named_dreadedict':'Marksman Rifle','w_named_dread_edict2':'Marksman Rifle',
+    'w_named_sacrumimperium':'Marksman Rifle','w_named_sacrum2':'Marksman Rifle',
+    'w_dbl':'Shotgun','w_m870':'Shotgun','w_super90':'Shotgun','w_sasg12':'Shotgun',
+    'w_acs12':'Shotgun','w_spas12':'Shotgun','w_scorpio':'Shotgun',
+    'w_m870_pol':'Shotgun','w_m870_ext':'Shotgun',
+    'w_dbl_mil':'Shotgun','w_dbl_cust':'Shotgun',
+    'w_m870_mil':'Shotgun','w_m870_bm':'Shotgun','w_m870_cust':'Shotgun',
+    'w_super90_mil':'Shotgun','w_super90_cust':'Shotgun',
+    'w_sasg12_mil':'Shotgun','w_sasg12_cust':'Shotgun',
+    'w_acs12_mil':'Shotgun','w_acs12_cust':'Shotgun',
+    'w_spas12_mil':'Shotgun','w_spas12_cust':'Shotgun',
+    'w_named_lullaby':'Shotgun','w_named_lullaby2':'Shotgun',
+    'w_named_overlord':'Shotgun','w_named_overlord2':'Shotgun',
+    'w_named_sweetdreams':'Shotgun','w_named_sweetdreams2':'Shotgun',
+    'w_m9':'Pistol','w_m1911':'Pistol','w_pf45':'Pistol','w_px4':'Pistol',
+    'w_x45':'Pistol','w_93r':'Pistol','w_d50':'Pistol','w_586mag':'Pistol',
+    'w_diceros':'Pistol','w_regulus':'Pistol','w_m9a3':'Pistol','w_g17':'Pistol',
+    'w_m9_mil':'Pistol','w_m9_cust':'Pistol',
+    'w_m1911_mil':'Pistol','w_m1911_bm':'Pistol','w_m1911_cust':'Pistol','w_m1911_tac':'Pistol',
+    'w_pf45_mil':'Pistol','w_pf45_cust':'Pistol',
+    'w_px4_mil':'Pistol','w_px4_cust':'Pistol',
+    'w_x45_mil':'Pistol','w_x45_cust':'Pistol',
+    'w_93r_mil':'Pistol','w_93r_cust':'Pistol',
+    'w_d50_mil':'Pistol','w_d50_cust':'Pistol',
+    'w_586_mil':'Pistol','w_586_cust':'Pistol',
+    'w_diceros_mil':'Pistol',
+    'w_named_liberty':'Pistol','w_named_mosquito':'Pistol',
+    'w_named_busylittlebee':'Pistol','w_named_quickstep':'Pistol','w_named_whiplash':'Pistol',
+    'w_dbl_sawed':'Pistol','w_dbl_sawed_mil':'Pistol','w_dbl_sawed_cust':'Pistol',
+    'w_named_orbit':'Pistol','w_named_tempest':'Pistol','w_named_prophet':'Pistol',
+    'w_named_kard':'Pistol','w_named_lefty':'Pistol','w_named_sheriff':'Pistol',
+    'w_sig_bow':'Specialization','w_sig_crossbow':'Specialization',
+    'w_sig_lmg':'Specialization','w_sig_minigun':'Specialization','w_sig_sniper':'Specialization',
+  };
+  return typeMap[w.id] || 'Assault Rifle';
+}
 
 
 // ─── PLACEHOLDER STUBS (filled in later tasks) ───────────────────────────────
@@ -2125,13 +2395,50 @@ function renderWeaponSlot(index, keepOpen) {
   html += `<div id="wpicker-list-${index}"
     style="max-height:200px;overflow-y:scroll;
            scrollbar-width:thin;scrollbar-color:var(--border-accent) var(--surface2);">`;
-  html += `<div class="wpi" data-wid="" style="padding:5px 12px;font-size:0.8rem;color:var(--text-muted);cursor:pointer;">-- Clear Selection --</div>`;
-  for (const w of [...DB.weapons].sort((a, b) => a.name.localeCompare(b.name))) {
-    const qc = {Common:'#9e9e9e',Uncommon:'#00e676',Rare:'#40c4ff','High-End':'#ffd740',Exotic:'#ff6d00'}[w.quality] || 'var(--text-bright)';
-    const bg = weaponState.weaponId === w.id ? 'background:var(--surface3);' : '';
-    const safeName = w.name.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
-    html += `<div class="wpi" data-wid="${w.id}" data-wname="${w.name.toLowerCase()}"
-      style="padding:5px 12px;font-size:0.85rem;color:${qc};cursor:pointer;${bg}font-family:Rajdhani,sans-serif;font-weight:600;">${safeName}</div>`;
+  html += weaponState.weaponId ? `<div class="wpi" data-wid="" style="padding:5px 12px;font-size:0.8rem;color:var(--text-muted);cursor:pointer;">-- Clear Selection --</div>` : ``;
+  const isSidearmSlot = index === 2;
+  const isPistol = w => getWeaponType(w) === 'Pistol';
+  const filteredWeapons = [...DB.weapons]
+    .filter(w => isSidearmSlot ? isPistol(w) : !isPistol(w))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  if (isSidearmSlot) {
+    for (const w of filteredWeapons) {
+      const qc = {Common:'#9e9e9e',Uncommon:'#00e676',Rare:'#40c4ff','High-End':'#ffd740',Exotic:'#ff6d00'}[w.quality] || 'var(--text-bright)';
+      const bg = weaponState.weaponId === w.id ? 'background:var(--surface3);' : '';
+      const safeName = w.name.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+      html += `<div class="wpi" data-wid="${w.id}" data-wname="${w.name.toLowerCase()}"
+        style="padding:5px 12px;font-size:0.85rem;color:${qc};cursor:pointer;${bg}font-family:Rajdhani,sans-serif;font-weight:600;">${safeName}</div>`;
+    }
+  } else {
+    const categoryOrder = ['Assault Rifle','SMG','LMG','Rifle','Marksman Rifle','Shotgun','Specialization'];
+    const grouped = {};
+    for (const w of filteredWeapons) {
+      const type = getWeaponType(w);
+      if (!grouped[type]) grouped[type] = [];
+      grouped[type].push(w);
+    }
+    for (const cat of categoryOrder) {
+      const weapons = grouped[cat];
+      if (!weapons || weapons.length === 0) continue;
+      const catId = `wcat-${index}-${cat.replace(/\s+/g,'-')}`;
+      html += `<div class="wcat-header" data-cat="${catId}"
+        style="padding:5px 12px;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+               color:var(--accent);background:var(--surface2);border-left:3px solid var(--accent-dim);
+               cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px;">
+        <span class="wcat-arrow" style="font-size:0.5rem;transition:transform 0.15s;display:inline-block;">▶</span>
+        ${cat} <span style="color:var(--text-muted);font-weight:400;">(${weapons.length})</span>
+      </div>`;
+      html += `<div id="${catId}" style="display:none;">`;
+      for (const w of weapons) {
+        const qc = {Common:'#9e9e9e',Uncommon:'#00e676',Rare:'#40c4ff','High-End':'#ffd740',Exotic:'#ff6d00'}[w.quality] || 'var(--text-bright)';
+        const bg = weaponState.weaponId === w.id ? 'background:var(--surface3);' : '';
+        const safeName = w.name.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+        html += `<div class="wpi" data-wid="${w.id}" data-wname="${w.name.toLowerCase()}" data-wcat="${catId}"
+          style="padding:5px 12px 5px 22px;font-size:0.85rem;color:${qc};cursor:pointer;${bg}font-family:Rajdhani,sans-serif;font-weight:600;">${safeName}</div>`;
+      }
+      html += `</div>`;
+    }
   }
   html += `</div></div></div>`;
 
@@ -2335,25 +2642,67 @@ function renderWeaponSlot(index, keepOpen) {
         wpPanel.style.display = 'block';
         wpSearch.value = '';
         wpList.querySelectorAll('.wpi').forEach(el => el.style.display = '');
+        wpList.querySelectorAll('.wcat-header').forEach(h => {
+          const catDiv = wpList.querySelector(`#${h.dataset.cat}`);
+          if (catDiv) catDiv.style.display = 'none';
+          const arrow = h.querySelector('.wcat-arrow');
+          if (arrow) arrow.style.transform = '';
+        });
         setTimeout(() => wpSearch.focus(), 10);
       }
     });
 
-    // Filter list as user types
-    wpSearch.addEventListener('input', () => {
-      const q = wpSearch.value.toLowerCase();
-      wpList.querySelectorAll('.wpi').forEach(el => {
-        const name = (el.dataset.wname || '');
-        el.style.display = (!q || !name || name.includes(q)) ? '' : 'none';
-      });
-    });
-
-    // Select on click
+    // Category header toggle
     wpList.addEventListener('click', (e) => {
+      const header = e.target.closest('.wcat-header');
+      if (header) {
+        e.stopPropagation();
+        const catDiv = wpList.querySelector(`#${header.dataset.cat}`);
+        const arrow = header.querySelector('.wcat-arrow');
+        if (catDiv) {
+          const open = catDiv.style.display !== 'none';
+          catDiv.style.display = open ? 'none' : 'block';
+          if (arrow) arrow.style.transform = open ? '' : 'rotate(90deg)';
+        }
+        return;
+      }
       const item = e.target.closest('.wpi');
       if (!item) return;
       wpPanel.style.display = 'none';
       selectWeapon(item.dataset.wid || '');
+    });
+
+    // Filter list as user types — expand all categories when searching
+    wpSearch.addEventListener('input', () => {
+      const q = wpSearch.value.toLowerCase();
+      if (q) {
+        wpList.querySelectorAll('.wcat-header').forEach(h => {
+          const catDiv = wpList.querySelector(`#${h.dataset.cat}`);
+          if (catDiv) catDiv.style.display = 'block';
+          const arrow = h.querySelector('.wcat-arrow');
+          if (arrow) arrow.style.transform = 'rotate(90deg)';
+        });
+        wpList.querySelectorAll('.wpi').forEach(el => {
+          const name = (el.dataset.wname || '');
+          el.style.display = (!name || name.includes(q)) ? '' : 'none';
+        });
+        wpList.querySelectorAll('.wcat-header').forEach(h => {
+          const catDiv = wpList.querySelector(`#${h.dataset.cat}`);
+          if (catDiv) {
+            const hasVisible = [...catDiv.querySelectorAll('.wpi')].some(el => el.style.display !== 'none');
+            h.style.display = hasVisible ? '' : 'none';
+          }
+        });
+      } else {
+        wpList.querySelectorAll('.wpi').forEach(el => el.style.display = '');
+        wpList.querySelectorAll('.wcat-header').forEach(h => {
+          h.style.display = '';
+          const catDiv = wpList.querySelector(`#${h.dataset.cat}`);
+          if (catDiv) catDiv.style.display = 'none';
+          const arrow = h.querySelector('.wcat-arrow');
+          if (arrow) arrow.style.transform = '';
+        });
+      }
     });
 
     // Hover highlight
@@ -2520,14 +2869,84 @@ function renderGearSlot(index) {
   html += `<div id="gpicker-list-${index}"
     style="max-height:200px;overflow-y:scroll;
            scrollbar-width:thin;scrollbar-color:var(--border-accent) var(--surface2);">`;
-  html += `<div class="gpi" data-gid="" style="padding:5px 12px;font-size:0.8rem;color:var(--text-muted);cursor:pointer;">-- Clear Selection --</div>`;
-  for (const item of slotItems) {
-    const qc = {Common:'#9e9e9e',Uncommon:'#00e676',Rare:'#40c4ff','High-End':'#ffd740',Exotic:'#ff6d00','Gear Set':'#e040fb'}[item.quality] || 'var(--text-bright)';
-    const bg = gearState.itemId === item.id ? 'background:var(--surface3);' : '';
-    const safeName = item.name.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
-    html += `<div class="gpi" data-gid="${item.id}" data-gname="${item.name.toLowerCase()}"
-      style="padding:5px 12px;font-size:0.85rem;color:${qc};cursor:pointer;${bg}font-family:Rajdhani,sans-serif;font-weight:600;">${safeName}</div>`;
+  html += gearState.itemId ? `<div class="gpi" data-gid="" style="padding:5px 12px;font-size:0.8rem;color:var(--text-muted);cursor:pointer;">-- Clear Selection --</div>` : ``;
+
+  const gearSets = [...new Set(slotItems.filter(i => i.gearSet).map(i => i.gearSet))].sort();
+  const brands   = [...new Set(slotItems.filter(i => i.brand && !i.isNamedItem).map(i => i.brand))].sort();
+  const namedItems = slotItems.filter(i => i.isNamedItem || i.quality === 'Exotic');
+  const genericItems = slotItems.filter(i => (i.quality === 'Uncommon' || i.quality === 'Rare') && !i.isNamedItem);
+
+  function renderGCat(catId, label, color, items) {
+    if (!items.length) return '';
+    let h = `<div class="gcat-header" data-cat="${catId}"
+      style="padding:5px 12px;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+             color:${color};background:var(--surface2);border-left:3px solid ${color}44;
+             cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px;">
+      <span class="gcat-arrow" style="font-size:0.5rem;transition:transform 0.15s;display:inline-block;">▶</span>
+      ${label} <span style="color:var(--text-muted);font-weight:400;">(${items.length})</span>
+    </div>`;
+    h += `<div id="${catId}" style="display:none;">`;
+    for (const item of items) {
+      const qc = {Common:'#9e9e9e',Uncommon:'#00e676',Rare:'#40c4ff','High-End':'#ffd740',Exotic:'#ff6d00','Gear Set':'#e040fb'}[item.quality] || 'var(--text-bright)';
+      const bg = gearState.itemId === item.id ? 'background:var(--surface3);' : '';
+      const safeName = item.name.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+      h += `<div class="gpi" data-gid="${item.id}" data-gname="${item.name.toLowerCase()}" data-gcat="${catId}"
+        style="padding:5px 12px 5px 22px;font-size:0.85rem;color:${qc};cursor:pointer;${bg}font-family:Rajdhani,sans-serif;font-weight:600;">${safeName}</div>`;
+    }
+    h += `</div>`;
+    return h;
   }
+
+  if (gearSets.length) {
+    const gsCatId = `gcat-${index}-gearsets`;
+    const allSetItems = slotItems.filter(i => i.gearSet).sort((a,b) => a.name.localeCompare(b.name));
+    html += `<div class="gcat-header" data-cat="${gsCatId}"
+      style="padding:5px 12px;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+             color:#e040fb;background:var(--surface2);border-left:3px solid #e040fb44;
+             cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px;">
+      <span class="gcat-arrow" style="font-size:0.5rem;transition:transform 0.15s;display:inline-block;">▶</span>
+      Gear Sets <span style="color:var(--text-muted);font-weight:400;">(${allSetItems.length})</span>
+    </div>`;
+    html += `<div id="${gsCatId}" style="display:none;">`;
+    for (const item of allSetItems) {
+      const bg = gearState.itemId === item.id ? 'background:var(--surface3);' : '';
+      const safeName = item.name.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+      html += `<div class="gpi" data-gid="${item.id}" data-gname="${item.name.toLowerCase()}" data-gcat="${gsCatId}"
+        style="padding:5px 12px 5px 22px;font-size:0.85rem;color:#e040fb;cursor:pointer;${bg}font-family:Rajdhani,sans-serif;font-weight:600;">${safeName}</div>`;
+    }
+    html += `</div>`;
+  }
+
+  if (brands.length) {
+    const brCatId = `gcat-${index}-brands`;
+    const allBrandItems = slotItems.filter(i => i.brand && !i.isNamedItem).sort((a,b) => a.name.localeCompare(b.name));
+    html += `<div class="gcat-header" data-cat="${brCatId}"
+      style="padding:5px 12px;font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+             color:var(--accent);background:var(--surface2);border-left:3px solid var(--accent-dim);
+             cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px;">
+      <span class="gcat-arrow" style="font-size:0.5rem;transition:transform 0.15s;display:inline-block;">▶</span>
+      Brand Sets <span style="color:var(--text-muted);font-weight:400;">(${allBrandItems.length})</span>
+    </div>`;
+    html += `<div id="${brCatId}" style="display:none;">`;
+    for (const item of allBrandItems) {
+      const bg = gearState.itemId === item.id ? 'background:var(--surface3);' : '';
+      const safeName = item.name.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+      html += `<div class="gpi" data-gid="${item.id}" data-gname="${item.name.toLowerCase()}" data-gcat="${brCatId}"
+        style="padding:5px 12px 5px 22px;font-size:0.85rem;color:#ffd740;cursor:pointer;${bg}font-family:Rajdhani,sans-serif;font-weight:600;">${safeName}</div>`;
+    }
+    html += `</div>`;
+  }
+
+  if (namedItems.length) {
+    const neCatId = `gcat-${index}-named`;
+    html += renderGCat(neCatId, 'Named & Exotic', '#ff6d00', namedItems.sort((a,b) => a.name.localeCompare(b.name)));
+  }
+
+  if (genericItems.length) {
+    const genCatId = `gcat-${index}-generic`;
+    html += renderGCat(genCatId, 'Generic', '#4a6070', genericItems.sort((a,b) => a.name.localeCompare(b.name)));
+  }
+
   html += `</div></div></div>`;
 
   // ── Farming info ─────────────────────────────────────────────────────────
@@ -2708,23 +3127,65 @@ function renderGearSlot(index) {
         gpPanel.style.display = 'block';
         gpSearch.value = '';
         gpList.querySelectorAll('.gpi').forEach(el => el.style.display = '');
+        gpList.querySelectorAll('.gcat-header').forEach(h => {
+          const catDiv = gpList.querySelector(`#${h.dataset.cat}`);
+          if (catDiv) catDiv.style.display = 'none';
+          const arrow = h.querySelector('.gcat-arrow');
+          if (arrow) arrow.style.transform = '';
+        });
         setTimeout(() => gpSearch.focus(), 10);
       }
     });
 
-    gpSearch.addEventListener('input', () => {
-      const q = gpSearch.value.toLowerCase();
-      gpList.querySelectorAll('.gpi').forEach(el => {
-        const name = (el.dataset.gname || '');
-        el.style.display = (!q || !name || name.includes(q)) ? '' : 'none';
-      });
-    });
-
     gpList.addEventListener('click', (e) => {
+      const header = e.target.closest('.gcat-header');
+      if (header) {
+        e.stopPropagation();
+        const catDiv = gpList.querySelector(`#${header.dataset.cat}`);
+        const arrow = header.querySelector('.gcat-arrow');
+        if (catDiv) {
+          const open = catDiv.style.display !== 'none';
+          catDiv.style.display = open ? 'none' : 'block';
+          if (arrow) arrow.style.transform = open ? '' : 'rotate(90deg)';
+        }
+        return;
+      }
       const item = e.target.closest('.gpi');
       if (!item) return;
       gpPanel.style.display = 'none';
       selectGearItem(item.dataset.gid || '');
+    });
+
+    gpSearch.addEventListener('input', () => {
+      const q = gpSearch.value.toLowerCase();
+      if (q) {
+        gpList.querySelectorAll('.gcat-header').forEach(h => {
+          const catDiv = gpList.querySelector(`#${h.dataset.cat}`);
+          if (catDiv) catDiv.style.display = 'block';
+          const arrow = h.querySelector('.gcat-arrow');
+          if (arrow) arrow.style.transform = 'rotate(90deg)';
+        });
+        gpList.querySelectorAll('.gpi').forEach(el => {
+          const name = (el.dataset.gname || '');
+          el.style.display = (!name || name.includes(q)) ? '' : 'none';
+        });
+        gpList.querySelectorAll('.gcat-header').forEach(h => {
+          const catDiv = gpList.querySelector(`#${h.dataset.cat}`);
+          if (catDiv) {
+            const hasVisible = [...catDiv.querySelectorAll('.gpi')].some(el => el.style.display !== 'none');
+            h.style.display = hasVisible ? '' : 'none';
+          }
+        });
+      } else {
+        gpList.querySelectorAll('.gpi').forEach(el => el.style.display = '');
+        gpList.querySelectorAll('.gcat-header').forEach(h => {
+          h.style.display = '';
+          const catDiv = gpList.querySelector(`#${h.dataset.cat}`);
+          if (catDiv) catDiv.style.display = 'none';
+          const arrow = h.querySelector('.gcat-arrow');
+          if (arrow) arrow.style.transform = '';
+        });
+      }
     });
 
     gpList.addEventListener('mouseover', (e) => {
@@ -3074,7 +3535,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="stat-row"><label>Crit Chance</label><span id="sp-critChance">0%</span></div>
     <div class="stat-row"><label>Crit Damage</label><span id="sp-critDamage">0%</span></div>
     <div class="stat-row"><label>Headshot Damage</label><span id="sp-headshotDamage">0%</span></div>
-    <div class="stat-row"><label>Damage to Elites</label><span id="sp-damageToElites">0%</span></div>
+    <div class="stat-row"><label>Protection From Elites</label><span id="sp-damageToElites">0%</span></div>
     <div class="stat-row"><label>SMG Damage</label><span id="sp-smgDamage">0%</span></div>
     <div class="stat-row"><label>AR Damage</label><span id="sp-arDamage">0%</span></div>
     <div class="stat-row"><label>LMG Damage</label><span id="sp-lmgDamage">0%</span></div>
@@ -3122,6 +3583,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.getElementById('btnImport').addEventListener('click', () => {
     document.getElementById('importFile').click();
+  });
+  document.getElementById('btn-credits').addEventListener('click', () => {
+    document.getElementById('credits-modal').style.display = 'flex';
+  });
+  document.getElementById('credits-modal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('credits-modal'))
+      document.getElementById('credits-modal').style.display = 'none';
   });
   document.getElementById('importFile').addEventListener('change', (e) => {
     const file = e.target.files[0];
