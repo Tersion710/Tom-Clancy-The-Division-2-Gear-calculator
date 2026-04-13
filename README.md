@@ -1,8 +1,24 @@
-# Division 2 Gear & DPS Calculator
+# Division 2 Gear & DPS Calculator v1.7.4
 
 A fully-featured, offline gear and DPS calculator for Tom Clancy's The Division 2.
 
 Built by **ImThatTeriyaki** from the **Sleepy Inc Clan**.
+
+---
+
+## What's New in v1.7.4
+
+- Gear set chest and backpack talent dropdowns now show only the set-specific talent
+- All 42 exotic weapons locked to their unique talent; 73 named weapons locked to their Perfect talent
+- Added 50+ Perfect weapon talent entries and all missing exotic talent entries
+- Coyote's Mask range stage selector (0-15m / 15-25m / 25m+)
+- Capacitor Skill Tier scaling fixed
+- Liquid glass theme: skill picker now uses styled custom panel matching weapon/gear pickers
+- Liquid glass theme: DTA/DTWA/DTOC/HS/CRIT buttons now show bright active state with glow
+- Cozy theme: page navigation fixed (Compare, SHD Levels, Specializations no longer append to current page)
+- Gear set bonus corrections (Striker's, Tipping Scales), 4pc bonuses added for all sets
+- Overlord Magazine slot fix, Regulus talent renamed to Regicide, Mosquito/Tempest talent corrections
+- Category arrow icons fixed (▶ instead of ?) in item search dropdowns
 
 ---
 
@@ -48,8 +64,8 @@ npm run build
 ```
 
 This produces two files in the `dist/` folder:
-- `Division 2 Gear Calculator Setup 1.2.0.exe` — Windows installer
-- `Division 2 Gear Calculator 1.2.0.exe` — Portable (no install needed)
+- `Division 2 Gear Calculator Setup 1.7.4.exe` — Windows installer
+- `Division 2 Gear Calculator 1.7.4.exe` — Portable (no install needed)
 
 > **Note:** On Windows, you may need to enable Developer Mode in Settings to allow symlink creation during the build process.
 

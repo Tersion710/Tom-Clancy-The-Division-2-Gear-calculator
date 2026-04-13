@@ -1,6 +1,6 @@
 {
   "name": "division2-gear-calculator",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "Division 2 Gear & DPS Calculator",
   "main": "main.js",
   "author": "ImThatTeryaki",
@@ -14,8 +14,18 @@
     "productName": "Division 2 Gear Calculator",
     "win": {
       "target": [
-        { "target": "nsis", "arch": ["x64"] },
-        { "target": "portable", "arch": ["x64"] }
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
       ],
       "icon": "icon.png",
       "certificateFile": null,
@@ -25,20 +35,27 @@
       "verifyUpdateCodeSignature": false
     },
     "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
+      "oneClick": true,
+      "perMachine": false,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true
     },
     "files": [
       "main.js",
+      "preload.js",
       "splash.html",
+      "splash-liquid-glass.html",
+      "splash-aero.html",
+      "welcome.html",
+      "welcome-liquid-glass.html",
+      "welcome-aero.html",
       "division2-gear-calculator-v2.html",
       "icon.png"
     ]
   },
   "devDependencies": {
     "electron": "^33.4.11",
-    "electron-builder": "^25.1.8"
+    "electron-builder": "^25.1.8",
+    "prettier": "^3.8.1"
   }
 }
