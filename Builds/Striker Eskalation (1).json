@@ -1,0 +1,459 @@
+{
+  "name": "Striker Eskalation",
+  "expertise": 0,
+  "shdLevels": {
+    "weaponDamage": 50,
+    "headshotDamage": 50,
+    "critDamage": 50,
+    "critChance": 50,
+    "armor": 50,
+    "health": 50,
+    "explosiveRes": 50,
+    "hazardProtection": 50,
+    "skillDamage": 50,
+    "skillHaste": 50,
+    "skillDuration": 50,
+    "skillRepair": 50,
+    "accuracy": 50,
+    "stability": 50,
+    "reloadSpeed": 50,
+    "magazineSizePct": 50
+  },
+  "specialization": {
+    "active": "Gunner",
+    "perkTiers": {
+      "gun_armor": 1,
+      "gun_sig_dmg": 1,
+      "gun_reload": 1,
+      "gun_crit_res": 1,
+      "gun_lmg_dmg": 3,
+      "gun_shotgun_dmg": 3,
+      "gun_sidearm_dmg": 3,
+      "gun_rifle_dmg": 3,
+      "gun_mmr_dmg": 3,
+      "gun_smg_dmg": 3,
+      "gun_ar_dmg": 3
+    }
+  },
+  "weapons": [
+    {
+      "weaponId": "w_lexington",
+      "expertise": 20,
+      "baseDamage": 48700,
+      "critChance": 0,
+      "critDamage": 0,
+      "headshotDamage": 65,
+      "weaponAttrs": [
+        {
+          "statType": "weaponDamage",
+          "value": 15
+        },
+        {
+          "statType": "headshotDamage",
+          "value": 10
+        },
+        {
+          "statType": "damageToOutOfCover",
+          "value": 12
+        }
+      ],
+      "attachments": {
+        "Scope": {
+          "id": null,
+          "modifiers": {}
+        },
+        "Muzzle": {
+          "id": null,
+          "modifiers": {}
+        },
+        "Underbarrel": {
+          "id": null,
+          "modifiers": {}
+        },
+        "Magazine": {
+          "id": null,
+          "modifiers": {}
+        }
+      },
+      "talent": {
+        "id": "wt_perfect_killer",
+        "modifiers": {}
+      },
+      "_slotIndex": 0
+    },
+    {
+      "weaponId": "w_gr9",
+      "expertise": 20,
+      "baseDamage": 49480,
+      "critChance": 0,
+      "critDamage": 0,
+      "headshotDamage": 65,
+      "weaponAttrs": [
+        {
+          "statType": "weaponDamage",
+          "value": 15
+        },
+        {
+          "statType": "damageToOutOfCover",
+          "value": 12
+        },
+        {
+          "statType": "damageToArmor",
+          "value": 6
+        }
+      ],
+      "attachments": {
+        "Scope": {
+          "id": null,
+          "modifiers": {}
+        },
+        "Muzzle": {
+          "id": null,
+          "modifiers": {}
+        },
+        "Underbarrel": {
+          "id": null,
+          "modifiers": {}
+        },
+        "Magazine": {
+          "id": null,
+          "modifiers": {}
+        }
+      },
+      "talent": {
+        "id": "wt_measured",
+        "modifiers": {
+          "weaponDamage": 0
+        }
+      },
+      "_slotIndex": 1
+    },
+    {
+      "weaponId": "w_quickstep",
+      "expertise": 0,
+      "baseDamage": 117436,
+      "critChance": 0,
+      "critDamage": 0,
+      "headshotDamage": 95,
+      "weaponAttrs": [
+        {
+          "statType": null,
+          "value": 0
+        },
+        {
+          "statType": null,
+          "value": 0
+        },
+        {
+          "statType": null,
+          "value": 0
+        }
+      ],
+      "attachments": {
+        "Scope": {
+          "id": null,
+          "modifiers": {}
+        },
+        "Muzzle": {
+          "id": null,
+          "modifiers": {}
+        },
+        "Underbarrel": {
+          "id": null,
+          "modifiers": {}
+        },
+        "Magazine": {
+          "id": null,
+          "modifiers": {}
+        }
+      },
+      "talent": {
+        "id": null,
+        "modifiers": {}
+      },
+      "_slotIndex": 2
+    }
+  ],
+  "gear": [
+    {
+      "itemId": "gi_mask_striker",
+      "expertise": 20,
+      "armor": 80000,
+      "coreAttribute": {
+        "statType": "weaponDamage",
+        "value": 15
+      },
+      "attributes": [
+        {
+          "statType": "critChance",
+          "value": 6,
+          "isEditable": true
+        },
+        {
+          "statType": null,
+          "value": 0,
+          "isEditable": true
+        },
+        {
+          "statType": null,
+          "value": 0,
+          "isEditable": true
+        }
+      ],
+      "mods": [
+        {
+          "statType": null,
+          "value": 0
+        },
+        {
+          "statType": null,
+          "value": 0
+        }
+      ],
+      "talent": {
+        "id": null,
+        "modifiers": {}
+      }
+    },
+    {
+      "itemId": "gi_chest_named_equalizer",
+      "expertise": 20,
+      "armor": 158000,
+      "coreAttribute": {
+        "statType": "weaponDamage",
+        "value": 15
+      },
+      "attributes": [
+        {
+          "statType": "critChance",
+          "value": 6,
+          "isEditable": true
+        },
+        {
+          "statType": "critDamage",
+          "value": 12,
+          "isEditable": true
+        },
+        {
+          "statType": null,
+          "value": 0,
+          "isEditable": true
+        }
+      ],
+      "mods": [
+        {
+          "statType": null,
+          "value": 0
+        },
+        {
+          "statType": null,
+          "value": 0
+        }
+      ],
+      "talent": {
+        "id": null,
+        "modifiers": {}
+      }
+    },
+    {
+      "itemId": "gi_bp_striker",
+      "expertise": 20,
+      "armor": 131000,
+      "coreAttribute": {
+        "statType": "weaponDamage",
+        "value": 15
+      },
+      "attributes": [
+        {
+          "statType": null,
+          "value": 0,
+          "isEditable": true
+        },
+        {
+          "statType": null,
+          "value": 0,
+          "isEditable": true
+        },
+        {
+          "statType": null,
+          "value": 0,
+          "isEditable": true
+        }
+      ],
+      "mods": [
+        {
+          "statType": null,
+          "value": 0
+        },
+        {
+          "statType": null,
+          "value": 0
+        }
+      ],
+      "talent": {
+        "id": null,
+        "modifiers": {}
+      }
+    },
+    {
+      "itemId": "gi_gloves_overdogs",
+      "expertise": 0,
+      "armor": 80000,
+      "coreAttribute": {
+        "statType": "weaponDamage",
+        "value": 15
+      },
+      "attributes": [
+        {
+          "statType": "critChance",
+          "value": 6,
+          "isEditable": true
+        },
+        {
+          "statType": "critDamage",
+          "value": 12,
+          "isEditable": true
+        },
+        {
+          "statType": null,
+          "value": 0,
+          "isEditable": true
+        }
+      ],
+      "mods": [
+        {
+          "statType": null,
+          "value": 0
+        },
+        {
+          "statType": null,
+          "value": 0
+        }
+      ],
+      "talent": {
+        "id": null,
+        "modifiers": {}
+      }
+    },
+    {
+      "itemId": "gi_holster_striker",
+      "expertise": 20,
+      "armor": 112000,
+      "coreAttribute": {
+        "statType": "weaponDamage",
+        "value": 15
+      },
+      "attributes": [
+        {
+          "statType": null,
+          "value": 0,
+          "isEditable": true
+        },
+        {
+          "statType": null,
+          "value": 0,
+          "isEditable": true
+        },
+        {
+          "statType": null,
+          "value": 0,
+          "isEditable": true
+        }
+      ],
+      "mods": [
+        {
+          "statType": null,
+          "value": 0
+        },
+        {
+          "statType": null,
+          "value": 0
+        }
+      ],
+      "talent": {
+        "id": null,
+        "modifiers": {}
+      }
+    },
+    {
+      "itemId": "gi_kp_striker",
+      "expertise": 20,
+      "armor": 99000,
+      "coreAttribute": {
+        "statType": "weaponDamage",
+        "value": 15
+      },
+      "attributes": [
+        {
+          "statType": null,
+          "value": 0,
+          "isEditable": true
+        },
+        {
+          "statType": null,
+          "value": 0,
+          "isEditable": true
+        },
+        {
+          "statType": null,
+          "value": 0,
+          "isEditable": true
+        }
+      ],
+      "mods": [
+        {
+          "statType": null,
+          "value": 0
+        },
+        {
+          "statType": null,
+          "value": 0
+        }
+      ],
+      "talent": {
+        "id": null,
+        "modifiers": {}
+      }
+    }
+  ],
+  "skills": [
+    {
+      "skillName": "Hive",
+      "modName": "Reviver Hive",
+      "modPlatform": {
+        "0": {
+          "statType": null,
+          "value": 0
+        },
+        "1": {
+          "statType": null,
+          "value": 0
+        },
+        "2": {
+          "statType": null,
+          "value": 0
+        }
+      },
+      "expertise": 0
+    },
+    {
+      "skillName": "Shield",
+      "modName": "Crusader Shield",
+      "modPlatform": {
+        "0": {
+          "statType": null,
+          "value": 0
+        },
+        "1": {
+          "statType": null,
+          "value": 0
+        },
+        "2": {
+          "statType": null,
+          "value": 0
+        }
+      },
+      "expertise": 0
+    }
+  ]
+}
